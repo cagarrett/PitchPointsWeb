@@ -13,6 +13,13 @@ namespace PitchPointsWeb
             var settings = new FriendlyUrlSettings();
             settings.AutoRedirectMode = RedirectMode.Permanent;
             routes.EnableFriendlyUrls(settings);
+            routes.Ignore("{resource}.axd/{*pathInfo}");
+
+            routes.MapPageRoute(
+                name: "Default",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }
