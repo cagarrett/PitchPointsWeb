@@ -17,6 +17,11 @@ namespace PitchPointsWeb.Account
             var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
             var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
             IdentityResult result = manager.Create(user, Password.Text);
+            if (WaiverSigned.SelectedValue.Equals("No"))
+            {
+                Context.Response.Write("<script> language='javascript'>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a"','_blank');</script>")
+                //Response.Redirect("https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a");
+            }
             if (result.Succeeded)
             {
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
