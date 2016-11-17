@@ -74,6 +74,18 @@ namespace PitchPointsWeb.Models
             return UserUtils.DoPasswordsMatch(password, PasswordHash, Salt);
         }
 
+        public static User CreateFrom(RegisterAPIUser user)
+        {
+            User normalUser = new User();
+            normalUser.Email = user.Email;
+            normalUser.DateOfBirth = user.DateOfBirth;
+            normalUser.FirstName = user.FirstName;
+            normalUser.LastName = user.LastName;
+            normalUser.UpdatePassword(user.Password);
+            normalUser.DateRegistered = DateTime.Now;
+            return normalUser;
+        }
+
     }
 
     public class UserUtils
@@ -83,7 +95,7 @@ namespace PitchPointsWeb.Models
 
         private static readonly int HASH_LEGNTH = 64;
 
-        private static readonly int PASSWORD_ITERATIONS = 512;
+        private static readonly int PASSWORD_ITERATIONS = 1024;
 
         private static readonly int NUMBER_OF_BYTES = 64;
 
@@ -102,7 +114,7 @@ namespace PitchPointsWeb.Models
         }
 
         /// <summary>
-        /// Hashes the password and salt and returns a byte array of 64 length
+        /// Hashes the password and salt and returns a byte array of 20 length
         /// </summary>
         /// <param name="password">The password to hash</param>
         /// <param name="salt">The securely generated salt</param>
@@ -112,7 +124,7 @@ namespace PitchPointsWeb.Models
             byte[] hash;
             using (var crypto = new Rfc2898DeriveBytes(password, salt, PASSWORD_ITERATIONS))
             {
-                hash = crypto.GetBytes(NUMBER_OF_BYTES);
+                hash = crypto.GetBytes(20);
             }
             return hash;
         }
