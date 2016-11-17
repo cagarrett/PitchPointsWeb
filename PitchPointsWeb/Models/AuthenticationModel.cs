@@ -10,6 +10,11 @@ namespace PitchPointsWeb.Models
     {
 
         /// <summary>
+        /// The ID of the public key in UserPublicKey
+        /// </summary>
+        public int PublicKeyID { get; set; }
+
+        /// <summary>
         /// The plain text data that was signed
         /// </summary>
         public string Data { get; set; }
@@ -25,4 +30,21 @@ namespace PitchPointsWeb.Models
         }
 
     }
+
+    public class PublicKeyUserModel
+    {
+
+        public byte[] PublicKey { get; set; }
+
+        public DateTime ExpiryDate { get; set; }
+
+        public bool Invalid { get; set; }
+
+        public PublicKeyUserModel()
+        {
+
+        }
+
+    }
+
 }

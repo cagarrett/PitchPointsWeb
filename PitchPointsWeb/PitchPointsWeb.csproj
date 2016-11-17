@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.1\lib\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="jose-jwt, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\jose-jwt.2.0.2\lib\net40\jose-jwt.dll</HintPath>
       <Private>True</Private>
@@ -382,6 +386,7 @@
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
+    <Compile Include="API\AccountVerifier.cs" />
     <Compile Include="API\APICommon.cs" />
     <Compile Include="API\Authenticator.cs" />
     <Compile Include="API\CompetitionsController.cs" />
@@ -416,6 +421,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\CompetitionDetails.cs" />
     <Compile Include="Models\IdentityModels.cs" />
