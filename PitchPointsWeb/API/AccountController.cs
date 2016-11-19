@@ -89,6 +89,52 @@ namespace PitchPointsWeb.API
         }
 
         /// <summary>
+        /// Modifies a user based on their ID to grant / revoke admin permission(s)
+        /// </summary>
+        /// <param name="userId">The ID of a user that exists in the User table</param>
+        /// <param name="isAdmin">Determines if this user is an admin. Set this to false to remove this user from the admin table</param>
+        /// <param name="canModifyScores">True if this admin can modify climber scores in a competition</param>
+        /// <param name="canCreateCompetitions">True if this admin has competition creation privileges</param>
+        /// <exception cref="SqlException">Thrown if a connection could not be made with the database</exception>
+        internal void ModifyAdmin(int userId, bool isAdmin, bool canModifyScores, bool canCreateCompetitions)
+        {
+            var connection = GetConnection();
+            connection.Open();
+            using (var command = new SqlCommand("ModifyAdminUser", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@isAdmin", isAdmin);
+                command.Parameters.AddWithValue("@canModifyScores", canModifyScores);
+                command.Parameters.AddWithValue("@canCreateCompetitions", canCreateCompetitions);
+                command.ExecuteNonQuery();
+            }
+            connection.Close();
+        }
+
+        /// <summary>
+        /// Modifies a user based on their ID to promote / revoke judge role
+        /// </summary>
+        /// <param name="userId">The ID of a user that exists in the User table</param>
+        /// <param name="isJudge">Determines if this user is a judge. Set this to false to remove this user from the judge table</param>
+        /// <param name="compId">The ID of a competition that this user can be a judge for</param>
+        /// <exception cref="SqlException">Thrown if a connection could not be made with the database</exception>
+        internal void ModifyJudge(int userId, bool isJudge, int compId)
+        {
+            var connection = GetConnection();
+            connection.Open();
+            using (var command = new SqlCommand("ModifyJudgeUser", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@isJudge", isJudge);
+                command.Parameters.AddWithValue("@compId", compId);
+                command.ExecuteNonQuery();
+            }
+            connection.Close();
+        }
+
+        /// <summary>
         /// Creates a user object from the database with the given email
         /// </summary>
         /// <param name="email">The email to use to query the database</param>
