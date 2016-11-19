@@ -423,6 +423,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountControllerModels.cs" />
+    <Compile Include="Models\APIModels.cs" />
     <Compile Include="Models\AuthenticationModel.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\CompetitionDetails.cs" />
