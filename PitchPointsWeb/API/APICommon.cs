@@ -65,6 +65,20 @@ namespace PitchPointsWeb.API
         }
 
         /// <summary>
+        /// Creates a simple JSON message with a provided object
+        /// </summary>
+        /// <param name="obj">The object to serialize to JSON</param>
+        /// <param name="status">The status code for this message. Default = OK</param>
+        /// <returns>A HttpResponseMessage formatted as JSON with content being the object passed in</returns>
+        internal static HttpResponseMessage CreateJsonResponse(object obj, HttpStatusCode status = HttpStatusCode.OK)
+        {
+            return new HttpResponseMessage(status)
+            {
+                Content = new ObjectContent<object>(obj, new JsonMediaTypeFormatter(), "application/json")
+            };
+        }
+
+        /// <summary>
         /// Creates an ID table that is used within the database when passing more then 1 id is desired
         /// </summary>
         /// <param name="ids">An array of integers to be used as IDS</param>
