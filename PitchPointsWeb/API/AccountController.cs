@@ -1,9 +1,7 @@
 ﻿using PitchPointsWeb.Models;
 using System.Web.Http;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Linq;
 using static PitchPointsWeb.API.APICommon;
 using static PitchPointsWeb.API.AccountVerifier;
 using System.Data.SqlClient;
@@ -16,41 +14,53 @@ namespace PitchPointsWeb.API
     {
 
         /// <summary>
-        /// Attempts to register a new user in the database. A successful dictionary will contain PrivateKeyInfo. An unsuccessful dictionary will contain an error with a user friendly message as to why they couldn't register.
+        /// Attempts to register a user from a RegisterAPIUser model and returns a HttpResponseMessage
         /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
+        /// <param name="user">The user to register</param>
+        /// <returns>A HttpResponseMessage based on the success / failure of the insertion</returns>
         [AllowAnonymous]
         [HttpPost]
         public HttpResponseMessage Register([FromBody] RegisterAPIUser user)
         {
-            var connection = GetConnection();
+            RegisterAccountResponse response = null;
             try
             {
-                connection.Open();
-            }
-            catch
+                response = InternalRegister(user);
+            } catch (SqlException)
             {
                 return GetUnavailableMessage();
             }
-            var dict = new Dictionary<string, object>();
+            return CreateJsonResponse(response);
+        }
+
+        /// <summary>
+        /// Internally registers a user in the database.
+        /// </summary>
+        /// <param name="user">The user to register in the database</param>
+        /// <returns>A RegisterAccountResponse from the insertion. Use this value to check if the insertion was successful and for any potential errors.</returns>
+        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
+        internal RegisterAccountResponse InternalRegister(RegisterAPIUser user)
+        {
+            var connection = GetConnection();
+            connection.Open();
+            var response = new RegisterAccountResponse();
             if (DoesUserExist(user.Email))
             {
-                dict.Add("Error", "User already exists");
+                response.ErrorMessage = "Email unavailable";
             } else
             {
                 var insertResponse = InsertUser(user);
-                if (!insertResponse.Success)
+                if (insertResponse.Success)
                 {
-                    dict.Add("Error", insertResponse.ErrorMessage);
+                    response.PrivateKey = insertResponse.PrivateKeyInfo;
                 } else
                 {
-                    dict.Add("PrivateKeyInfo", insertResponse.PrivateKeyInfo);
+                    response.ErrorMessage = insertResponse.ErrorMessage;
                 }
             }
+            response.Success = response.ErrorMessage == null;
             connection.Close();
-            dict.Add("Success", !dict.ContainsKey("Error"));
-            return CreateJsonResponse(dict);
+            return response;
         }
 
         /// <summary>
@@ -62,30 +72,105 @@ namespace PitchPointsWeb.API
         [HttpPost]
         public HttpResponseMessage Login([FromBody] LoginAPIUser user)
         {
-            var dict = new Dictionary<string, object>();
-            if (DoesUserExist(user.Email))
+            LoginAccountResponse response = null;
+            try
+            {
+                response = InternalLogin(user);
+            } catch
+            {
+                return GetUnavailableMessage();
+            }
+            return CreateJsonResponse(response);
+        }
+
+        /// <summary>
+        /// Attempts to validate a user trying to log in
+        /// </summary>
+        /// <param name="user">The user attempting to log in</param>
+        /// <returns>A LoginAccountResponse which dictates if the login was successful or not</returns>
+        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
+        internal LoginAccountResponse InternalLogin(LoginAPIUser user)
+        {
+            LoginAccountResponse response = new LoginAccountResponse();
+            var databaseUser = GetUserFrom(user.Email);
+            if (databaseUser != null)
             {
                 var connection = GetConnection();
                 connection.Open();
-                var dbUser = GetUserFrom(user.Email);
-                if (!dbUser.ID.HasValue)
+                if (databaseUser.PasswordsMatch(user.Password))
                 {
-                    dict["Error"] = "User does not exist with this email";
-                } else if (dbUser.PasswordsMatch(user.Password))
-                {
-                    var userId = dbUser.ID.Value;
-                    dict.Add("PrivateKeyInfo", CreateAndInsertPublicKeyFrom(userId, connection));
+                    response.PrivateKey = CreateAndInsertPublicKeyFrom(databaseUser.ID.Value, connection);
                 } else
                 {
-                    dict["Error"] = "Incorrect password";
+                    response.ErrorMessage = "Incorrect password";
                 }
                 connection.Close();
             } else
             {
-                dict["Error"] = "User does not exist with this email";
+                response.ErrorMessage = "User does not exist with this email";
             }
-            dict["Success"] = !dict.ContainsKey("Error");
-            return CreateJsonResponse(dict);
+            response.Success = response.ErrorMessage == null;
+            return response;
+        }
+
+        /// <summary>
+        /// Modifies a user based on their ID to grant / revoke admin permission(s)
+        /// </summary>
+        /// <param name="userId">The ID of a user that exists in the User table</param>
+        /// <param name="isAdmin">Determines if this user is an admin. Set this to false to remove this user from the admin table</param>
+        /// <param name="canModifyScores">True if this admin can modify climber scores in a competition</param>
+        /// <param name="canCreateCompetitions">True if this admin has competition creation privileges</param>
+        /// <returns>True if the modification was successful, false otherwise</returns>
+        internal bool ModifyAdmin(int userId, bool isAdmin, bool canModifyScores, bool canCreateCompetitions)
+        {
+            var connection = GetConnection();
+            try
+            {
+                connection.Open();
+                using (var command = new SqlCommand("ModifyAdminUser", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@isAdmin", isAdmin);
+                    command.Parameters.AddWithValue("@canModifyScores", canModifyScores);
+                    command.Parameters.AddWithValue("@canCreateCompetitions", canCreateCompetitions);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            } catch
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Modifies a user based on their ID to promote / revoke judge role
+        /// </summary>
+        /// <param name="userId">The ID of a user that exists in the User table</param>
+        /// <param name="isJudge">Determines if this user is a judge. Set this to false to remove this user from the judge table</param>
+        /// <param name="compId">The ID of a competition that this user can be a judge for</param>
+        /// <returns>True if the modification was successful, false otherwise</returns>
+        internal bool ModifyJudge(int userId, bool isJudge, int compId)
+        {
+            var connection = GetConnection();
+            try
+            {
+                connection.Open();
+                using (var command = new SqlCommand("ModifyJudgeUser", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@userId", userId);
+                    command.Parameters.AddWithValue("@isJudge", isJudge);
+                    command.Parameters.AddWithValue("@compId", compId);
+                    command.ExecuteNonQuery();
+                }
+                connection.Close();
+            } catch
+            {
+                return false;
+            }
+            return true;
         }
 
         /// <summary>
@@ -93,6 +178,7 @@ namespace PitchPointsWeb.API
         /// </summary>
         /// <param name="email">The email to use to query the database</param>
         /// <returns>A User if the email exists within the database, null otherwise</returns>
+        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
         private User GetUserFrom(string email)
         {
             var connection = GetConnection();
@@ -119,7 +205,7 @@ namespace PitchPointsWeb.API
         /// </summary>
         /// <param name="email">the email to check within the database</param>
         /// <returns>True if the user exists in the database</returns>
-        /// <exception cref="SqlException">Thrown if there is an issue creating a connection to the database</exception> 
+        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception> 
         private bool DoesUserExist(string email)
         {
             return GetUserFrom(email) != null;
@@ -134,7 +220,7 @@ namespace PitchPointsWeb.API
             var success = false;
             var message = "";
             var userId = 0;
-            PrivateKeyInfoResult info = new PrivateKeyInfoResult();
+            var info = new PrivateKeyInfo();
             using (var command = new SqlCommand("CreateUser", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -173,7 +259,7 @@ namespace PitchPointsWeb.API
             };
         }
 
-        private PrivateKeyInfoResult CreateAndInsertPublicKeyFrom(int userID, SqlConnection connection = null)
+        private PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userID, SqlConnection connection = null)
         {
             var pair = GenerateKeyPair();
             connection = connection ?? GetConnection();
@@ -195,7 +281,7 @@ namespace PitchPointsWeb.API
                 reader.Close();
             }
             connection.Close();
-            return new PrivateKeyInfoResult()
+            return new PrivateKeyInfo()
             {
                 PrivateKey = pair.Item2,
                 PublicKeyId = id
@@ -230,11 +316,6 @@ namespace PitchPointsWeb.API
             return user;
         }
 
-        private static byte[] StringToByteArray(string hex)
-        {
-            return Enumerable.Range(0, hex.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(hex.Substring(x, 2), 16)).ToArray();
-        }
-
         private struct InsertUserResult
         {
 
@@ -244,16 +325,7 @@ namespace PitchPointsWeb.API
 
             public int UserId;
 
-            public PrivateKeyInfoResult PrivateKeyInfo;
-
-        }
-
-        private struct PrivateKeyInfoResult
-        {
-
-            public byte[] PrivateKey;
-
-            public int PublicKeyId;
+            public PrivateKeyInfo PrivateKeyInfo;
 
         }
 
