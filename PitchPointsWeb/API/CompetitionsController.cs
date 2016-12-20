@@ -18,9 +18,9 @@ namespace PitchPointsWeb.API
             try
             {
                 connection.Open();
-            } catch (SqlException e)
+            } catch
             {
-                return new HttpResponseMessage(System.Net.HttpStatusCode.ServiceUnavailable);
+                return GetUnavailableMessage();
             }
             var data = new List<Competition>();
             using (var command = new SqlCommand("GetActiveCompetitions", connection))
