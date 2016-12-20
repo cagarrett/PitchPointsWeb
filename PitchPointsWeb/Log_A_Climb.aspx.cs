@@ -10,7 +10,7 @@ using System.Net.Mail;
 
 namespace PitchPointsWeb
 {
-    public partial class Contact : Page
+    public partial class Log_A_Climb : Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -35,9 +35,13 @@ namespace PitchPointsWeb.Account
                 // To enable password failures to trigger lockout, change to shouldLockout: true
                 var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
 
+                var controller = new API.AccountController();
+                var login = new LoginAPIUser();
+
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        controller.InternalLogin(login);
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         break;
                     case SignInStatus.LockedOut:
