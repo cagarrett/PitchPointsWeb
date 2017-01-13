@@ -4,13 +4,12 @@
     <h2>Log A Climb</h2>
 
     <div class="form-horizontal">
-        <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Category" CssClass="col-md-2 control-label">First Name</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="CategoryDropDownList" CssClass="col-md-2 control-label">Category</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="TextBox1" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="FName"
-                    CssClass="text-danger" ErrorMessage="The first name field is required." />
+                <asp:DropDownList ID="CategoryDropDownList" runat="server"></asp:DropDownList>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryDropDownList"
+                    CssClass="text-danger" ErrorMessage="The category field is required." />
             </div>
         </div>
         <div class="form-group">
@@ -26,23 +25,26 @@
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="LName" CssClass="form-control" TextMode="SingleLine" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="LName"
-                    CssClass="text-danger" ErrorMessage="The last name field is required." />
+                    CssClass="text-danger" ErrorMessage="The first name field is required." />
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Subject" CssClass="col-md-2 control-label">Subject</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="Witness" CssClass="col-md-2 control-label">Witness</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Subject" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Subject"
+                <asp:TextBox runat="server" ID="Witness" CssClass="form-control" TextMode="SingleLine" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Witness"
                     CssClass="text-danger" ErrorMessage="The subject field is required." />
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Message" CssClass="col-md-2 control-label">Message</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="CheckBox1" CssClass="col-md-2 control-label">Falls </asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Message" CssClass="form-control" TextMode="MultiLine" Width="280px" Height="100px" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Message"
-                    CssClass="text-danger" ErrorMessage="The message field is required." />
+                <asp:CheckBox ID="CheckBox1" runat="server" />
+                <asp:CheckBox ID="CheckBox2" runat="server" />
+                <asp:CheckBox ID="CheckBox3" runat="server" />
+                <asp:CheckBox ID="CheckBox4" runat="server" />
+                <asp:CheckBox ID="CheckBox5" runat="server" />
+                
                 <br />
                 <br />
                 <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
@@ -50,7 +52,15 @@
                 <br />
                 <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
                 <br />
+                <asp:ValidationSummary runat="server" CssClass="text-danger" />
         </div>
     </div>
     </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 </asp:Content>

@@ -23,8 +23,8 @@ namespace PitchPointsWeb
             var fromAddress = new MailAddress("PitchPointsIssueTracking@gmail.com", user);
             var toAddress = new MailAddress("PitchPointsTeam@gmail.com", "Pitch Points Team");
             const string fromPassword = "PitchPointsBugraCodyRiderSam";
-            var subject = Subject.Text;
-            var body = Message.Text;
+            //var subject = Witness.Text;
+            //var body = Falls.Text;
 
             var smtp = new SmtpClient
             {
@@ -35,7 +35,7 @@ namespace PitchPointsWeb
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
-            using (var message = new MailMessage(fromAddress, toAddress)
+            /*using (var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
                 Body = body
@@ -44,12 +44,12 @@ namespace PitchPointsWeb
                 smtp.Send(message);
                 FName.Text = "";
                 LName.Text = "";
-                Subject.Text = "";
-                Message.Text = "";
+                Witness.Text = "";
+                Falls.Text = "";
 
                 lblMessage.ForeColor = System.Drawing.Color.Red;
                 lblMessage.Text = "Your message has been sent to the Pitch Points Support Team.";
-            }
+            }*/
         }
     }
 }
