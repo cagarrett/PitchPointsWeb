@@ -11,7 +11,7 @@ namespace PitchPointsWeb.Account
 {
     public partial class Register : Page
     {
-        protected void writeCookies(PrivateKeyInfo info)
+        private void writeCookies(PrivateKeyInfo info)
         {
             HttpCookie privateKeyString = new HttpCookie("PrivateKeyId");
             HttpCookie publicKeyString = new HttpCookie("PublicKeyId");
@@ -29,7 +29,7 @@ namespace PitchPointsWeb.Account
             Response.Cookies.Add(publicKeyString);
         }
 
-        protected void readCookies(PrivateKeyInfo info)
+        private void readCookies(PrivateKeyInfo info)
         {
             HttpCookie privateKeyCookie = Request.Cookies["PrivateKeyId"];
             HttpCookie publicKeyCookie = Request.Cookies["PublicKeyCookie"];
@@ -66,6 +66,7 @@ namespace PitchPointsWeb.Account
                 //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
                 //manager.SendEmail(user.Id, "Confirm your Pitch Points account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
                 //controller.InternalRegister(register);
+                //writeCookies();
                 signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
