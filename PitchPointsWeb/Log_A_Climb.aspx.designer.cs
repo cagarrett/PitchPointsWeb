@@ -10,43 +10,43 @@
 namespace PitchPointsWeb {
     
     
-    public partial class Contact {
+    public partial class Log_A_Climb {
         
         /// <summary>
-        /// FName control.
+        /// RouteID control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FName;
+        protected global::System.Web.UI.WebControls.TextBox RouteID;
         
         /// <summary>
-        /// LName control.
+        /// Attempts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LName;
+        protected global::System.Web.UI.WebControls.TextBox Attempts;
         
         /// <summary>
-        /// Subject control.
+        /// Witness control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Subject;
+        protected global::System.Web.UI.WebControls.TextBox Witness;
         
         /// <summary>
-        /// Message control.
+        /// Witness2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Message;
+        protected global::System.Web.UI.WebControls.TextBox Witness2;
         
         /// <summary>
         /// btnSubmit control.
