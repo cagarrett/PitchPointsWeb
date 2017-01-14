@@ -240,6 +240,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Assets\carousel_background.jpg" />
+    <Content Include="Assets\ppCampusHelv.png" />
     <Content Include="Log_A_Climb.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
