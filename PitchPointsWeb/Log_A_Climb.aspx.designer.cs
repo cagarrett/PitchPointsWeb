@@ -49,7 +49,6 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.TextBox Witness;
         
         /// <summary>
-        /// RouteClimbed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
