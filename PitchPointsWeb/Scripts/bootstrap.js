@@ -732,7 +732,9 @@ if (typeof jQuery === 'undefined') {
 
 
   // COLLAPSE DATA-API
-  // =================
+    // =================
+
+
 
   $(document).on('click.bs.collapse.data-api', '[data-toggle="collapse"]', function (e) {
     var $this   = $(this)
