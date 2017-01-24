@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.API;
 
 namespace PitchPointsWeb.Account
 {
@@ -41,26 +42,21 @@ namespace PitchPointsWeb.Account
             Response.Cookies.Add(publicKeyString);
         }
 
-        private void readCookies(PrivateKeyInfo info)
-        {
-            HttpCookie privateKeyCookie = Request.Cookies["PrivateKeyId"];
-            HttpCookie publicKeyCookie = Request.Cookies["PublicKeyCookie"];
-
-            // Read the cookie information and display it.
-            if (privateKeyCookie != null)
-                Response.Write("<p>" + privateKeyCookie.Name + "<p>" + privateKeyCookie.Value);
-            else
-                Response.Write("not found");
-
-            if (publicKeyCookie != null)
-                Response.Write("<p>" + publicKeyCookie.Name + "<p>" + publicKeyCookie.Value);
-            else
-                Response.Write("not found");
-        }
-
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            var validLogin = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
+
+            if(validLogin.Success)
+            {
+                writeCookies(validLogin.PrivateKey);
+                var controller = new AccountController();
+                var login = new LoginAPIUser();
+                Response.Redirect("Default.aspx");
+            } else
+            if(validLogin.ErrorMessage == "Incorrect password") {
+                Response.Write("The password you entered is inccorect.");
+            }
+            /*if (IsValid)
             {
                 // Validate the user password
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -93,8 +89,7 @@ namespace PitchPointsWeb.Account
                         FailureText.Text = "Invalid login attempt";
                         ErrorMessage.Visible = true;
                         break;
-                }
-            }
+                }*/
         }
     }
 }
