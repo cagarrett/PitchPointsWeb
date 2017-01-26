@@ -45,14 +45,17 @@
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="RadioButton1" CssClass="col-md-2 control-label">Falls </asp:Label>
+            <asp:Label runat="server" AssociatedControlID="RadioButtonList1" CssClass="col-md-2 control-label">Falls </asp:Label>
             <div class="col-md-10">
-                <asp:RadioButton ID="RadioButton1" runat="server" />
-                <asp:RadioButton ID="RadioButton2" runat="server" />
-                <asp:RadioButton ID="RadioButton3" runat="server" />
-                <asp:RadioButton ID="RadioButton4" runat="server" />
-                <asp:RadioButton ID="RadioButton5" runat="server" />
-                <asp:TextBox ID="TextBox1" CssClass="form-control" style="width:50px;" runat="server"></asp:TextBox>
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal" Width="117px">
+                    <asp:ListItem>0</asp:ListItem> 
+                    <asp:ListItem>1</asp:ListItem>
+                    <asp:ListItem>2</asp:ListItem> 
+                    <asp:ListItem>3</asp:ListItem>
+                    <asp:ListItem>4</asp:ListItem> 
+                    <asp:ListItem>5</asp:ListItem>
+                </asp:RadioButtonList>
+                <asp:TextBox ID="TextBox1" CssClass="form-control" style="width:50px; display: inline-block;" runat="server" ></asp:TextBox>
                 <br />
                 <br />
                 <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
@@ -64,11 +67,4 @@
         </div>
     </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
 </asp:Content>
