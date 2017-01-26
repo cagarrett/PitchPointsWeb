@@ -4,7 +4,15 @@
     <h2>Log A Climb</h2>
 
     <div class="form-horizontal">
-            <div class="form-group">
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="CategoryDropDownList" CssClass="col-md-2 control-label">Category</asp:Label>
+            <div class="col-md-10">
+                <asp:DropDownList ID="CategoryDropDownList" runat="server"></asp:DropDownList>
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="CategoryDropDownList"
+                    CssClass="text-danger" ErrorMessage="The category field is required." />
+            </div>
+        </div>
+        <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="FName" CssClass="col-md-2 control-label">First Name</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="FName" CssClass="form-control" TextMode="SingleLine" />
@@ -37,9 +45,9 @@
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="FallsList" CssClass="col-md-2 control-label">Falls </asp:Label>
+            <asp:Label runat="server" AssociatedControlID="RadioButtonList1" CssClass="col-md-2 control-label">Falls </asp:Label>
             <div class="col-md-10">
-                <asp:RadioButtonList ID="FallsList" runat="server" RepeatDirection="Horizontal" Width="117px">
+                <asp:RadioButtonList ID="RadioButtonList1" runat="server" RepeatDirection="Horizontal" Width="117px">
                     <asp:ListItem>0</asp:ListItem> 
                     <asp:ListItem>1</asp:ListItem>
                     <asp:ListItem>2</asp:ListItem> 
@@ -47,7 +55,7 @@
                     <asp:ListItem>4</asp:ListItem> 
                     <asp:ListItem>5</asp:ListItem>
                 </asp:RadioButtonList>
-                <asp:TextBox ID="PlusFiveFalls" CssClass="form-control" style="width:50px; display: inline-block;" runat="server" ></asp:TextBox>
+                <asp:TextBox ID="TextBox1" CssClass="form-control" style="width:50px; display: inline-block;" runat="server" ></asp:TextBox>
                 <br />
                 <br />
                 <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />

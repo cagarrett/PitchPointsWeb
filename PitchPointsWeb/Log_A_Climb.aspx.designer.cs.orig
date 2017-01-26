@@ -13,6 +13,15 @@ namespace PitchPointsWeb {
     public partial class Log_A_Climb {
         
         /// <summary>
+        /// CategoryDropDownList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CategoryDropDownList;
+        
+        /// <summary>
         /// FName control.
         /// </summary>
         /// <remarks>
@@ -40,7 +49,10 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.TextBox Witness;
         
         /// <summary>
+<<<<<<< HEAD
         /// RouteClimbed control.
+=======
+>>>>>>> origin/dev
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -49,22 +61,72 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.TextBox RouteClimbed;
         
         /// <summary>
-        /// FallsList control.
+<<<<<<< HEAD
+        /// RadioButton1 control.
+=======
+        /// RadioButtonList1 control.
+>>>>>>> origin/dev
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList FallsList;
+<<<<<<< HEAD
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton1;
         
         /// <summary>
-        /// PlusFiveFalls control.
+        /// RadioButton2 control.
+=======
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
+        
+        /// <summary>
+        /// TextBox1 control.
+>>>>>>> origin/dev
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PlusFiveFalls;
+<<<<<<< HEAD
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton2;
+        
+        /// <summary>
+        /// RadioButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton3;
+        
+        /// <summary>
+        /// RadioButton4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton4;
+        
+        /// <summary>
+        /// RadioButton5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButton RadioButton5;
+        
+        /// <summary>
+        /// TextBox1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+=======
+>>>>>>> origin/dev
+        protected global::System.Web.UI.WebControls.TextBox TextBox1;
         
         /// <summary>
         /// btnSubmit control.
