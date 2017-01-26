@@ -10,6 +10,7 @@
                 <asp:TextBox runat="server" ID="ClimberID" CssClass="form-control" TextMode="Number" Width="75 px" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="ClimberID"
                     CssClass="text-danger" ErrorMessage="The climber ID field is required." />
+
             </div>
         </div>
         <div class="form-group">
@@ -40,6 +41,7 @@
             <div class="col-md-offset-2 col-md-10">
                 <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-default" />
             </div>
+
         </div>
     </div>
 </asp:Content>
