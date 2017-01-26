@@ -32,17 +32,17 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Message" CssClass="col-md-2 control-label">Message</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Message" CssClass="form-control" TextMode="MultiLine" Width="280px" Height="100px" />
+                <asp:TextBox runat="server" ID="Message" CssClass="form-control" TextMode="MultiLine" Width="280px" Height="50px" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Message"
                     CssClass="text-danger" ErrorMessage="The message field is required." />
-                <br />
-                <br />
-                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
-                <br />
-                <br />
-                <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-                <br />
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-10">
+            <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-default" />
+        </div>
+        <div>
+            <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
     </div>
-    </div>
+
 </asp:Content>
