@@ -39,14 +39,6 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="FallsList" CssClass="col-md-2 control-label">Falls </asp:Label>
             <div class="col-md-10">
-                <asp:RadioButtonList ID="FallsList" runat="server" RepeatDirection="Horizontal" Width="117px">
-                    <asp:ListItem>0</asp:ListItem> 
-                    <asp:ListItem>1</asp:ListItem>
-                    <asp:ListItem>2</asp:ListItem> 
-                    <asp:ListItem>3</asp:ListItem>
-                    <asp:ListItem>4</asp:ListItem> 
-                    <asp:ListItem>5</asp:ListItem>
-                </asp:RadioButtonList>
                 <asp:TextBox ID="PlusFiveFalls" CssClass="form-control" style="width:50px; display: inline-block;" runat="server" ></asp:TextBox>
                 <br />
                 <br />
