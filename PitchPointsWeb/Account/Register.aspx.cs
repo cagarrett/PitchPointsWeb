@@ -54,15 +54,16 @@ namespace PitchPointsWeb.Account
             var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
             var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
+            string redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
             IdentityResult result = manager.Create(user, Password.Text);
             var validRegister = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
 
             if (WaiverSigned.SelectedValue.Equals("No"))
             {
-                System.Diagnostics.Process.Start("https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a");
+                Response.Write(redirect);
             }
 
-            /*if (validRegister.Success)
+            if (validRegister.Success)
             {
                 writeCookies(validRegister.PrivateKey);
                 Response.Redirect("Default.aspx");
@@ -70,7 +71,7 @@ namespace PitchPointsWeb.Account
             else
             {
 
-            }*/
+            }
 
             if (result.Succeeded)
             {
