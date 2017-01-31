@@ -55,7 +55,10 @@
                 </p>
             </section>
         </div>
-
+<<<<<<< HEAD
+        <br />
+=======
+>>>>>>> Source Tree Commit Test
         <div class="col-md-4">
             <section id="socialLoginForm">
                 <uc:OpenAuthProviders runat="server" ID="OpenAuthLogin" />

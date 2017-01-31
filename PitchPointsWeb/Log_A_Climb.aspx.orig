@@ -40,8 +40,7 @@
                 <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn-primary" />
                 <br />
                 <br />
-                <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-                <br />
+                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
         </div>
     </div>
     </div>

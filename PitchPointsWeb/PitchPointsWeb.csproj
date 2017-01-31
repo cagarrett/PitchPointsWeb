@@ -241,6 +241,8 @@
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Assets\carousel_background.jpg" />
     <Content Include="Assets\ppCampusHelv.png" />
+    <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
+    <Content Include="Assets\PPHangLogoTrim.png" />
     <Content Include="Log_A_Climb.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
