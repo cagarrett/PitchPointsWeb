@@ -13,22 +13,17 @@ namespace PitchPointsWeb {
     public partial class Log_A_Climb {
         
         /// <summary>
-        /// FName control.
+
+        /// ClimberID control.
+
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FName;
-        
-        /// <summary>
-        /// LName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LName;
+
+        protected global::System.Web.UI.WebControls.TextBox ClimberID;
+
         
         /// <summary>
         /// Witness control.
@@ -49,39 +44,14 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.TextBox RouteClimbed;
         
         /// <summary>
-        /// FallsList control.
+
+        /// numberOfFalls control.
+
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList FallsList;
-        
-        /// <summary>
-        /// PlusFiveFalls control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox PlusFiveFalls;
-        
-        /// <summary>
-        /// btnSubmit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSubmit;
-        
-        /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
+        protected global::System.Web.UI.WebControls.TextBox numberOfFalls;
     }
 }

@@ -4,20 +4,13 @@
     <h2>Log A Climb</h2>
 
     <div class="form-horizontal">
-            <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="FName" CssClass="col-md-2 control-label">First Name</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="FName" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="FName"
-                    CssClass="text-danger" ErrorMessage="The first name field is required." />
-            </div>
-        </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="LName" CssClass="col-md-2 control-label">Last Name</asp:Label>
+            <asp:Label runat="server" AssociatedControlID="ClimberID" CssClass="col-md-2 control-label">Climber ID</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="LName" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="LName"
-                    CssClass="text-danger" ErrorMessage="The first name field is required." />
+                <asp:TextBox runat="server" ID="ClimberID" CssClass="form-control" TextMode="Number" Width="75 px" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="ClimberID"
+                    CssClass="text-danger" ErrorMessage="The climber ID field is required." />
+
             </div>
         </div>
         <div class="form-group">
@@ -25,38 +18,30 @@
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Witness" CssClass="form-control" TextMode="SingleLine" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Witness"
-                    CssClass="text-danger" ErrorMessage="The subject field is required." />
+                    CssClass="text-danger" ErrorMessage="The witness field is required." />
             </div>
         </div>
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="RouteClimbed" CssClass="col-md-2 control-label">Route ID</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="RouteClimbed" CssClass="form-control" style="width:50px;" TextMode="SingleLine" />
+                <asp:TextBox runat="server" ID="RouteClimbed" CssClass="form-control" Style="width: 57px;" TextMode="Number" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="RouteClimbed"
                     CssClass="text-danger" ErrorMessage="The route climbed is required." />
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="FallsList" CssClass="col-md-2 control-label">Falls </asp:Label>
+            <asp:Label runat="server" AssociatedControlID="numberOfFalls" CssClass="col-md-2 control-label">Falls</asp:Label>
             <div class="col-md-10">
-                <asp:RadioButtonList ID="FallsList" runat="server" RepeatDirection="Horizontal" Width="117px">
-                    <asp:ListItem>0</asp:ListItem> 
-                    <asp:ListItem>1</asp:ListItem>
-                    <asp:ListItem>2</asp:ListItem> 
-                    <asp:ListItem>3</asp:ListItem>
-                    <asp:ListItem>4</asp:ListItem> 
-                    <asp:ListItem>5</asp:ListItem>
-                </asp:RadioButtonList>
-                <asp:TextBox ID="PlusFiveFalls" CssClass="form-control" style="width:50px; display: inline-block;" runat="server" ></asp:TextBox>
-                <br />
-                <br />
-                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
-                <br />
-                <br />
-                <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-                <br />
-                <asp:ValidationSummary runat="server" CssClass="text-danger" />
+                <asp:TextBox runat="server" ID="numberOfFalls" CssClass="form-control" Style="width: 57px;" TextMode="Number" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="numberOfFalls"
+                    CssClass="text-danger" ErrorMessage="The number of falls is required." />
+            </div>
         </div>
-    </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-default" />
+            </div>
+
+        </div>
     </div>
 </asp:Content>
