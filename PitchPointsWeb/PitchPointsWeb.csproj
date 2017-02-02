@@ -415,6 +415,7 @@
     <Compile Include="API\APICommon.cs" />
     <Compile Include="API\Authenticator.cs" />
     <Compile Include="API\CompetitionsController.cs" />
+    <Compile Include="API\LoggedRouteController.cs" />
     <Compile Include="API\RouteController.cs" />
     <Compile Include="API\TestController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

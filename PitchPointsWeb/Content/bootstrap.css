@@ -4121,6 +4121,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-justified > li > a {
   margin-bottom: 5px;
   text-align: center;
+    top: -42px;
+    left: -4px;
 }
 .nav-justified > .dropdown .dropdown-menu {
   top: auto;
