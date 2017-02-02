@@ -1619,8 +1619,8 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
-    top: 16px;
-    left: 2px;
+    top: -12px;
+    left: 10px;
     height: 50px;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
@@ -4121,6 +4121,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-justified > li > a {
   margin-bottom: 5px;
   text-align: center;
+    top: -42px;
+    left: -4px;
 }
 .nav-justified > .dropdown .dropdown-menu {
   top: auto;
