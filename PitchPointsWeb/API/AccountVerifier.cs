@@ -47,6 +47,12 @@ namespace PitchPointsWeb.API
             return model;
         }
 
+        internal static bool InternalVerify(SignedData data, int pubKeyId)
+        {
+            var publicKey = GetPublicKeyFor(pubKeyId);
+            return !publicKey.Invalid && Verify(data, publicKey.PublicKey);
+        }
+
         /// <summary>
         /// Verifies that the SignedData object is valid with the provided publicKey
         /// </summary>
