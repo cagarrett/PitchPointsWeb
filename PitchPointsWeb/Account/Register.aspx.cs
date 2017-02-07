@@ -61,6 +61,7 @@ namespace PitchPointsWeb.Account
             if (WaiverSigned.SelectedValue.Equals("No"))
             {
                 Response.Write(redirect);
+                validRegister.Success = false;
             }
 
             if (validRegister.Success)

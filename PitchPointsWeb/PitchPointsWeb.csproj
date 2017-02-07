@@ -459,6 +459,7 @@
     <Compile Include="Models\CompetitionDetails.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\LoggedClimb.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\UpdateableData.cs" />
     <Compile Include="Models\User.cs" />
