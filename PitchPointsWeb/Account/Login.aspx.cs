@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.API;
 
 namespace PitchPointsWeb.Account
 {
@@ -15,7 +16,7 @@ namespace PitchPointsWeb.Account
             RegisterHyperLink.NavigateUrl = "Register";
             // Enable this once you have account confirmation enabled for password reset functionality
             //ForgotPasswordHyperLink.NavigateUrl = "Forgot";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
+            //OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
             var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
             if (!String.IsNullOrEmpty(returnUrl))
             {
@@ -23,9 +24,39 @@ namespace PitchPointsWeb.Account
             }
         }
 
+        private void writeCookies(PrivateKeyInfo info)
+        {
+            HttpCookie privateKeyString = new HttpCookie("PrivateKeyId");
+            HttpCookie publicKeyString = new HttpCookie("PublicKeyId");
+
+            // Set the cookie value.
+            privateKeyString.Value = info.KeyAsBase64();
+            publicKeyString.Value = info.PublicKeyId.ToString();
+
+            // Set the cookie expiration date.
+            //DateTime now = DateTime.Now;
+            //privateKeyString.Expires = now.AddYears(50); // For a cookie to effectively never expire
+
+            // Add the cookie.
+            Response.Cookies.Add(privateKeyString);
+            Response.Cookies.Add(publicKeyString);
+        }
+
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            var validLogin = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
+
+            if(validLogin.Success)
+            {
+                writeCookies(validLogin.PrivateKey);
+                var controller = new AccountController();
+                var login = new LoginAPIUser();
+                Response.Redirect("Default.aspx");
+            } else
+            if(validLogin.ErrorMessage == "Incorrect password") {
+                Response.Write("The password you entered is inccorect.");
+            }
+            /*if (IsValid)
             {
                 // Validate the user password
                 var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -35,9 +66,13 @@ namespace PitchPointsWeb.Account
                 // To enable password failures to trigger lockout, change to shouldLockout: true
                 var result = signinManager.PasswordSignIn(Email.Text, Password.Text, RememberMe.Checked, shouldLockout: false);
 
+                var controller = new API.AccountController();
+                var login = new LoginAPIUser();
+
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        controller.InternalLogin(login);
                         IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
                         break;
                     case SignInStatus.LockedOut:
@@ -54,8 +89,7 @@ namespace PitchPointsWeb.Account
                         FailureText.Text = "Invalid login attempt";
                         ErrorMessage.Visible = true;
                         break;
-                }
-            }
+                }*/
         }
     }
 }

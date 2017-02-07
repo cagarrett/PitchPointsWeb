@@ -1,4 +1,4 @@
-/*!
+container/*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
  * Copyright 2011-2016 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -276,7 +276,6 @@ th {
   line-height: 1;
 
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 .glyphicon-asterisk:before {
   content: "\002a";
@@ -1366,6 +1365,8 @@ a.text-warning:focus {
 }
 .text-danger {
   color: #a94442;
+    margin-left: 8px;
+    margin-top: 2px;
 }
 a.text-danger:hover,
 a.text-danger:focus {
@@ -1617,6 +1618,9 @@ pre code {
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+  top: 16px;
+  left: 2px;
+  height: 50px;
 }
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
   float: left;
@@ -1966,7 +1970,7 @@ pre code {
   .col-md-3 {
     width: 25%;
   }
-  .col-md-2 {
+  .col-md-2  {
     width: 16.66666667%;
   }
   .col-md-1 {
@@ -4093,6 +4097,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-pills > li + li {
   margin-left: 2px;
 }
+.nav .nav-pills .nav-justified
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
@@ -4115,6 +4120,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-justified > li > a {
   margin-bottom: 5px;
   text-align: center;
+    top: -42px;
+    left: -4px;
 }
 .nav-justified > .dropdown .dropdown-menu {
   top: auto;
@@ -5152,8 +5159,7 @@ a.thumbnail.active {
   background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
   background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
   background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-  -webkit-background-size: 40px 40px;
-          background-size: 40px 40px;
+  background-size: 40px 40px;
 }
 .progress.active .progress-bar,
 .progress-bar.active {
@@ -5456,7 +5462,7 @@ button.list-group-item-danger.active:focus {
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }
 .panel-body {
-  padding: 15px;
+  padding: 0px;
 }
 .panel-heading {
   padding: 10px 15px;
@@ -5467,6 +5473,7 @@ button.list-group-item-danger.active:focus {
 .panel-heading > .dropdown .dropdown-toggle {
   color: inherit;
 }
+
 .panel-title {
   margin-top: 0;
   margin-bottom: 0;
@@ -6233,7 +6240,28 @@ button.close {
   content: " ";
   border-right-width: 0;
   border-left-color: #fff;
-}
+}o
+lontal dd:after,
+.container:before,
+.container:after,
+.container-fluid:before,
+.container-fluid:after,
+.row:before,
+.row:after,
+.form-horizontal .form-group:before,
+.form-horizontal .form-group:after,
+.btn-toolbar:before,
+.btn-toolbar:after,
+.btn-group-vertical > .btn-group:before,
+.btn-group-vertical > .btn-group:after,
+.nav:before,
+.nav:after,
+.navbar:before,
+.navbar:after,
+.navbar-header:before,
+.navbar-header:after,
+.navbar-coll
+
 .carousel {
   position: relative;
 }

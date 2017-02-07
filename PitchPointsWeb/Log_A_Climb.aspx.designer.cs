@@ -10,51 +10,48 @@
 namespace PitchPointsWeb {
     
     
-    public partial class Contact {
+    public partial class Log_A_Climb {
         
         /// <summary>
-        /// FName control.
+
+        /// ClimberID control.
+
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FName;
+
+        protected global::System.Web.UI.WebControls.TextBox ClimberID;
+
         
         /// <summary>
-        /// LName control.
+        /// Witness control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LName;
+        protected global::System.Web.UI.WebControls.TextBox Witness;
         
         /// <summary>
-        /// Subject control.
+        /// RouteClimbed control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Subject;
+        protected global::System.Web.UI.WebControls.TextBox RouteClimbed;
         
         /// <summary>
-        /// Message control.
+
+        /// numberOfFalls control.
+
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Message;
-        
-        /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
+        protected global::System.Web.UI.WebControls.TextBox numberOfFalls;
     }
 }
