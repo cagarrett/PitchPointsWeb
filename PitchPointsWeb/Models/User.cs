@@ -93,11 +93,7 @@ namespace PitchPointsWeb.Models
 
         private static readonly int MAX_SALT_LENGTH = 16;
 
-        private static readonly int HASH_LEGNTH = 64;
-
         private static readonly int PASSWORD_ITERATIONS = 1024;
-
-        private static readonly int NUMBER_OF_BYTES = 64;
 
         /// <summary>
         /// Generates a random salt of max length supported in the User table database
