@@ -55,9 +55,8 @@ namespace PitchPointsWeb.API
         /// <returns>true if the Signature and Data within SignedData matches the publicKey digest</returns>
         public static bool Verify(SignedData data, byte[] publicKey)
         {
-            var encoder = new ASCIIEncoding();
             var signer = SignerUtilities.GetSigner(SIGNER_METHOD);
-            var inputData = encoder.GetBytes(data.Data);
+            var inputData = new ASCIIEncoding().GetBytes(data.Data);
             var domain = GetECDomain();
             var point = domain.Curve.DecodePoint(publicKey);
             signer.Init(false, new ECPublicKeyParameters(point, domain));
@@ -74,10 +73,8 @@ namespace PitchPointsWeb.API
         {
             var signer = SignerUtilities.GetSigner(SIGNER_METHOD);
             var privKey = new BigInteger(Convert.FromBase64String(privateKey));
-            var privKeyParam = new ECPrivateKeyParameters(privKey, GetECDomain());
-            var encoder = new ASCIIEncoding();
-            var inputData = encoder.GetBytes(data);
-            signer.Init(true, privKeyParam);
+            var inputData = new ASCIIEncoding().GetBytes(data);
+            signer.Init(true, new ECPrivateKeyParameters(privKey, GetECDomain()));
             signer.BlockUpdate(inputData, 0, inputData.Length);
             return BytesToHexString(signer.GenerateSignature());
         }
