@@ -33,6 +33,27 @@ namespace PitchPointsWeb.API
             return CreateJsonResponse(response);
         }
 
+        public class TestSign
+        {
+            public string Data { get; set; }
+            public string Key { get; set; }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage Sign([FromBody] TestSign data)
+        {
+            return CreateJsonResponse(AccountVerifier.Sign(data.Data, data.Key));
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage Verify([FromBody] SignedData data)
+        {
+            var pubKey = GetPublicKeyFor(data.PublicKeyID);
+            return CreateJsonResponse(AccountVerifier.Verify(data, pubKey.PublicKey));
+        }
+
         /// <summary>
         /// Internally registers a user in the database.
         /// </summary>
@@ -93,6 +114,7 @@ namespace PitchPointsWeb.API
         {
             LoginAccountResponse response = new LoginAccountResponse();
             var databaseUser = GetUserFrom(user.Email);
+            Debug.WriteLine(databaseUser);
             if (databaseUser != null)
             {
                 var connection = GetConnection();
