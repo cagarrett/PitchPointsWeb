@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
+using System.Diagnostics;
 
 namespace PitchPointsWeb.Account
 {
@@ -49,44 +50,33 @@ namespace PitchPointsWeb.Account
 
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            var controller = new AccountController();
-            var register = new RegisterAPIUser();
-            var manager = Context.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
-            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
-            string redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
-            IdentityResult result = manager.Create(user, Password.Text);
-            var validRegister = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
-
             if (WaiverSigned.SelectedValue.Equals("No"))
             {
+                string redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
                 Response.Write(redirect);
+                return;
             }
-
+            var controller = new AccountController();
+            var register = new RegisterAPIUser();
+            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
+            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
+            var registerModel = new RegisterAPIUser
+            {
+                Email = Email.Text,
+                Password = Password.Text,
+                FirstName = FName.Text,
+                LastName = LName.Text,
+                DateOfBirth = DateTime.Parse(DOB.Text)
+            };
+            var validRegister = new AccountController().InternalRegister(registerModel);
             if (validRegister.Success)
             {
                 writeCookies(validRegister.PrivateKey);
-                Response.Redirect("Default.aspx");
+                Response.Redirect("../Default.aspx");
             }
             else
             {
 
-            }
-
-            if (result.Succeeded)
-            {
-                // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                //string code = manager.GenerateEmailConfirmationToken(user.Id);
-                //string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
-                //manager.SendEmail(user.Id, "Confirm your Pitch Points account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>.");
-                //controller.InternalRegister(register);
-                //writeCookies();
-                signInManager.SignIn( user, isPersistent: false, rememberBrowser: false);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            }
-            else 
-            {
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
             }
         }
     }
