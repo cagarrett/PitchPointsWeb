@@ -46,14 +46,13 @@ namespace PitchPointsWeb.Account
         {
             var validLogin = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
 
-            if(validLogin.Success)
+            if (validLogin.Success)
             {
                 writeCookies(validLogin.PrivateKey);
                 var controller = new AccountController();
                 var login = new LoginAPIUser();
-                Response.Redirect("Default.aspx");
-            } else
-            if(validLogin.ErrorMessage == "Incorrect password") {
+                Response.Redirect("../Default.aspx");
+            } else if (validLogin.ErrorMessage == "Incorrect password") {
                 Response.Write("The password you entered is inccorect.");
             }
             /*if (IsValid)
