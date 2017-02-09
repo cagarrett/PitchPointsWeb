@@ -120,7 +120,7 @@ namespace PitchPointsWeb.Models
             byte[] hash;
             using (var crypto = new Rfc2898DeriveBytes(password, salt, PASSWORD_ITERATIONS))
             {
-                hash = crypto.GetBytes(20);
+                hash = crypto.GetBytes(64);
             }
             return hash;
         }
