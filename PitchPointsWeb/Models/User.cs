@@ -93,11 +93,7 @@ namespace PitchPointsWeb.Models
 
         private static readonly int MAX_SALT_LENGTH = 16;
 
-        private static readonly int HASH_LEGNTH = 64;
-
         private static readonly int PASSWORD_ITERATIONS = 1024;
-
-        private static readonly int NUMBER_OF_BYTES = 64;
 
         /// <summary>
         /// Generates a random salt of max length supported in the User table database
@@ -124,7 +120,7 @@ namespace PitchPointsWeb.Models
             byte[] hash;
             using (var crypto = new Rfc2898DeriveBytes(password, salt, PASSWORD_ITERATIONS))
             {
-                hash = crypto.GetBytes(20);
+                hash = crypto.GetBytes(64);
             }
             return hash;
         }
