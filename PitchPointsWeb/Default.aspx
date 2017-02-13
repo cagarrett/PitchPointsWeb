@@ -10,8 +10,14 @@
             <div class="carousel-inner">
                 <div class="item active">
                     <div class="panel-body">
-                        <asp:GridView ID="GridView1" runat="server">
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1">
+                            <Columns>
+                                <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                                <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
+                                <asp:BoundField DataField="CompetitionID" HeaderText="CompetitionID" SortExpression="CompetitionID" />
+                            </Columns>
                         </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsMainConnectionString %>" SelectCommand="SELECT * FROM [Climber]"></asp:SqlDataSource>
                     </div>
                     <div class="carousel-caption">
                         <h3>Beginner</h3>
@@ -23,7 +29,12 @@
                 <!-- End Item -->
                 <div class="item">
                     <div class="panel-body">
-                       <asp:GridView ID="GridView2" runat="server">
+                       <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1">
+                           <Columns>
+                               <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                               <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
+                               <asp:BoundField DataField="CompetitionID" HeaderText="CompetitionID" SortExpression="CompetitionID" />
+                           </Columns>
                        </asp:GridView>
                     </div>
                     <div class="carousel-caption">
