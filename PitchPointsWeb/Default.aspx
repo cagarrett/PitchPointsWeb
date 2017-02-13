@@ -48,8 +48,13 @@
                 <div class="item">
                     <!--<img src="Assets/carousel_background.jpg">-->
                     <div class="panel-body">
-                        <asp:GridView ID="GridView3" runat="server">
-                        </asp:GridView>
+                        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1">
+                           <Columns>
+                               <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                               <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
+                               <asp:BoundField DataField="CompetitionID" HeaderText="CompetitionID" SortExpression="CompetitionID" />
+                           </Columns>
+                       </asp:GridView>
                     </div>
                     <div class="carousel-caption">
                         <h3>Advanced</h3>
@@ -62,8 +67,13 @@
                 <div class="item">
                     <!--<img src="Assets/carousel_background.jpg">-->
                     <div class="panel-body">
-                        <asp:GridView ID="GridView4" runat="server">
-                        </asp:GridView>
+                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" DataKeyNames="Id" DataSourceID="SqlDataSource1">
+                           <Columns>
+                               <asp:BoundField DataField="Id" HeaderText="Id" InsertVisible="False" ReadOnly="True" SortExpression="Id" />
+                               <asp:BoundField DataField="UserID" HeaderText="UserID" SortExpression="UserID" />
+                               <asp:BoundField DataField="CompetitionID" HeaderText="CompetitionID" SortExpression="CompetitionID" />
+                           </Columns>
+                       </asp:GridView>
                     </div>
                     <div class="carousel-caption">
                         <h3>Open</h3>
