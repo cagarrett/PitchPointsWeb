@@ -16,7 +16,7 @@
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Witness" CssClass="col-md-2 control-label">Witness</asp:Label>
             <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Witness" CssClass="form-control" TextMode="SingleLine" />
+                <asp:TextBox runat="server" ID="Witness" CssClass="form-control" TextMode="Number" Width="57px" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Witness"
                     CssClass="text-danger" ErrorMessage="The witness field is required." />
             </div>
