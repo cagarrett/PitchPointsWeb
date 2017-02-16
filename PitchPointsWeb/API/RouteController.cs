@@ -24,9 +24,9 @@ namespace PitchPointsWeb.API
             try
             {
                 response = InsertClimb(route);
-            } catch (SqlException)
+            } catch (Exception e)
             {
-                return GetUnavailableMessage();
+                return CreateJsonResponse("Error", HttpStatusCode.InternalServerError);
             }
             return CreateJsonResponse(response);
         }
@@ -35,7 +35,7 @@ namespace PitchPointsWeb.API
         {
             var connection = GetConnection();
             connection.Open();
-            var success = false;
+            var success = true;
             var message = "";
             using (var command = new SqlCommand("InsertLoggedClimb", connection))
             {
@@ -44,7 +44,14 @@ namespace PitchPointsWeb.API
                 command.Parameters.AddWithValue("@falls", logClimb.falls);
                 command.Parameters.AddWithValue("@climberId", logClimb.climberId);
                 command.Parameters.AddWithValue("@witnessId", logClimb.witnessId);
-                command.ExecuteNonQuery();
+                try
+                {
+                    command.ExecuteNonQuery();
+                } catch (SqlException)
+                {
+                    success = false;
+                    message = "Error logging climb";
+                }
             }
             connection.Close();
             return new InsertClimbResult()

@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Mail;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
+using System.Diagnostics;
 
 namespace PitchPointsWeb
 {
@@ -64,14 +65,10 @@ namespace PitchPointsWeb
                 routeId = Convert.ToInt32(RouteClimbed.Text),
                 falls = Convert.ToInt32(numberOfFalls.Text),
             };
-            var validInsert = controller.InsertClimb(logClimbModel);
-            if (validInsert.Success)
+            var result = controller.InsertClimb(logClimbModel);
+            if (result.Success)
             {
-                Response.Redirect("../Default.aspx");
-            }
-            else
-            {
-
+                Response.Redirect("Default.aspx");
             }
         }
     }
