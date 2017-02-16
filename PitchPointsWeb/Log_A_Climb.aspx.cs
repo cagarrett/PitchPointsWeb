@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Net;
 using System.Net.Mail;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.API;
 
 namespace PitchPointsWeb
 {
@@ -54,7 +55,24 @@ namespace PitchPointsWeb
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            var controller = new RouteController();
+            var logClimb = new LoggedClimbModel();
+            var logClimbModel = new LoggedClimbModel
+            {
+                climberId = Convert.ToInt32(ClimberID.Text),
+                witnessId = Convert.ToInt32(Witness.Text),
+                routeId = Convert.ToInt32(RouteClimbed.Text),
+                falls = Convert.ToInt32(numberOfFalls.Text),
+            };
+            var validInsert = controller.InsertClimb(logClimbModel);
+            if (validInsert.Success)
+            {
+                Response.Redirect("../Default.aspx");
+            }
+            else
+            {
 
+            }
         }
     }
 }
