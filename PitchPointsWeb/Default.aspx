@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PitchPointsWeb._Default" %>
+<%@ OutputCache duration="300" varybyparam="time" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -235,10 +236,10 @@
             </div>
             <!-- End Carousel Inner -->
             <ul class="nav nav-pills nav-justified">
-                <li data-target="#leaderboardCarousel" data-slide-to="0" class="active"><a href="#">Beginner</a></li>
-                <li data-target="#leaderboardCarousel" data-slide-to="1" class="active"><a href="#">Intermediate</a></li>
-                <li data-target="#leaderboardCarousel" data-slide-to="2" class="active"><a href="#">Advanced</a></li>
-                <li data-target="#leaderboardCarousel" data-slide-to="3" class="active"><a href="#">Open</a></li>
+                <li data-target="#leaderboardCarousel" data-slide-to="0" class="active"><a href="?time=300">Beginner</a></li>
+                <li data-target="#leaderboardCarousel" data-slide-to="1" class="active"><a href="?time=300">Intermediate</a></li>
+                <li data-target="#leaderboardCarousel" data-slide-to="2" class="active"><a href="?time=300">Advanced</a></li>
+                <li data-target="#leaderboardCarousel" data-slide-to="3" class="active"><a href="?time=300">Open</a></li>
             </ul>
         </div>
         <!-- End Carousel -->
