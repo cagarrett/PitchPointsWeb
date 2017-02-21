@@ -454,7 +454,7 @@
     </Compile>
     <Compile Include="Models\AccountControllerModels.cs" />
     <Compile Include="Models\APIModels.cs" />
-    <Compile Include="Models\AuthenticationModel.cs" />
+    <Compile Include="Models\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\CompetitionDetails.cs" />
     <Compile Include="Models\IdentityModels.cs" />
