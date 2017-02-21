@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PitchPointsWeb.API;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -28,6 +29,18 @@ namespace PitchPointsWeb.Models
         {
 
         }
+
+        public bool IsValid()
+        {
+            return AccountVerifier.InternalVerify(this);
+        }
+
+    }
+
+    public class SignedUserCompetitionModel : SignedData
+    {
+
+        public int UserID { get; set; }
 
     }
 

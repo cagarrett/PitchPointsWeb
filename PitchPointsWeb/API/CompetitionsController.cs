@@ -14,17 +14,34 @@ namespace PitchPointsWeb.API
 
         public HttpResponseMessage Get()
         {
+            return GetCompetitionsFor(0);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage Get(SignedUserCompetitionModel data)
+        {
+            if (data.IsValid())
+            {
+                return GetCompetitionsFor(data.UserID);
+            }
+            return GetBadAuthRequest();
+        }
+
+        private HttpResponseMessage GetCompetitionsFor(int userId)
+        {
             var connection = GetConnection();
             try
             {
                 connection.Open();
-            } catch
+            }
+            catch
             {
                 return GetUnavailableMessage();
             }
             var data = new List<Competition>();
             using (var command = new SqlCommand("GetActiveCompetitions", connection))
             {
+                command.Parameters.AddWithValue("@userId", userId);
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -34,9 +51,7 @@ namespace PitchPointsWeb.API
                 reader.Close();
             }
             connection.Close();
-            var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            response.Content = new ObjectContent<List<Competition>>(data, new JsonMediaTypeFormatter(), "application/json");
-            return response;
+            return CreateJsonResponse(data);
         }
 
         private Competition readCompetition(SqlDataReader reader)
