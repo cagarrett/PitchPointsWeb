@@ -295,7 +295,7 @@ namespace PitchPointsWeb.API
             connection.Close();
             return new PrivateKeyInfo()
             {
-                PrivateKey = pair.Item2,
+                PrivateKey = Convert.ToBase64String(pair.Item2, options: Base64FormattingOptions.None),
                 PublicKeyId = id
             };
         }
