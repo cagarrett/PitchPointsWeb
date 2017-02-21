@@ -37,6 +37,8 @@ namespace PitchPointsWeb.Models
 
         public int PublicKeyId { get; set; }
 
+        public string Username { get; set; }
+
         public PrivateKeyInfo()
         {
 

@@ -4,7 +4,6 @@ using System.Web;
 using System.Web.UI;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Owin;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
 using System.Diagnostics;
@@ -17,10 +16,12 @@ namespace PitchPointsWeb.Account
         {
             HttpCookie privateKeyString = new HttpCookie("PrivateKeyId");
             HttpCookie publicKeyString = new HttpCookie("PublicKeyId");
+            HttpCookie username = new HttpCookie("Username");
 
             // Set the cookie value.
             privateKeyString.Value = info.PrivateKey;
             publicKeyString.Value = info.PublicKeyId.ToString();
+            username.Value = FName.Text;
 
             // Set the cookie expiration date.
             //DateTime now = DateTime.Now;
@@ -29,12 +30,14 @@ namespace PitchPointsWeb.Account
             // Add the cookie.
             Response.Cookies.Add(privateKeyString);
             Response.Cookies.Add(publicKeyString);
+            Response.Cookies.Add(username);
         }
 
-        private void readCookies(PrivateKeyInfo info)
+        public void readCookies()
         {
             HttpCookie privateKeyCookie = Request.Cookies["PrivateKeyId"];
             HttpCookie publicKeyCookie = Request.Cookies["PublicKeyCookie"];
+            HttpCookie username = Request.Cookies["Username"];
 
             // Read the cookie information and display it.
             if (privateKeyCookie != null)
@@ -44,6 +47,11 @@ namespace PitchPointsWeb.Account
 
             if (publicKeyCookie != null)
                 Response.Write("<p>" + publicKeyCookie.Name + "<p>" + publicKeyCookie.Value);
+            else
+                Response.Write("not found");
+
+            if (username != null)
+                Response.Write("<p>" + username.Name + "<p>" + username.Value);
             else
                 Response.Write("not found");
         }
