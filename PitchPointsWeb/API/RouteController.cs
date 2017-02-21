@@ -10,11 +10,65 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using PitchPointsWeb.Models;
 using static PitchPointsWeb.API.APICommon;
+using System.Diagnostics;
 
 namespace PitchPointsWeb.API
 {
     public class RouteController : ApiController
     {
+        [AllowAnonymous]
+        [HttpPost]
+        public HttpResponseMessage LogClimb([FromBody] LoggedClimbModel route)
+        {
+            InsertClimbResult? response = null;
+            try
+            {
+                response = InsertClimb(route);
+            } catch (Exception e)
+            {
+                return CreateJsonResponse("Error", HttpStatusCode.InternalServerError);
+            }
+            return CreateJsonResponse(response);
+        }
+
+        internal InsertClimbResult InsertClimb(LoggedClimbModel logClimb)
+        {
+            var connection = GetConnection();
+            connection.Open();
+            var success = true;
+            var message = "";
+            using (var command = new SqlCommand("InsertLoggedClimb", connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@routeId", logClimb.routeId);
+                command.Parameters.AddWithValue("@falls", logClimb.falls);
+                command.Parameters.AddWithValue("@climberId", logClimb.climberId);
+                command.Parameters.AddWithValue("@witnessId", logClimb.witnessId);
+                try
+                {
+                    command.ExecuteNonQuery();
+                } catch (SqlException)
+                {
+                    success = false;
+                    message = "Error logging climb";
+                }
+            }
+            connection.Close();
+            return new InsertClimbResult()
+            {
+                Success = success,
+                ErrorMessage = message
+            };
+        }
+
+        public struct InsertClimbResult
+        {
+
+            public bool Success;
+
+            public string ErrorMessage;
+
+        }
 
         public HttpResponseMessage GetRoute(int id)
         {

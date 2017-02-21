@@ -30,7 +30,7 @@ namespace PitchPointsWeb.Account
             HttpCookie publicKeyString = new HttpCookie("PublicKeyId");
 
             // Set the cookie value.
-            privateKeyString.Value = info.KeyAsBase64();
+            privateKeyString.Value = info.PrivateKey;
             publicKeyString.Value = info.PublicKeyId.ToString();
 
             // Set the cookie expiration date.
@@ -51,6 +51,7 @@ namespace PitchPointsWeb.Account
                 writeCookies(validLogin.PrivateKey);
                 var controller = new AccountController();
                 var login = new LoginAPIUser();
+                Session["Username"] = Email.Text;
                 Response.Redirect("../Default.aspx");
             } else if (validLogin.ErrorMessage == "Incorrect password") {
                 Response.Write("The password you entered is inccorect.");

@@ -33,18 +33,15 @@ namespace PitchPointsWeb.Models
     public class PrivateKeyInfo
     {
 
-        public byte[] PrivateKey { get; set; }
+        public string PrivateKey { get; set; }
 
         public int PublicKeyId { get; set; }
+
+        public string Username { get; set; }
 
         public PrivateKeyInfo()
         {
 
-        }
-
-        public string KeyAsBase64()
-        {
-            return Convert.ToBase64String(this.PrivateKey);
         }
 
     }

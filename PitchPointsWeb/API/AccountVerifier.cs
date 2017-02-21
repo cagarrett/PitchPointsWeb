@@ -25,7 +25,8 @@ namespace PitchPointsWeb.API
 
         public static PublicKeyUserModel GetPublicKeyFor(int pubKeyId)
         {
-            PublicKeyUserModel model = null;
+            PublicKeyUserModel model = new PublicKeyUserModel();
+            model.Invalid = true;
             var connection = APICommon.GetConnection();
             connection.Open();
             using (var command = new SqlCommand("GetPublicKeyForUser", connection))
@@ -36,7 +37,6 @@ namespace PitchPointsWeb.API
                 if (reader.HasRows)
                 {
                     reader.Read();
-                    model = new PublicKeyUserModel();
                     model.PublicKey = APICommon.readObject(reader, "PublicKey", new byte[] { });
                     model.ExpiryDate = APICommon.readObject(reader, "ExpiryDate", DateTime.Now);
                     model.Invalid = APICommon.readObject(reader, "Invalid", (byte)0) == 1;
@@ -49,8 +49,7 @@ namespace PitchPointsWeb.API
 
         internal static bool InternalVerify(SignedData data, int pubKeyId)
         {
-            var publicKey = GetPublicKeyFor(pubKeyId);
-            return !publicKey.Invalid && Verify(data, publicKey.PublicKey);
+            return Verify(data, GetPublicKeyFor(pubKeyId));
         }
 
         /// <summary>
@@ -59,12 +58,13 @@ namespace PitchPointsWeb.API
         /// <param name="data">SignedData received from an API call</param>
         /// <param name="publicKey">The public key used to verify data</param>
         /// <returns>true if the Signature and Data within SignedData matches the publicKey digest</returns>
-        public static bool Verify(SignedData data, byte[] publicKey)
+        public static bool Verify(SignedData data, PublicKeyUserModel publicKey)
         {
+            if (publicKey == null || publicKey.Invalid) return false;
             var signer = SignerUtilities.GetSigner(SIGNER_METHOD);
             var inputData = new ASCIIEncoding().GetBytes(data.Data);
             var domain = GetECDomain();
-            var point = domain.Curve.DecodePoint(publicKey);
+            var point = domain.Curve.DecodePoint(publicKey.PublicKey);
             signer.Init(false, new ECPublicKeyParameters(point, domain));
             signer.BlockUpdate(inputData, 0, inputData.Length);
             return signer.VerifySignature(StringToByteArray(data.Signature));
