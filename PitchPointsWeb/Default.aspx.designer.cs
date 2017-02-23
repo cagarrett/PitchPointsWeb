@@ -13,48 +13,111 @@ namespace PitchPointsWeb {
     public partial class _Default {
         
         /// <summary>
-        /// GridView1 control.
+        /// BeginnerUpdateTimer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView1;
+        protected global::System.Web.UI.Timer BeginnerUpdateTimer;
         
         /// <summary>
-        /// SqlDataSource1 control.
+        /// BeginnerTimedPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+        protected global::System.Web.UI.UpdatePanel BeginnerTimedPanel;
         
         /// <summary>
-        /// GridView2 control.
+        /// BeginnerDateStampLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView2;
+        protected global::System.Web.UI.WebControls.Label BeginnerDateStampLabel;
         
         /// <summary>
-        /// GridView3 control.
+        /// IntermediateUpdateTimer control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView3;
+        protected global::System.Web.UI.Timer IntermediateUpdateTimer;
         
         /// <summary>
-        /// GridView4 control.
+        /// IntermediateUpdatePanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView4;
+        protected global::System.Web.UI.UpdatePanel IntermediateUpdatePanel;
+        
+        /// <summary>
+        /// IntermediateDateStampLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label IntermediateDateStampLabel;
+        
+        /// <summary>
+        /// AdvancedUpdateTimer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.Timer AdvancedUpdateTimer;
+        
+        /// <summary>
+        /// AdvancedUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel AdvancedUpdatePanel;
+        
+        /// <summary>
+        /// AdvancedDateStampLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label AdvancedDateStampLabel;
+        
+        /// <summary>
+        /// OpenUpdateTimer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.Timer OpenUpdateTimer;
+        
+        /// <summary>
+        /// OpenUpdatePanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel OpenUpdatePanel;
+        
+        /// <summary>
+        /// OpenDateStampLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OpenDateStampLabel;
     }
 }
