@@ -47,9 +47,9 @@ namespace PitchPointsWeb.API
             return model;
         }
 
-        internal static bool InternalVerify(SignedData data, int pubKeyId)
+        internal static bool InternalVerify(SignedData data)
         {
-            return Verify(data, GetPublicKeyFor(pubKeyId));
+            return Verify(data, GetPublicKeyFor(data.PublicKeyID));
         }
 
         /// <summary>

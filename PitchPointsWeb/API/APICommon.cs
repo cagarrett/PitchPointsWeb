@@ -37,6 +37,11 @@ namespace PitchPointsWeb.API
             return CreateJsonResponse(dict, HttpStatusCode.BadRequest);
         }
 
+        internal static HttpResponseMessage GetBadAuthRequest()
+        {
+            return CreateJsonResponse("Invalid credentials", HttpStatusCode.Unauthorized);
+        }
+
         /// <summary>
         /// Creates a simple Unavailable message
         /// </summary>
