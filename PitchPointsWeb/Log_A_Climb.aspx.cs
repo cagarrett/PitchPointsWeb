@@ -20,7 +20,7 @@ namespace PitchPointsWeb
             HttpCookie publicKeyString = new HttpCookie("PublicKeyId");
 
             // Set the cookie value.
-            privateKeyString.Value = info.KeyAsBase64();
+            privateKeyString.Value = info.PrivateKey;
             publicKeyString.Value = info.PublicKeyId.ToString();
 
             // Set the cookie expiration date.

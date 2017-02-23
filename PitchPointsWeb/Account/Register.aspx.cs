@@ -19,7 +19,7 @@ namespace PitchPointsWeb.Account
             HttpCookie username = new HttpCookie("Username");
 
             // Set the cookie value.
-            privateKeyString.Value = info.KeyAsBase64();
+            privateKeyString.Value = info.PrivateKey;
             publicKeyString.Value = info.PublicKeyId.ToString();
             username.Value = FName.Text;
 

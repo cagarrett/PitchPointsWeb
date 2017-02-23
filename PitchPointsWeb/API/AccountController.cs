@@ -33,25 +33,15 @@ namespace PitchPointsWeb.API
             return CreateJsonResponse(response);
         }
 
-        public class TestSign
+        public HttpResponseMessage IsUserValid([FromBody] int publicKeyId)
         {
-            public string Data { get; set; }
-            public string Key { get; set; }
+            return CreateJsonResponse(InternalIsUserValid(publicKeyId));
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public HttpResponseMessage Sign([FromBody] TestSign data)
+        internal bool InternalIsUserValid(int publicKeyId)
         {
-            return CreateJsonResponse(AccountVerifier.Sign(data.Data, data.Key));
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        public HttpResponseMessage Verify([FromBody] SignedData data)
-        {
-            var pubKey = GetPublicKeyFor(data.PublicKeyID);
-            return CreateJsonResponse(AccountVerifier.Verify(data, pubKey.PublicKey));
+            var model = GetPublicKeyFor(publicKeyId);
+            return model != null && !model.Invalid;
         }
 
         /// <summary>
@@ -305,7 +295,7 @@ namespace PitchPointsWeb.API
             connection.Close();
             return new PrivateKeyInfo()
             {
-                PrivateKey = pair.Item2,
+                PrivateKey = Convert.ToBase64String(pair.Item2, options: Base64FormattingOptions.None),
                 PublicKeyId = id
             };
         }
