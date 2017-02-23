@@ -52,7 +52,7 @@ namespace PitchPointsWeb.Account
                 var controller = new AccountController();
                 var login = new LoginAPIUser();
                 Session["Username"] = Email.Text;
-                Response.Redirect("../Default.aspx");
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             } else if (validLogin.ErrorMessage == "Incorrect password") {
                 Response.Write("The password you entered is inccorect.");
             }
