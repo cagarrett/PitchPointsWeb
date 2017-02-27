@@ -300,6 +300,7 @@
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +414,7 @@
     <Compile Include="API\APICommon.cs" />
     <Compile Include="API\Authenticator.cs" />
     <Compile Include="API\CompetitionsController.cs" />
+    <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\LoggedRouteController.cs" />
     <Compile Include="API\RouteController.cs" />
     <Compile Include="API\TestController.cs" />
@@ -454,6 +456,7 @@
     </Compile>
     <Compile Include="Models\AccountControllerModels.cs" />
     <Compile Include="Models\APIModels.cs" />
+    <Compile Include="Models\LeaderboardModels.cs" />
     <Compile Include="Models\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\CompetitionDetails.cs" />
