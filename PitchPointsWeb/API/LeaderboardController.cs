@@ -33,6 +33,7 @@ namespace PitchPointsWeb.API
                 command.Parameters.AddWithValue("@compId", request.CompetitionId);
                 var reader = command.ExecuteReader();
                 leaderboard = ReadLeaderboard(reader);
+                leaderboard.CompetitionId = request.CompetitionId;
                 reader.Close();
             }
             connection.Close();
@@ -54,7 +55,6 @@ namespace PitchPointsWeb.API
         private LeaderboardEntry ReadLeaderboardEntry(SqlDataReader reader)
         {
             var entry = new LeaderboardEntry();
-            entry.CompetitionId = readObject(reader, "CompetitionId", 0);
             entry.CategoryId = readObject(reader, "CategoryId", 0);
             entry.UserId = readObject(reader, "UserId", 0);
             entry.Gender = readObject(reader, "Gender", false);

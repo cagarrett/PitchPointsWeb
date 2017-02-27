@@ -8,8 +8,6 @@ namespace PitchPointsWeb.Models
     public class LeaderboardEntry
     {
 
-        public int CompetitionId { get; set; }
-
         public int CategoryId { get; set; }
 
         public int UserId { get; set; }
@@ -28,6 +26,8 @@ namespace PitchPointsWeb.Models
 
     public class Leaderboard
     {
+
+        public int CompetitionId { get; set; }
 
         public List<LeaderboardEntry> Entries { get; set; }
 
