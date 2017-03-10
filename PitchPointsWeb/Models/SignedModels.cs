@@ -37,7 +37,7 @@ namespace PitchPointsWeb.Models
 
     }
 
-    public class SignedUserCompetitionModel : SignedData
+    public class UserIDSignedData : SignedData
     {
 
         public int UserID { get; set; }
