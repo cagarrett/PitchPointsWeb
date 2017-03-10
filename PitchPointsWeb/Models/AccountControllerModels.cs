@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
-namespace PitchPointsWeb.Models
+1namespace PitchPointsWeb.Models
 {
 
     public class RegisterAccountResponse : PrivateAPIResponse
@@ -27,6 +24,19 @@ namespace PitchPointsWeb.Models
         {
 
         }
+
+    }
+
+    public class UserSnapshot
+    {
+
+        public int Points { get; set; }
+
+        public int Falls { get; set; }
+
+        public int ParticipatedCompetitions { get; set; }
+
+        public List<Competition> UpcomingCompetitions { get; set; }
 
     }
 
