@@ -13,7 +13,7 @@ namespace PitchPointsWeb.Account {
     public partial class Register {
         
         /// <summary>
-        /// ErrorMessage control.
+        /// ResponseMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

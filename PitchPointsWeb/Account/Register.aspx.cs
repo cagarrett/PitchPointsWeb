@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
 using System.Diagnostics;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.Account
 {
@@ -65,10 +66,9 @@ namespace PitchPointsWeb.Account
                 return;
             }
             var controller = new AccountController();
-            var register = new RegisterAPIUser();
             var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
             var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
-            var registerModel = new RegisterAPIUser
+            var registerModel = new RegisterModel
             {
                 Email = Email.Text,
                 Password = Password.Text,

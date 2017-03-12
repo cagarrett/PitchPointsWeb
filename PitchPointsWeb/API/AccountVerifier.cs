@@ -1,16 +1,13 @@
 ﻿using Org.BouncyCastle.Asn1.Sec;
-using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Generators;
 using Org.BouncyCastle.Crypto.Parameters;
 using Org.BouncyCastle.Math;
 using Org.BouncyCastle.Security;
-using PitchPointsWeb.Models;
+using PitchPointsWeb.Models.API;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Web;
 
 namespace PitchPointsWeb.API
 {
@@ -47,7 +44,7 @@ namespace PitchPointsWeb.API
             return model;
         }
 
-        internal static bool InternalVerify(SignedData data)
+        public static bool Verify(SignedData data)
         {
             return Verify(data, GetPublicKeyFor(data.PublicKeyID));
         }

@@ -2,72 +2,56 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
 using System.Web.Http;
 using PitchPointsWeb.Models;
-using static PitchPointsWeb.API.APICommon;
-using System.Diagnostics;
+using PitchPointsWeb.Models.API;
+using PitchPointsWeb.Models.API.Response;
 
 namespace PitchPointsWeb.API
 {
-    public class RouteController : ApiController
+    public class RouteController : MasterController
     {
         [AllowAnonymous]
         [HttpPost]
         public HttpResponseMessage LogClimb([FromBody] LoggedClimbModel route)
         {
-            InsertClimbResult? response = null;
+            return CreateJsonResponse(InsertClimb(route));
+        }
+
+        internal PrivateAPIResponse InsertClimb(LoggedClimbModel logClimb)
+        {
+            var response = new PrivateAPIResponse();
             try
             {
-                response = InsertClimb(route);
-            } catch (Exception e)
-            {
-                return CreateJsonResponse("Error", HttpStatusCode.InternalServerError);
-            }
-            return CreateJsonResponse(response);
-        }
-
-        internal InsertClimbResult InsertClimb(LoggedClimbModel logClimb)
-        {
-            var connection = GetConnection();
-            connection.Open();
-            var success = true;
-            var message = "";
-            using (var command = new SqlCommand("InsertLoggedClimb", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@routeId", logClimb.routeId);
-                command.Parameters.AddWithValue("@falls", logClimb.falls);
-                command.Parameters.AddWithValue("@climberId", logClimb.climberId);
-                command.Parameters.AddWithValue("@witnessId", logClimb.witnessId);
-                try
+                using (var connection = GetConnection())
                 {
-                    command.ExecuteNonQuery();
-                } catch (SqlException)
-                {
-                    success = false;
-                    message = "Error logging climb";
+                    connection.Open();
+                    using (var command = new SqlCommand("InsertLoggedClimb", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@routeId", logClimb.routeId);
+                        command.Parameters.AddWithValue("@falls", logClimb.falls);
+                        command.Parameters.AddWithValue("@climberId", logClimb.climberId);
+                        command.Parameters.AddWithValue("@witnessId", logClimb.witnessId);
+                        var outputCode = new SqlParameter("@errorCode", SqlDbType.Int);
+                        outputCode.Direction = ParameterDirection.Output;
+                        command.Parameters.Add(outputCode);
+                        command.ExecuteNonQuery();
+                        if (outputCode.Value is int)
+                        {
+                            response.APIResponseCode = (APIResponseCode)outputCode.Value;
+                        }
+                    }
                 }
             }
-            connection.Close();
-            return new InsertClimbResult()
+            catch
             {
-                Success = success,
-                ErrorMessage = message
-            };
-        }
-
-        public struct InsertClimbResult
-        {
-
-            public bool Success;
-
-            public string ErrorMessage;
-
+                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+            }
+            return response;
         }
 
         public HttpResponseMessage GetRoute(int id)
@@ -96,9 +80,9 @@ namespace PitchPointsWeb.API
             using (var command = new SqlCommand("GetRouteInformation", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                SqlParameter errorCode = new SqlParameter("@ErrorCode", SqlDbType.Int);
+                SqlParameter errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int);
                 errorCode.Direction = ParameterDirection.Output;
-                SqlParameter errorMessage = new SqlParameter("@ErrorMessage", SqlDbType.NVarChar, 200);
+                SqlParameter errorMessage = new SqlParameter("@ResponseMessage", SqlDbType.NVarChar, 200);
                 errorMessage.Direction = ParameterDirection.Output;
                 command.Parameters.Add(errorCode);
                 command.Parameters.Add(errorMessage);

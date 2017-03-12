@@ -9,6 +9,7 @@ using System.Net.Mail;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
 using System.Diagnostics;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb
 {

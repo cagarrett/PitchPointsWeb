@@ -1,10 +1,6 @@
 ﻿using PitchPointsWeb.API;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace PitchPointsWeb.Models
+namespace PitchPointsWeb.Models.API
 {
 
     public class SignedData
@@ -32,7 +28,7 @@ namespace PitchPointsWeb.Models
 
         public bool IsValid()
         {
-            return AccountVerifier.InternalVerify(this);
+            return AccountVerifier.Verify(this);
         }
 
     }
@@ -41,22 +37,6 @@ namespace PitchPointsWeb.Models
     {
 
         public int UserID { get; set; }
-
-    }
-
-    public class PublicKeyUserModel
-    {
-
-        public byte[] PublicKey { get; set; }
-
-        public DateTime ExpiryDate { get; set; }
-
-        public bool Invalid { get; set; }
-
-        public PublicKeyUserModel()
-        {
-
-        }
 
     }
 

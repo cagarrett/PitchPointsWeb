@@ -2,15 +2,16 @@
 using System.Web.Http;
 using System;
 using System.Net.Http;
-using static PitchPointsWeb.API.APICommon;
 using static PitchPointsWeb.API.AccountVerifier;
 using System.Data.SqlClient;
 using System.Data;
-using System.Diagnostics;
+using PitchPointsWeb.Models.API;
+using PitchPointsWeb.Models.API.Response;
+using System.Collections.Generic;
 
 namespace PitchPointsWeb.API
 {
-    public class AccountController : ApiController
+    public class AccountController : MasterController
     {
 
         /// <summary>
@@ -20,28 +21,9 @@ namespace PitchPointsWeb.API
         /// <returns>A HttpResponseMessage based on the success / failure of the insertion</returns>
         [AllowAnonymous]
         [HttpPost]
-        public HttpResponseMessage Register([FromBody] RegisterAPIUser user)
+        public HttpResponseMessage Register([FromBody] RegisterModel user)
         {
-            RegisterAccountResponse response = null;
-            try
-            {
-                response = InternalRegister(user);
-            } catch (SqlException)
-            {
-                return GetUnavailableMessage();
-            }
-            return CreateJsonResponse(response);
-        }
-
-        public HttpResponseMessage IsUserValid([FromBody] int publicKeyId)
-        {
-            return CreateJsonResponse(InternalIsUserValid(publicKeyId));
-        }
-
-        internal bool InternalIsUserValid(int publicKeyId)
-        {
-            var model = GetPublicKeyFor(publicKeyId);
-            return model != null && !model.Invalid;
+            return CreateJsonResponse(InternalRegister(user));
         }
 
         /// <summary>
@@ -50,48 +32,46 @@ namespace PitchPointsWeb.API
         /// <param name="user">The user to register in the database</param>
         /// <returns>A RegisterAccountResponse from the insertion. Use this value to check if the insertion was successful and for any potential errors.</returns>
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        internal RegisterAccountResponse InternalRegister(RegisterAPIUser user)
+        internal RegisterAccountResponse InternalRegister(RegisterModel user)
         {
-            var connection = GetConnection();
-            connection.Open();
-            var response = new RegisterAccountResponse();
-            if (DoesUserExist(user.Email))
+            RegisterAccountResponse response = new RegisterAccountResponse();
+            try
             {
-                response.ErrorMessage = "Email unavailable";
-            } else
-            {
-                var insertResponse = InsertUser(user);
-                if (insertResponse.Success)
+                using (var connection = GetConnection())
                 {
-                    response.PrivateKey = insertResponse.PrivateKeyInfo;
-                } else
-                {
-                    response.ErrorMessage = insertResponse.ErrorMessage;
+                    connection.Open();
+                    if (DoesUserExist(user.Email))
+                    {
+                        response.APIResponseCode = APIResponseCode.USER_ALREADY_EXISTS_EMAIL;
+                    }
+                    else
+                    {
+                        var insertResponse = InsertUser(user, connection);
+                        response.ResponseCode = insertResponse.ResponseCode;
+                        if (insertResponse.Success)
+                        {
+                            response.PrivateKey = insertResponse.PrivateKeyInfo;
+                        }
+                    }
                 }
+            } catch
+            {
+                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
             }
-            response.Success = response.ErrorMessage == null;
-            connection.Close();
             return response;
         }
 
         /// <summary>
-        /// Attempts to 'login' to the website by using a LoginAPIUser model. A successful dictionary would contain PrivateKeyInfo. An unsuccessful dictionary would include an error pertaining to why a login was invalid.
+        /// Attempts to 'login' to the website by using a LoginAPIUser model. A successful dictionary would contain
+        /// PrivateKeyInfo. An unsuccessful dictionary would include an error pertaining to why a login was invalid.
         /// </summary>
         /// <param name="user">The user to login with</param>
         /// <returns>A JSON dictionary with a private key if the login was successful</returns>
         [AllowAnonymous]
         [HttpPost]
-        public HttpResponseMessage Login([FromBody] LoginAPIUser user)
+        public HttpResponseMessage Login([FromBody] LoginModel user)
         {
-            LoginAccountResponse response = null;
-            try
-            {
-                response = InternalLogin(user);
-            } catch
-            {
-                return GetUnavailableMessage();
-            }
-            return CreateJsonResponse(response);
+            return CreateJsonResponse(InternalLogin(user));
         }
 
         /// <summary>
@@ -100,28 +80,33 @@ namespace PitchPointsWeb.API
         /// <param name="user">The user attempting to log in</param>
         /// <returns>A LoginAccountResponse which dictates if the login was successful or not</returns>
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        internal LoginAccountResponse InternalLogin(LoginAPIUser user)
+        internal LoginAccountResponse InternalLogin(LoginModel user)
         {
             LoginAccountResponse response = new LoginAccountResponse();
-            var databaseUser = GetUserFrom(user.Email);
-            Debug.WriteLine(databaseUser);
-            if (databaseUser != null)
+            try
             {
+                var databaseUser = GetUserFrom(user.Email);
+                if (databaseUser == null)
+                {
+                    response.APIResponseCode = APIResponseCode.USER_DOES_NOT_EXIST_EMAIL;
+                    return response;
+                }
                 var connection = GetConnection();
                 connection.Open();
                 if (databaseUser.PasswordsMatch(user.Password))
                 {
+                    response.APIResponseCode = APIResponseCode.SUCCESS;
                     response.PrivateKey = CreateAndInsertPublicKeyFrom(databaseUser.ID.Value, connection);
-                } else
+                }
+                else
                 {
-                    response.ErrorMessage = "Incorrect password";
+                    response.APIResponseCode = APIResponseCode.INCORRECT_PASSWORD;
                 }
                 connection.Close();
-            } else
+            } catch
             {
-                response.ErrorMessage = "User does not exist with this email";
+                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
             }
-            response.Success = response.ErrorMessage == null;
             return response;
         }
 
@@ -135,20 +120,21 @@ namespace PitchPointsWeb.API
         /// <returns>True if the modification was successful, false otherwise</returns>
         internal bool ModifyAdmin(int userId, bool isAdmin, bool canModifyScores, bool canCreateCompetitions)
         {
-            var connection = GetConnection();
             try
             {
-                connection.Open();
-                using (var command = new SqlCommand("ModifyAdminUser", connection))
+                using (var connection = GetConnection())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@userId", userId);
-                    command.Parameters.AddWithValue("@isAdmin", isAdmin);
-                    command.Parameters.AddWithValue("@canModifyScores", canModifyScores);
-                    command.Parameters.AddWithValue("@canCreateCompetitions", canCreateCompetitions);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    using (var command = new SqlCommand("ModifyAdminUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@isAdmin", isAdmin);
+                        command.Parameters.AddWithValue("@canModifyScores", canModifyScores);
+                        command.Parameters.AddWithValue("@canCreateCompetitions", canCreateCompetitions);
+                        command.ExecuteNonQuery();
+                    }
                 }
-                connection.Close();
             } catch
             {
                 return false;
@@ -165,24 +151,68 @@ namespace PitchPointsWeb.API
         /// <returns>True if the modification was successful, false otherwise</returns>
         internal bool ModifyJudge(int userId, bool isJudge, int compId)
         {
-            var connection = GetConnection();
             try
             {
-                connection.Open();
-                using (var command = new SqlCommand("ModifyJudgeUser", connection))
+                using (var connection = GetConnection())
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@userId", userId);
-                    command.Parameters.AddWithValue("@isJudge", isJudge);
-                    command.Parameters.AddWithValue("@compId", compId);
-                    command.ExecuteNonQuery();
+                    connection.Open();
+                    using (var command = new SqlCommand("ModifyJudgeUser", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@isJudge", isJudge);
+                        command.Parameters.AddWithValue("@compId", compId);
+                        command.ExecuteNonQuery();
+                    }
                 }
-                connection.Close();
             } catch
             {
                 return false;
             }
             return true;
+        }
+
+        [HttpPost]
+        public UserSnapshot GetUserSnapshot([FromBody] UserIDSignedData data)
+        {
+            UserSnapshot snapshot = new UserSnapshot();
+            if (!data.IsValid())
+            {
+                snapshot.APIResponseCode = APIResponseCode.AUTH_ERROR;
+                return snapshot;
+            }
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("GetUserSnapshot", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@userId", data.UserID);
+                        using (var reader = command.ExecuteReader())
+                        {
+                            snapshot.Points = readObject(reader, "Points", 0);
+                            snapshot.Falls = readObject(reader, "Falls", 0);
+                            snapshot.ParticipatedCompetitions = readObject(reader, "ParticipatedCompetitions", 0);
+                            if (reader.NextResult())
+                            {
+                                List<Competition> competitions = new List<Competition>();
+                                while (reader.Read())
+                                {
+                                    competitions.Add(readCompetition(reader));
+                                }
+                                snapshot.UpcomingCompetitions = competitions;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                snapshot.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+            }
+            return snapshot;
         }
 
         /// <summary>
@@ -193,22 +223,24 @@ namespace PitchPointsWeb.API
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
         private User GetUserFrom(string email)
         {
-            var connection = GetConnection();
-            connection.Open();
             User user = null;
-            using (var command = new SqlCommand("GetAllUserInfo", connection))
+            using (var connection = GetConnection())
             {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@email", email);
-                var reader = command.ExecuteReader();
-                if (reader.HasRows)
+                connection.Open();
+                using (var command = new SqlCommand("GetAllUserInfo", connection))
                 {
-                    reader.Read();
-                    user = ReadUserFrom(reader);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@email", email);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            user = ReadUserFrom(reader);
+                        }
+                    }
                 }
-                reader.Close();
             }
-            connection.Close();
             return user;
         }
 
@@ -223,63 +255,73 @@ namespace PitchPointsWeb.API
             return GetUserFrom(email) != null;
         }
 
-        private InsertUserResult InsertUser(RegisterAPIUser registerUser)
+        private InsertUserResponse InsertUser(RegisterModel model, SqlConnection connection)
         {
-            Debug.WriteLine(registerUser.DateOfBirth);
-            var user = Models.User.CreateFrom(registerUser);
-            var connection = GetConnection();
-            connection.Open();
-            var success = false;
-            var message = "";
-            var userId = 0;
-            var info = new PrivateKeyInfo();
-            using (var command = new SqlCommand("CreateUser", connection))
+            var user = Models.User.CreateFrom(model);
+            var response = new InsertUserResponse();
+            try
             {
-                command.CommandType = CommandType.StoredProcedure;
-                var userIdParam = new SqlParameter("@UserId", SqlDbType.Int);
-                userIdParam.Direction = ParameterDirection.Output;
-                var errorCode = new SqlParameter("@ErrorCode", SqlDbType.Int);
-                errorCode.Direction = ParameterDirection.Output;
-                var errorMessage = new SqlParameter("@ErrorMessage", SqlDbType.VarChar, 64);
-                errorMessage.Direction = ParameterDirection.Output;
-                command.Parameters.Add(userIdParam);
-                command.Parameters.Add(errorCode);
-                command.Parameters.Add(errorMessage);
-                command.Parameters.AddWithValue("@email", user.Email);
-                command.Parameters.AddWithValue("@firstName", user.FirstName);
-                command.Parameters.AddWithValue("@lastName", user.LastName);
-                command.Parameters.AddWithValue("@dob", user.DateOfBirth);
-                command.Parameters.AddWithValue("@password", user.PasswordHash);
-                command.Parameters.AddWithValue("@salt", user.Salt);
-                var reader = command.ExecuteReader();
-                success = (errorCode.Value as int?) == 0;
-                message = errorMessage.Value as string ?? "";
-                userId = (int) userIdParam.Value;
-                reader.Close();
-                if (success)
+                if (connection.State == ConnectionState.Closed)
                 {
-                    info = CreateAndInsertPublicKeyFrom(userId, connection);
+                    connection.Open();
                 }
-            }
-            connection.Close();
-            return new InsertUserResult()
+                using (var command = new SqlCommand("CreateUser", connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+                    var userIdParam = new SqlParameter("@UserId", SqlDbType.Int);
+                    userIdParam.Direction = ParameterDirection.Output;
+                    var errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int);
+                    errorCode.Direction = ParameterDirection.Output;
+                    var errorMessage = new SqlParameter("@ResponseMessage", SqlDbType.VarChar, 64);
+                    errorMessage.Direction = ParameterDirection.Output;
+                    command.Parameters.Add(userIdParam);
+                    command.Parameters.Add(errorCode);
+                    command.Parameters.Add(errorMessage);
+                    command.Parameters.AddWithValue("@email", user.Email);
+                    command.Parameters.AddWithValue("@firstName", user.FirstName);
+                    command.Parameters.AddWithValue("@lastName", user.LastName);
+                    command.Parameters.AddWithValue("@dob", user.DateOfBirth);
+                    command.Parameters.AddWithValue("@password", user.PasswordHash);
+                    command.Parameters.AddWithValue("@salt", user.Salt);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        var outErrorCode = (errorCode.Value as int?) ?? 0;
+                        var userId = (int)userIdParam.Value;
+                        if (outErrorCode == 0)
+                        {
+                            response.APIResponseCode = APIResponseCode.SUCCESS;
+                            response.UserId = userId;
+                            response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(userId, connection);
+                        }
+                        else
+                        {
+                            response.APIResponseCode = (APIResponseCode)outErrorCode;
+                        }
+                    }
+                }
+            } catch
             {
-                Success = success,
-                ErrorMessage = message,
-                UserId = userId,
-                PrivateKeyInfo = info
-            };
+                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+            }
+            return response;
         }
 
-        private PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userID, SqlConnection connection = null)
+        /// <summary>
+        /// Creates and inserts a Public Key / Public Key ID into the database with a given connection.
+        /// The connection provided is not closed and must be closed by the invoked methods used to
+        /// call this method.
+        /// </summary>
+        /// <param name="userID">The user ID to create a key pair for</param>
+        /// <param name="connection">The pre-existing connection to use to access the database</param>
+        /// <returns>A PrivateKeyInfo for the user</returns>
+        private PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userID, SqlConnection connection)
         {
             var pair = GenerateKeyPair();
-            connection = connection ?? GetConnection();
+            var id = 0;
             if (connection.State == ConnectionState.Closed)
             {
                 connection.Open();
             }
-            var id = 0;
             using (var command = new SqlCommand("InsertPublicKey", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
@@ -288,11 +330,11 @@ namespace PitchPointsWeb.API
                 command.Parameters.Add(idParam);
                 command.Parameters.AddWithValue("@userId", userID);
                 command.Parameters.AddWithValue("@key", pair.Item1);
-                var reader = command.ExecuteReader();
-                id = (idParam.Value as int?) ?? 0;
-                reader.Close();
+                using (var reader = command.ExecuteReader())
+                {
+                    id = (idParam.Value as int?) ?? 0;
+                }
             }
-            connection.Close();
             return new PrivateKeyInfo()
             {
                 PrivateKey = Convert.ToBase64String(pair.Item2, options: Base64FormattingOptions.None),
@@ -326,19 +368,6 @@ namespace PitchPointsWeb.API
                 user.DateRegistered = dateRegistered.Value;
             }
             return user;
-        }
-
-        private struct InsertUserResult
-        {
-
-            public bool Success;
-
-            public string ErrorMessage;
-
-            public int UserId;
-
-            public PrivateKeyInfo PrivateKeyInfo;
-
         }
 
     }

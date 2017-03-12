@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace PitchPointsWeb.API
 {
-    public class LoggedRouteController : ApiController
+    public class LoggedRouteController : MasterController
     {
         // GET: api/LogedRoute
         public IEnumerable<string> Get()

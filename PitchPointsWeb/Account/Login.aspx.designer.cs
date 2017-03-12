@@ -13,7 +13,7 @@ namespace PitchPointsWeb.Account {
     public partial class Login {
         
         /// <summary>
-        /// ErrorMessage control.
+        /// ResponseMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

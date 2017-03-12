@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Owin;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.Account
 {
@@ -44,16 +45,15 @@ namespace PitchPointsWeb.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            var validLogin = new AccountController().InternalLogin(new LoginAPIUser { Email = Email.Text, Password = Password.Text });
+            var validLogin = new AccountController().InternalLogin(new LoginModel { Email = Email.Text, Password = Password.Text });
 
             if (validLogin.Success)
             {
                 writeCookies(validLogin.PrivateKey);
                 var controller = new AccountController();
-                var login = new LoginAPIUser();
                 Session["Username"] = Email.Text;
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            } else if (validLogin.ErrorMessage == "Incorrect password") {
+            } else if (validLogin.ResponseMessage == "Incorrect password") {
                 Response.Write("The password you entered is inccorect.");
             }
             /*if (IsValid)
@@ -87,7 +87,7 @@ namespace PitchPointsWeb.Account
                     case SignInStatus.Failure:
                     default:
                         FailureText.Text = "Invalid login attempt";
-                        ErrorMessage.Visible = true;
+                        ResponseMessage.Visible = true;
                         break;
                 }*/
         }

@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.API
 {

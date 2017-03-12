@@ -5,13 +5,12 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using PitchPointsWeb.Models;
-using static PitchPointsWeb.API.APICommon;
 using System.Data.SqlClient;
 
 namespace PitchPointsWeb.API
 {
 
-    public class LeaderboardController : ApiController
+    public class LeaderboardController : MasterController
     {
 
         [HttpPost]

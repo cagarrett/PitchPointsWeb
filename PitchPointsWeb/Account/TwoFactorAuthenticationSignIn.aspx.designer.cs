@@ -58,7 +58,7 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.HiddenField SelectedProvider;
         
         /// <summary>
-        /// ErrorMessage control.
+        /// ResponseMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

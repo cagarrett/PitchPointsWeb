@@ -412,12 +412,11 @@
     <Compile Include="API\AccountController.cs" />
     <Compile Include="API\AccountVerifier.cs" />
     <Compile Include="API\APICommon.cs" />
-    <Compile Include="API\Authenticator.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\LoggedRouteController.cs" />
+    <Compile Include="API\MasterController.cs" />
     <Compile Include="API\RouteController.cs" />
-    <Compile Include="API\TestController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -454,15 +453,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountControllerModels.cs" />
-    <Compile Include="Models\APIModels.cs" />
+    <Compile Include="Models\API\APIResponseCode.cs" />
+    <Compile Include="Models\API\PrivateKeyModel.cs" />
+    <Compile Include="Models\API\PublicKeyModel.cs" />
+    <Compile Include="Models\API\AccountControllerModels.cs" />
+    <Compile Include="Models\API\Response\PrivateAPIResponse.cs" />
+    <Compile Include="Models\API\Response\AccountControllerResponses.cs" />
+    <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
+    <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\LeaderboardModels.cs" />
-    <Compile Include="Models\SignedModels.cs" />
+    <Compile Include="Models\API\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\CompetitionDetails.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\LoggedClimb.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\UpdateableData.cs" />
     <Compile Include="Models\User.cs" />
