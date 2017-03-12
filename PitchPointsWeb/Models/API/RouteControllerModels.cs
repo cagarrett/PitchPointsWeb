@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace PitchPointsWeb.Models.API
+﻿namespace PitchPointsWeb.Models.API
 {
 
     public class LoggedClimbModel
     {
-        //define climber id, witness id, route id and pass to method in route controller
-        public int climberId { get; set; }
-        public int witnessId { get; set; }
-        public int routeId { get; set; }
-        public int falls { get; set; }
+
+        public int ClimberId { get; set; }
+
+        public int WitnessId { get; set; }
+
+        public int RouteId { get; set; }
+
+        public int Falls { get; set; }
+
+    }
+
+    public class CompetitionRoutesModel
+    {
+        
+        public int CompetitionId { get; set; }
+
     }
 
 }

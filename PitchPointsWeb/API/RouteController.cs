@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Web.Http;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.Models.API;
@@ -14,16 +9,11 @@ namespace PitchPointsWeb.API
 {
     public class RouteController : MasterController
     {
-        [AllowAnonymous]
-        [HttpPost]
-        public HttpResponseMessage LogClimb([FromBody] LoggedClimbModel route)
-        {
-            return CreateJsonResponse(InsertClimb(route));
-        }
 
-        internal PrivateAPIResponse InsertClimb(LoggedClimbModel logClimb)
+        [HttpPost]
+        public ApiResponse LogClimb([FromBody] LoggedClimbModel model)
         {
-            var response = new PrivateAPIResponse();
+            var response = new ApiResponse();
             try
             {
                 using (var connection = GetConnection())
@@ -32,128 +22,114 @@ namespace PitchPointsWeb.API
                     using (var command = new SqlCommand("InsertLoggedClimb", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@routeId", logClimb.routeId);
-                        command.Parameters.AddWithValue("@falls", logClimb.falls);
-                        command.Parameters.AddWithValue("@climberId", logClimb.climberId);
-                        command.Parameters.AddWithValue("@witnessId", logClimb.witnessId);
+                        command.Parameters.AddWithValue("@routeId", model.RouteId);
+                        command.Parameters.AddWithValue("@falls", model.Falls);
+                        command.Parameters.AddWithValue("@climberId", model.ClimberId);
+                        command.Parameters.AddWithValue("@witnessId", model.WitnessId);
                         var outputCode = new SqlParameter("@errorCode", SqlDbType.Int);
                         outputCode.Direction = ParameterDirection.Output;
                         command.Parameters.Add(outputCode);
                         command.ExecuteNonQuery();
                         if (outputCode.Value is int)
                         {
-                            response.APIResponseCode = (APIResponseCode)outputCode.Value;
+                            response.ApiResponseCode = (ApiResponseCode)outputCode.Value;
                         }
                     }
                 }
             }
             catch
             {
-                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+                response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
         }
 
-        public HttpResponseMessage GetRoute(int id)
+        public RoutesResponse GetRoute(int id)
         {
-            return GetRouteInformation(new int[] { id });
+            return GetRouteInformation(new[] { id });
         }
 
-        public HttpResponseMessage GetRouteInformation([FromBody] int[] ids)
+        public RoutesResponse GetRouteInformation([FromBody] int[] ids)
         {
-            if (ids == null || ids.Length == 0)
-            {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-            var connection = GetConnection();
+            var response = new RoutesResponse();
+            if (ids.Length == 0) return response;
+            var idTable = CreateIdTable(ids);
             try
             {
-                connection.Open();
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("GetRouteInformation", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        var errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(errorCode);
+                        var param = command.Parameters.AddWithValue("@IDList", idTable);
+                        param.SqlDbType = SqlDbType.Structured;
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if ((int) (errorCode.Value ?? 0) != 0)
+                            {
+                                response.ApiResponseCode = ApiResponseCode.NoRoutesSupplied;
+                            }
+                            else
+                            {
+                                while (reader.Read())
+                                {
+                                    response.Routes.Add(ReadRoute(reader));
+                                }
+                            }
+                        }
+                    }
+                }
             }
             catch
             {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            }
-            var idTable = APICommon.CreateIDTable(ids);
-            var routes = new List<PublicRoute>();
-            HttpResponseMessage response = null;
-            using (var command = new SqlCommand("GetRouteInformation", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                SqlParameter errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int);
-                errorCode.Direction = ParameterDirection.Output;
-                SqlParameter errorMessage = new SqlParameter("@ResponseMessage", SqlDbType.NVarChar, 200);
-                errorMessage.Direction = ParameterDirection.Output;
-                command.Parameters.Add(errorCode);
-                command.Parameters.Add(errorMessage);
-                SqlParameter param = command.Parameters.AddWithValue("@IDList", idTable);
-                param.SqlDbType = SqlDbType.Structured;
-                SqlDataReader reader = command.ExecuteReader();
-                if ((int) (errorCode.Value ?? 0) != 0)
-                {
-                    response = new HttpResponseMessage(HttpStatusCode.BadRequest);
-                    response.Content = new StringContent(errorMessage.Value.ToString());
-                } else
-                {
-                    while (reader.Read())
-                    {
-                        routes.Add(readRoute(reader));
-                    }
-                }
-                reader.Close();
-            }
-            connection.Close();
-            if (response == null)
-            {
-                response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content = new ObjectContent<List<PublicRoute>>(routes, new JsonMediaTypeFormatter(), "application/json");
+                response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
         }
 
         [HttpPost]
-        public HttpResponseMessage GetCompetitionRoutes([FromBody] int competitionID)
+        public CompetitionRoutesResponse GetCompetitionRoutes([FromBody] CompetitionRoutesModel model)
         {
-            var connection = GetConnection();
+            var response = new CompetitionRoutesResponse { CompetitionId = model.CompetitionId };
             try
             {
-                connection.Open();
-            } catch
-            {
-                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
-            }
-            var routes = new List<PublicRoute>();
-            using (var command = new SqlCommand("GetCompetitionRoutes", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@CompetitionID", competitionID);
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (var connection = GetConnection())
                 {
-                    routes.Add(readRoute(reader));
+                    connection.Open();
+                    using (var command = new SqlCommand("GetCompetitionRoutes", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@CompetitionID", model.CompetitionId);
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                response.Routes.Add(ReadRoute(reader));
+                            }
+                        }
+                    }
                 }
-                reader.Close();
             }
-            connection.Close();
-            return new HttpResponseMessage(HttpStatusCode.OK)
+            catch
             {
-                Content = new ObjectContent<List<PublicRoute>>(routes, new JsonMediaTypeFormatter(), "application/json")
-            };
+                response.ApiResponseCode = ApiResponseCode.InternalError;
+            }
+            return response;
         }
 
-        private PublicRoute readRoute(SqlDataReader reader)
+        private static PublicRoute ReadRoute(SqlDataReader reader)
         {
-            var route = new PublicRoute();
-            int? id = readObjectOrNull<int>(reader, "Id");
-            if (id.HasValue)
+            return new PublicRoute
             {
-                route.ID = id.Value;
-            }
-            route.Name = readObject(reader, "RouteName", "No route name");
-            route.CategoryName = readObject(reader, "Category", "No category");
-            route.MaxPoints = readObject(reader, "MaxPoints", 0);
-            route.PointDeductionPerFall = readObject(reader, "FailurePointDeduction", 0);
-            return route;
+                Id = ReadObject(reader, "Id", 0),
+                Name = ReadObject(reader, "RouteName", "No route name"),
+                CategoryName = ReadObject(reader, "Category", "No category"),
+                MaxPoints = ReadObject(reader, "MaxPoints", 0),
+                PointDeductionPerFall = ReadObject(reader, "FailurePointDeduction", 0)
+            };
         }
 
     }

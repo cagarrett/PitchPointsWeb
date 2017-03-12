@@ -47,11 +47,13 @@ namespace PitchPointsWeb.Models
 
         public static User CreateFrom(RegisterModel user)
         {
-            User normalUser = new User();
-            normalUser.Email = user.Email;
-            normalUser.DateOfBirth = user.DateOfBirth;
-            normalUser.FirstName = user.FirstName;
-            normalUser.LastName = user.LastName;
+            var normalUser = new User
+            {
+                Email = user.Email,
+                DateOfBirth = user.DateOfBirth,
+                FirstName = user.FirstName,
+                LastName = user.LastName
+            };
             normalUser.UpdatePassword(user.Password);
             normalUser.DateRegistered = DateTime.Now;
             return normalUser;
@@ -106,7 +108,7 @@ namespace PitchPointsWeb.Models
         public static bool DoPasswordsMatch(string password, byte[] currentHash, byte[] salt)
         {
             byte[] newHash = HashPassword(password, salt);
-            return Enumerable.SequenceEqual(newHash, currentHash);
+            return newHash.SequenceEqual(currentHash);
         }
 
     }

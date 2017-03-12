@@ -7,35 +7,38 @@ namespace PitchPointsWeb.Models.API
     /// APIResponseCode holds all error codes found in the API namespace.
     /// Range 0-99: Basic error codes
     /// Range 100-199: Account error codes
-    /// Range 200-299: Log climb error codes
+    /// Range 200-299: Route error codes
     /// </summary>
-    public enum APIResponseCode
+    public enum ApiResponseCode
     {
 
         [Description("success")]
-        SUCCESS = 0,
+        Success = 0,
 
         [Description("Error authorizing user")]
-        AUTH_ERROR = 1,
+        AuthError = 1,
 
         [Description("Internal server error")]
-        INTERNAL_ERROR = 2,
+        InternalError = 2,
 
         [Description("User already registered with this email address")]
-        USER_ALREADY_EXISTS_EMAIL = 100,
+        UserAlreadyExistsEmail = 100,
 
         [Description("The email address does not exist")]
-        USER_DOES_NOT_EXIST_EMAIL = 101,
+        UserDoesNotExistEmail = 101,
 
         [Description("Incorrect password")]
-        INCORRECT_PASSWORD = 102,
+        IncorrectPassword = 102,
 
         [Description("This route has already been logged")]
-        ALREADY_LOGGED_ROUTE = 200,
+        AlreadyLoggedRoute = 200,
+
+        [Description("At least one route ID must be supplied")]
+        NoRoutesSupplied = 201
 
     }
 
-    public static class APIResponseCodeExtension
+    public static class ApiResponseCodeExtension
     {
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace PitchPointsWeb.Models.API
         /// </summary>
         /// <param name="code">The code to get the description from</param>
         /// <returns>A string, or null, of the APIResponseCode</returns>
-        public static string GetDescription<APIResponseCode>(this APIResponseCode code)
+        public static string GetDescription(this ApiResponseCode code)
         {
             var type = code.GetType();
             var memberInfo = type.GetMember(code.ToString());
@@ -55,14 +58,9 @@ namespace PitchPointsWeb.Models.API
             return null;
         }
 
-        public static APIResponseCode From(int value)
+        public static ApiResponse ToResponse(this ApiResponseCode code)
         {
-            return (APIResponseCode)value;
-        }
-
-        public static PrivateAPIResponse ToResponse(this APIResponseCode code)
-        {
-            return new PrivateAPIResponse(code);
+            return new ApiResponse(code);
         }
 
     }

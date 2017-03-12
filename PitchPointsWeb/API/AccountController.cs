@@ -1,13 +1,11 @@
 ﻿using PitchPointsWeb.Models;
 using System.Web.Http;
 using System;
-using System.Net.Http;
 using static PitchPointsWeb.API.AccountVerifier;
 using System.Data.SqlClient;
 using System.Data;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.Models.API.Response;
-using System.Collections.Generic;
 
 namespace PitchPointsWeb.API
 {
@@ -21,20 +19,9 @@ namespace PitchPointsWeb.API
         /// <returns>A HttpResponseMessage based on the success / failure of the insertion</returns>
         [AllowAnonymous]
         [HttpPost]
-        public HttpResponseMessage Register([FromBody] RegisterModel user)
+        public PrivateApiResponse Register([FromBody] RegisterModel user)
         {
-            return CreateJsonResponse(InternalRegister(user));
-        }
-
-        /// <summary>
-        /// Internally registers a user in the database.
-        /// </summary>
-        /// <param name="user">The user to register in the database</param>
-        /// <returns>A RegisterAccountResponse from the insertion. Use this value to check if the insertion was successful and for any potential errors.</returns>
-        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        internal RegisterAccountResponse InternalRegister(RegisterModel user)
-        {
-            RegisterAccountResponse response = new RegisterAccountResponse();
+            var response = new PrivateApiResponse();
             try
             {
                 using (var connection = GetConnection())
@@ -42,7 +29,7 @@ namespace PitchPointsWeb.API
                     connection.Open();
                     if (DoesUserExist(user.Email))
                     {
-                        response.APIResponseCode = APIResponseCode.USER_ALREADY_EXISTS_EMAIL;
+                        response.ApiResponseCode = ApiResponseCode.UserAlreadyExistsEmail;
                     }
                     else
                     {
@@ -50,13 +37,14 @@ namespace PitchPointsWeb.API
                         response.ResponseCode = insertResponse.ResponseCode;
                         if (insertResponse.Success)
                         {
-                            response.PrivateKey = insertResponse.PrivateKeyInfo;
+                            response.PrivateKeyInfo = insertResponse.PrivateKeyInfo;
                         }
                     }
                 }
-            } catch
+            }
+            catch
             {
-                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+                response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
         }
@@ -69,43 +57,33 @@ namespace PitchPointsWeb.API
         /// <returns>A JSON dictionary with a private key if the login was successful</returns>
         [AllowAnonymous]
         [HttpPost]
-        public HttpResponseMessage Login([FromBody] LoginModel user)
+        public PrivateApiResponse Login([FromBody] LoginModel user)
         {
-            return CreateJsonResponse(InternalLogin(user));
-        }
-
-        /// <summary>
-        /// Attempts to validate a user trying to log in
-        /// </summary>
-        /// <param name="user">The user attempting to log in</param>
-        /// <returns>A LoginAccountResponse which dictates if the login was successful or not</returns>
-        /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        internal LoginAccountResponse InternalLogin(LoginModel user)
-        {
-            LoginAccountResponse response = new LoginAccountResponse();
+            var response = new PrivateApiResponse();
             try
             {
                 var databaseUser = GetUserFrom(user.Email);
                 if (databaseUser == null)
                 {
-                    response.APIResponseCode = APIResponseCode.USER_DOES_NOT_EXIST_EMAIL;
+                    response.ApiResponseCode = ApiResponseCode.UserDoesNotExistEmail;
                     return response;
                 }
                 var connection = GetConnection();
                 connection.Open();
                 if (databaseUser.PasswordsMatch(user.Password))
                 {
-                    response.APIResponseCode = APIResponseCode.SUCCESS;
-                    response.PrivateKey = CreateAndInsertPublicKeyFrom(databaseUser.ID.Value, connection);
+                    response.ApiResponseCode = ApiResponseCode.Success;
+                    response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(databaseUser.Id.Value, connection);
                 }
                 else
                 {
-                    response.APIResponseCode = APIResponseCode.INCORRECT_PASSWORD;
+                    response.ApiResponseCode = ApiResponseCode.IncorrectPassword;
                 }
                 connection.Close();
-            } catch
+            }
+            catch
             {
-                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+                response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
         }
@@ -173,12 +151,12 @@ namespace PitchPointsWeb.API
         }
 
         [HttpPost]
-        public UserSnapshot GetUserSnapshot([FromBody] UserIDSignedData data)
+        public UserSnapshotResponse GetUserSnapshot([FromBody] UserIDSignedData data)
         {
-            UserSnapshot snapshot = new UserSnapshot();
+            var snapshot = new UserSnapshotResponse();
             if (!data.IsValid())
             {
-                snapshot.APIResponseCode = APIResponseCode.AUTH_ERROR;
+                snapshot.ApiResponseCode = ApiResponseCode.AuthError;
                 return snapshot;
             }
             try
@@ -192,17 +170,15 @@ namespace PitchPointsWeb.API
                         command.Parameters.AddWithValue("@userId", data.UserID);
                         using (var reader = command.ExecuteReader())
                         {
-                            snapshot.Points = readObject(reader, "Points", 0);
-                            snapshot.Falls = readObject(reader, "Falls", 0);
-                            snapshot.ParticipatedCompetitions = readObject(reader, "ParticipatedCompetitions", 0);
+                            snapshot.Points = ReadObject(reader, "Points", 0);
+                            snapshot.Falls = ReadObject(reader, "Falls", 0);
+                            snapshot.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
                             if (reader.NextResult())
                             {
-                                List<Competition> competitions = new List<Competition>();
                                 while (reader.Read())
                                 {
-                                    competitions.Add(readCompetition(reader));
+                                    snapshot.UpcomingCompetitions.Add(CompetitionsController.ReadCompetition(reader));
                                 }
-                                snapshot.UpcomingCompetitions = competitions;
                             }
                         }
                     }
@@ -210,7 +186,7 @@ namespace PitchPointsWeb.API
             }
             catch
             {
-                snapshot.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+                snapshot.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return snapshot;
         }
@@ -221,9 +197,9 @@ namespace PitchPointsWeb.API
         /// <param name="email">The email to use to query the database</param>
         /// <returns>A User if the email exists within the database, null otherwise</returns>
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        private User GetUserFrom(string email)
+        private static User GetUserFrom(string email)
         {
-            User user = null;
+            User user;
             using (var connection = GetConnection())
             {
                 connection.Open();
@@ -233,11 +209,9 @@ namespace PitchPointsWeb.API
                     command.Parameters.AddWithValue("@email", email);
                     using (var reader = command.ExecuteReader())
                     {
-                        if (reader.HasRows)
-                        {
-                            reader.Read();
-                            user = ReadUserFrom(reader);
-                        }
+                        if (!reader.HasRows) return null;
+                        reader.Read();
+                        user = ReadUserFrom(reader);
                     }
                 }
             }
@@ -250,12 +224,12 @@ namespace PitchPointsWeb.API
         /// <param name="email">the email to check within the database</param>
         /// <returns>True if the user exists in the database</returns>
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception> 
-        private bool DoesUserExist(string email)
+        private static bool DoesUserExist(string email)
         {
             return GetUserFrom(email) != null;
         }
 
-        private InsertUserResponse InsertUser(RegisterModel model, SqlConnection connection)
+        private static InsertUserResponse InsertUser(RegisterModel model, SqlConnection connection)
         {
             var user = Models.User.CreateFrom(model);
             var response = new InsertUserResponse();
@@ -268,40 +242,33 @@ namespace PitchPointsWeb.API
                 using (var command = new SqlCommand("CreateUser", connection))
                 {
                     command.CommandType = CommandType.StoredProcedure;
-                    var userIdParam = new SqlParameter("@UserId", SqlDbType.Int);
-                    userIdParam.Direction = ParameterDirection.Output;
-                    var errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int);
-                    errorCode.Direction = ParameterDirection.Output;
-                    var errorMessage = new SqlParameter("@ResponseMessage", SqlDbType.VarChar, 64);
-                    errorMessage.Direction = ParameterDirection.Output;
+                    var userIdParam = new SqlParameter("@UserId", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    var errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     command.Parameters.Add(userIdParam);
                     command.Parameters.Add(errorCode);
-                    command.Parameters.Add(errorMessage);
                     command.Parameters.AddWithValue("@email", user.Email);
                     command.Parameters.AddWithValue("@firstName", user.FirstName);
                     command.Parameters.AddWithValue("@lastName", user.LastName);
                     command.Parameters.AddWithValue("@dob", user.DateOfBirth);
                     command.Parameters.AddWithValue("@password", user.PasswordHash);
                     command.Parameters.AddWithValue("@salt", user.Salt);
-                    using (var reader = command.ExecuteReader())
+                    command.ExecuteNonQuery();
+                    var outErrorCode = (errorCode.Value as int?) ?? 0;
+                    if (outErrorCode == 0)
                     {
-                        var outErrorCode = (errorCode.Value as int?) ?? 0;
                         var userId = (int)userIdParam.Value;
-                        if (outErrorCode == 0)
-                        {
-                            response.APIResponseCode = APIResponseCode.SUCCESS;
-                            response.UserId = userId;
-                            response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(userId, connection);
-                        }
-                        else
-                        {
-                            response.APIResponseCode = (APIResponseCode)outErrorCode;
-                        }
+                        response.ApiResponseCode = ApiResponseCode.Success;
+                        response.UserId = userId;
+                        response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(userId, connection);
+                    }
+                    else
+                    {
+                        response.ApiResponseCode = (ApiResponseCode)outErrorCode;
                     }
                 }
             } catch
             {
-                response.APIResponseCode = APIResponseCode.INTERNAL_ERROR;
+                response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
         }
@@ -311,13 +278,13 @@ namespace PitchPointsWeb.API
         /// The connection provided is not closed and must be closed by the invoked methods used to
         /// call this method.
         /// </summary>
-        /// <param name="userID">The user ID to create a key pair for</param>
+        /// <param name="userId">The user ID to create a key pair for</param>
         /// <param name="connection">The pre-existing connection to use to access the database</param>
         /// <returns>A PrivateKeyInfo for the user</returns>
-        private PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userID, SqlConnection connection)
+        private static PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userId, SqlConnection connection)
         {
             var pair = GenerateKeyPair();
-            var id = 0;
+            int id;
             if (connection.State == ConnectionState.Closed)
             {
                 connection.Open();
@@ -325,19 +292,16 @@ namespace PitchPointsWeb.API
             using (var command = new SqlCommand("InsertPublicKey", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-                var idParam = new SqlParameter("@id", SqlDbType.Int);
-                idParam.Direction = ParameterDirection.Output;
+                var idParam = new SqlParameter("@id", SqlDbType.Int) { Direction = ParameterDirection.Output };
                 command.Parameters.Add(idParam);
-                command.Parameters.AddWithValue("@userId", userID);
+                command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@key", pair.Item1);
-                using (var reader = command.ExecuteReader())
-                {
-                    id = (idParam.Value as int?) ?? 0;
-                }
+                command.ExecuteNonQuery();
+                id = (idParam.Value as int?) ?? 0;
             }
-            return new PrivateKeyInfo()
+            return new PrivateKeyInfo
             {
-                PrivateKey = Convert.ToBase64String(pair.Item2, options: Base64FormattingOptions.None),
+                PrivateKey = Convert.ToBase64String(pair.Item2, Base64FormattingOptions.None),
                 PublicKeyId = id
             };
         }
@@ -347,22 +311,24 @@ namespace PitchPointsWeb.API
         /// </summary>
         /// <param name="reader">A SqlDataReader obtained from a SqlCommand execution</param>
         /// <returns>A user with all data provided in the reader</returns>
-        private User ReadUserFrom(SqlDataReader reader)
+        private static User ReadUserFrom(SqlDataReader reader)
         {
-            var user = new User();
-            user.ID = readObject(reader, "UserId", 0);
-            user.FirstName = readObject(reader, "FirstName", "");
-            user.LastName = readObject(reader, "LastName", "");
-            var dob = readObjectOrNull<DateTime>(reader, "DOB");
+            var user = new User
+            {
+                Id = ReadObject(reader, "UserId", 0),
+                FirstName = ReadObject(reader, "FirstName", ""),
+                LastName = ReadObject(reader, "LastName", ""),
+                Email = ReadObject(reader, "Email", ""),
+                EmailVerified = ReadObject(reader, "EmailConfirmed", (byte) 0) == (byte) 1,
+                PasswordHash = ReadObject<byte[]>(reader, "PasswordHash", null),
+                Salt = ReadObject<byte[]>(reader, "Salt", null)
+            };
+            var dob = ReadObjectOrNull<DateTime>(reader, "DOB");
             if (dob.HasValue)
             {
                 user.DateOfBirth = dob.Value;
             }
-            user.Email = readObject(reader, "Email", "");
-            user.EmailVerified = readObject(reader, "EmailConfirmed", (byte) 0) == (byte) 1;
-            user.PasswordHash = readObject<byte[]>(reader, "PasswordHash", null);
-            user.Salt = readObject<byte[]>(reader, "Salt", null);
-            var dateRegistered = readObjectOrNull<DateTime>(reader, "DateRegistered");
+            var dateRegistered = ReadObjectOrNull<DateTime>(reader, "DateRegistered");
             if (dateRegistered.HasValue)
             {
                 user.DateRegistered = dateRegistered.Value;

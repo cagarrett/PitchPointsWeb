@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace PitchPointsWeb.Models.API
+﻿namespace PitchPointsWeb.Models.API
 {
 
     public class PrivateKeyInfo

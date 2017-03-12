@@ -61,13 +61,10 @@ namespace PitchPointsWeb.Account
         {
             if (WaiverSigned.SelectedValue.Equals("No"))
             {
-                string redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
+                var redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
                 Response.Write(redirect);
                 return;
             }
-            var controller = new AccountController();
-            var signInManager = Context.GetOwinContext().Get<ApplicationSignInManager>();
-            var user = new ApplicationUser() { UserName = Email.Text, Email = Email.Text };
             var registerModel = new RegisterModel
             {
                 Email = Email.Text,
@@ -76,15 +73,11 @@ namespace PitchPointsWeb.Account
                 LastName = LName.Text,
                 DateOfBirth = DateTime.Parse(DOB.Text)
             };
-            var validRegister = new AccountController().InternalRegister(registerModel);
+            var validRegister = new AccountController().Register(registerModel);
             if (validRegister.Success)
             {
-                writeCookies(validRegister.PrivateKey);
+                writeCookies(validRegister.PrivateKeyInfo);
                 Response.Redirect("../Default.aspx");
-            }
-            else
-            {
-
             }
         }
     }

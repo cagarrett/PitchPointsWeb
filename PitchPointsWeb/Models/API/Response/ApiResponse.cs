@@ -1,14 +1,13 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace PitchPointsWeb.Models.API.Response
 {
 
     /// <summary>
-    /// PrivateAPIResponse is a general response for all private API requests that require some form
+    /// ApiResponse is a general response for all private API requests that require some form
     /// of SignedData.
     /// </summary>
-    public class PrivateAPIResponse
+    public class ApiResponse
     {
 
         /// <summary>
@@ -27,36 +26,36 @@ namespace PitchPointsWeb.Models.API.Response
         /// </summary>
         public string ResponseMessage { get; internal set; }
 
-        private APIResponseCode mAPIResponseCode {get;set;}
+        private ApiResponseCode MApiResponseCode { get; set; }
 
         /// <summary>
         /// Represents the APIResponseCode for this response. This value is ignored when this object
         /// is parsed in JSON.
         /// </summary>
         [JsonIgnore]
-        public APIResponseCode APIResponseCode
+        public ApiResponseCode ApiResponseCode
         {
             set
             {
-                mAPIResponseCode = value;
+                MApiResponseCode = value;
                 ResponseCode = (int)value;
                 ResponseMessage = value.GetDescription();
-                Success = value == APIResponseCode.SUCCESS;
+                Success = value == ApiResponseCode.Success;
             }
             get
             {
-                return mAPIResponseCode;
+                return MApiResponseCode;
             }
         }
 
-        public PrivateAPIResponse()
+        public ApiResponse()
         {
-            APIResponseCode = APIResponseCode.SUCCESS;
+            ApiResponseCode = ApiResponseCode.Success;
         }
 
-        public PrivateAPIResponse(APIResponseCode code)
+        public ApiResponse(ApiResponseCode code)
         {
-            APIResponseCode = code;
+            ApiResponseCode = code;
         }
 
     }

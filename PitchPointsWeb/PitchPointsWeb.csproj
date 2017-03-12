@@ -255,6 +255,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Account\Register.aspx.cs.orig" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -414,7 +415,6 @@
     <Compile Include="API\APICommon.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
-    <Compile Include="API\LoggedRouteController.cs" />
     <Compile Include="API\MasterController.cs" />
     <Compile Include="API\RouteController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -453,21 +453,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\API\APIResponseCode.cs" />
+    <Compile Include="Models\API\ApiResponseCode.cs" />
     <Compile Include="Models\API\PrivateKeyModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
-    <Compile Include="Models\API\Response\PrivateAPIResponse.cs" />
+    <Compile Include="Models\API\Response\ApiResponse.cs" />
     <Compile Include="Models\API\Response\AccountControllerResponses.cs" />
+    <Compile Include="Models\API\Response\CompetitionControllerResponses.cs" />
+    <Compile Include="Models\API\Response\LeaderboardControllerResponses.cs" />
     <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
     <Compile Include="Models\API\RouteControllerModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaderboardModels.cs" />
     <Compile Include="Models\API\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
-    <Compile Include="Models\CompetitionDetails.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Location.cs" />
-    <Compile Include="Models\Route.cs" />
+    <Compile Include="Models\LocationModels.cs" />
+    <Compile Include="Models\RouteModels.cs" />
     <Compile Include="Models\UpdateableData.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

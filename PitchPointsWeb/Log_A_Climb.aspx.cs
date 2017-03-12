@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using System.Net;
-using System.Net.Mail;
-using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
-using System.Diagnostics;
 using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb
@@ -59,15 +52,14 @@ namespace PitchPointsWeb
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             var controller = new RouteController();
-            var logClimb = new LoggedClimbModel();
             var logClimbModel = new LoggedClimbModel
             {
-                climberId = Convert.ToInt32(ClimberID.Text),
-                witnessId = Convert.ToInt32(Witness.Text),
-                routeId = Convert.ToInt32(RouteClimbed.Text),
-                falls = Convert.ToInt32(numberOfFalls.Text),
+                ClimberId = Convert.ToInt32(ClimberID.Text),
+                WitnessId = Convert.ToInt32(Witness.Text),
+                RouteId = Convert.ToInt32(RouteClimbed.Text),
+                Falls = Convert.ToInt32(numberOfFalls.Text),
             };
-            var result = controller.InsertClimb(logClimbModel);
+            var result = controller.LogClimb(logClimbModel);
             if (result.Success)
             {
                 Response.Redirect("Default.aspx");

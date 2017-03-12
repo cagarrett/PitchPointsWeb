@@ -14,33 +14,41 @@ namespace PitchPointsWeb.API
     public class AccountVerifier
     {
 
-        private static readonly string KEY_PAIR_ALGORITHM = "ECDSA";
+        private const string KeyPairAlgorithm = "ECDSA";
 
-        private static readonly string SIGNER_METHOD = "ECDSAWITHSHA256";
+        private const string SignerMethod = "ECDSAWITHSHA256";
 
-        private static readonly string CURVE_NAME = "secp256r1";
+        private const string CurveName = "secp256r1";
 
         public static PublicKeyUserModel GetPublicKeyFor(int pubKeyId)
         {
-            PublicKeyUserModel model = new PublicKeyUserModel();
-            model.Invalid = true;
-            var connection = APICommon.GetConnection();
-            connection.Open();
-            using (var command = new SqlCommand("GetPublicKeyForUser", connection))
+            var model = new PublicKeyUserModel();
+            try
             {
-                command.CommandType = System.Data.CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@pubKeyId", pubKeyId);
-                var reader = command.ExecuteReader();
-                if (reader.HasRows)
+                using (var connection = MasterController.GetConnection())
                 {
-                    reader.Read();
-                    model.PublicKey = APICommon.readObject(reader, "PublicKey", new byte[] { });
-                    model.ExpiryDate = APICommon.readObject(reader, "ExpiryDate", DateTime.Now);
-                    model.Invalid = APICommon.readObject(reader, "Invalid", (byte)0) == 1;
+                    connection.Open();
+                    using (var command = new SqlCommand("GetPublicKeyForUser", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@pubKeyId", pubKeyId);
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                reader.Read();
+                                model.PublicKey = MasterController.ReadObject(reader, "PublicKey", new byte[] { });
+                                model.ExpiryDate = MasterController.ReadObject(reader, "ExpiryDate", DateTime.Now);
+                                model.Invalid = MasterController.ReadObject(reader, "Invalid", (byte)0) == 1;
+                            }
+                        }
+                    }
                 }
-                reader.Close();
             }
-            connection.Close();
+            catch
+            {
+                model.Invalid = true;
+            }
             return model;
         }
 
@@ -58,9 +66,9 @@ namespace PitchPointsWeb.API
         public static bool Verify(SignedData data, PublicKeyUserModel publicKey)
         {
             if (publicKey == null || publicKey.Invalid) return false;
-            var signer = SignerUtilities.GetSigner(SIGNER_METHOD);
+            var signer = SignerUtilities.GetSigner(SignerMethod);
             var inputData = new ASCIIEncoding().GetBytes(data.Data);
-            var domain = GetECDomain();
+            var domain = GetEcDomain();
             var point = domain.Curve.DecodePoint(publicKey.PublicKey);
             signer.Init(false, new ECPublicKeyParameters(point, domain));
             signer.BlockUpdate(inputData, 0, inputData.Length);
@@ -74,10 +82,10 @@ namespace PitchPointsWeb.API
         /// <param name="privateKey">The base64 private key</param>
         public static string Sign(string data, string privateKey)
         {
-            var signer = SignerUtilities.GetSigner(SIGNER_METHOD);
+            var signer = SignerUtilities.GetSigner(SignerMethod);
             var privKey = new BigInteger(Convert.FromBase64String(privateKey));
             var inputData = new ASCIIEncoding().GetBytes(data);
-            signer.Init(true, new ECPrivateKeyParameters(privKey, GetECDomain()));
+            signer.Init(true, new ECPrivateKeyParameters(privKey, GetEcDomain()));
             signer.BlockUpdate(inputData, 0, inputData.Length);
             return BytesToHexString(signer.GenerateSignature());
         }
@@ -88,20 +96,20 @@ namespace PitchPointsWeb.API
         /// <returns>A tuple of bytes. Item1 is the public key, Item2 is the private key.</returns>
         public static Tuple<byte[], byte[]> GenerateKeyPair()
         {
-            var generator = new ECKeyPairGenerator(KEY_PAIR_ALGORITHM);
-            var keyGenParameter = new ECKeyGenerationParameters(GetECDomain(), new SecureRandom());
+            var generator = new ECKeyPairGenerator(KeyPairAlgorithm);
+            var keyGenParameter = new ECKeyGenerationParameters(GetEcDomain(), new SecureRandom());
             generator.Init(keyGenParameter);
             var keyPair = generator.GenerateKeyPair();
             var publicKey = (ECPublicKeyParameters)keyPair.Public;
-            byte[] pubKey = publicKey.Q.GetEncoded();
+            var pubKey = publicKey.Q.GetEncoded();
             var privateKey = (ECPrivateKeyParameters)keyPair.Private;
-            byte[] privKey = privateKey.D.ToByteArray();
+            var privKey = privateKey.D.ToByteArray();
             return new Tuple<byte[], byte[]>(pubKey, privKey);
         }
 
-        private static ECDomainParameters GetECDomain()
+        private static ECDomainParameters GetEcDomain()
         {
-            var ecp = SecNamedCurves.GetByName(CURVE_NAME);
+            var ecp = SecNamedCurves.GetByName(CurveName);
             return new ECDomainParameters(ecp.Curve, ecp.G, ecp.N, ecp.H, ecp.GetSeed());
         }
 
@@ -123,8 +131,8 @@ namespace PitchPointsWeb.API
         /// <returns>A hexadecimal string</returns>
         private static string BytesToHexString(byte[] bytes)
         {
-            StringBuilder sb = new StringBuilder(bytes.Length * 2);
-            foreach (byte b in bytes)
+            var sb = new StringBuilder(bytes.Length * 2);
+            foreach (var b in bytes)
             {
                 sb.Append(b.ToString("X2"));
             }

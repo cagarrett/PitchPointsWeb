@@ -5,7 +5,7 @@
 
         public string Name { get; set; }
 
-        public int CategoryID { get; set; }
+        public int CategoryId { get; set; }
 
         public int MaxPoints { get; set; }
 
@@ -19,7 +19,7 @@
     public class PublicRoute
     {
         
-        public int? ID { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 

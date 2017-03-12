@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace PitchPointsWeb.Models
 {
@@ -30,6 +27,11 @@ namespace PitchPointsWeb.Models
         public int CompetitionId { get; set; }
 
         public List<LeaderboardEntry> Entries { get; set; }
+
+        public Leaderboard()
+        {
+            Entries = new List<LeaderboardEntry>();
+        }
 
     }
 

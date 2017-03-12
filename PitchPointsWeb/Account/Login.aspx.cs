@@ -45,12 +45,11 @@ namespace PitchPointsWeb.Account
 
         protected void LogIn(object sender, EventArgs e)
         {
-            var validLogin = new AccountController().InternalLogin(new LoginModel { Email = Email.Text, Password = Password.Text });
+            var validLogin = new AccountController().Login(new LoginModel { Email = Email.Text, Password = Password.Text });
 
             if (validLogin.Success)
             {
-                writeCookies(validLogin.PrivateKey);
-                var controller = new AccountController();
+                writeCookies(validLogin.PrivateKeyInfo);
                 Session["Username"] = Email.Text;
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             } else if (validLogin.ResponseMessage == "Incorrect password") {
