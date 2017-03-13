@@ -412,7 +412,6 @@
     </Compile>
     <Compile Include="API\AccountController.cs" />
     <Compile Include="API\AccountVerifier.cs" />
-    <Compile Include="API\APICommon.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />

@@ -1,5 +1,7 @@
-﻿using PitchPointsWeb.Models.API.Response;
+﻿using System;
+using PitchPointsWeb.Models.API.Response;
 using System.ComponentModel;
+using System.Linq;
 
 namespace PitchPointsWeb.Models.API
 {
@@ -44,18 +46,13 @@ namespace PitchPointsWeb.Models.API
         /// <summary>
         /// Returns the description of this APIResponseCode
         /// </summary>
-        /// <param name="code">The code to get the description from</param>
+        /// <param name="value">The code to get the description from</param>
         /// <returns>A string, or null, of the APIResponseCode</returns>
-        public static string GetDescription(this ApiResponseCode code)
+        public static string GetDescription(this ApiResponseCode value)
         {
-            var type = code.GetType();
-            var memberInfo = type.GetMember(code.ToString());
-            var attributes = memberInfo.Length > 0 ? memberInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false) : null;
-            if (attributes != null && attributes.Length > 0)
-            {
-                return attributes[0].ToString();
-            }
-            return null;
+            var field = value.GetType().GetField(value.ToString());
+            var attribute = Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) as DescriptionAttribute;
+            return attribute == null ? value.ToString() : attribute.Description;
         }
 
         public static ApiResponse ToResponse(this ApiResponseCode code)

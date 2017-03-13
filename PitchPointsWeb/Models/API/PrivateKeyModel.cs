@@ -8,8 +8,6 @@
 
         public int PublicKeyId { get; set; }
 
-        public string Username { get; set; }
-
     }
 
 }

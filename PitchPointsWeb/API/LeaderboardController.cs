@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
 using PitchPointsWeb.Models;
 using System.Data.SqlClient;
@@ -29,6 +30,7 @@ namespace PitchPointsWeb.API
                         {
                             var leaderboard = ReadLeaderboard(reader);
                             leaderboard.CompetitionId = request.CompetitionId;
+                            response.Leaderboard = leaderboard;
                         }
                     }
                 }
@@ -43,9 +45,12 @@ namespace PitchPointsWeb.API
         private static Leaderboard ReadLeaderboard(SqlDataReader reader)
         {
             var leaderboard = new Leaderboard();
-            while (reader.Read())
+            if (reader.HasRows)
             {
-                leaderboard.Entries.Add(ReadLeaderboardEntry(reader));
+                while (reader.Read())
+                {
+                    leaderboard.Entries.Add(ReadLeaderboardEntry(reader));
+                }
             }
             leaderboard.Entries = leaderboard.Entries.OrderByDescending(entry => entry.Points).ToList();
             return leaderboard;

@@ -6,14 +6,14 @@ namespace PitchPointsWeb.Models.API.Response
     public class PrivateApiResponse : ApiResponse
     {
 
-        public PrivateKeyInfo PrivateKeyInfo;
+        public PrivateKeyInfo PrivateKeyInfo { get; set; }
 
     }
 
     public class InsertUserResponse : PrivateApiResponse
     {
 
-        public int UserId;
+        public int UserId { get; set; }
 
     }
 

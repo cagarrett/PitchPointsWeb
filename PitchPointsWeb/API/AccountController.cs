@@ -297,7 +297,7 @@ namespace PitchPointsWeb.API
                 command.Parameters.AddWithValue("@userId", userId);
                 command.Parameters.AddWithValue("@key", pair.Item1);
                 command.ExecuteNonQuery();
-                id = (idParam.Value as int?) ?? 0;
+                id = idParam.Value as int? ?? 0;
             }
             return new PrivateKeyInfo
             {
