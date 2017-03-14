@@ -37,6 +37,10 @@ namespace PitchPointsWeb.API
                         response.ResponseCode = insertResponse.ResponseCode;
                         if (insertResponse.Success)
                         {
+                            var databaseUser = GetUserFrom(user.Email);
+                            response.Email = databaseUser.Email;
+                            response.FirstName = databaseUser.FirstName;
+                            response.LastName = databaseUser.LastName;
                             response.PrivateKeyInfo = insertResponse.PrivateKeyInfo;
                         }
                     }
@@ -62,24 +66,28 @@ namespace PitchPointsWeb.API
             var response = new PrivateApiResponse();
             try
             {
-                var databaseUser = GetUserFrom(user.Email);
-                if (databaseUser == null)
+                if (!DoesUserExist(user.Email))
                 {
                     response.ApiResponseCode = ApiResponseCode.UserDoesNotExistEmail;
                     return response;
                 }
-                var connection = GetConnection();
-                connection.Open();
-                if (databaseUser.PasswordsMatch(user.Password))
+                using (var connection = GetConnection())
                 {
-                    response.ApiResponseCode = ApiResponseCode.Success;
-                    response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(databaseUser.Id.Value, connection);
+                    connection.Open();
+                    var databaseUser = GetUserFrom(user.Email);
+                    if (databaseUser.PasswordsMatch(user.Password))
+                    {
+                        response.ApiResponseCode = ApiResponseCode.Success;
+                        response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(databaseUser.Id.Value, connection);
+                        response.Email = databaseUser.Email;
+                        response.FirstName = databaseUser.FirstName;
+                        response.LastName = databaseUser.LastName;
+                    }
+                    else
+                    {
+                        response.ApiResponseCode = ApiResponseCode.IncorrectPassword;
+                    }
                 }
-                else
-                {
-                    response.ApiResponseCode = ApiResponseCode.IncorrectPassword;
-                }
-                connection.Close();
             }
             catch
             {
