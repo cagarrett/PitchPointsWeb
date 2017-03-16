@@ -13,7 +13,7 @@ namespace PitchPointsWeb.Account {
     public partial class Register {
         
         /// <summary>
-        /// ResponseMessage control.
+        /// ErrorMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
@@ -83,5 +83,17 @@ namespace PitchPointsWeb.Account {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList WaiverSigned;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new PitchPointsWeb.SiteMaster Master {
+            get {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

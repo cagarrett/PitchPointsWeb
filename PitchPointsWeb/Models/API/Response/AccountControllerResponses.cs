@@ -12,7 +12,7 @@ namespace PitchPointsWeb.Models.API.Response
 
         public string LastName { get; set; }
 
-        public PrivateKeyInfo PrivateKeyInfo { get; set; }
+        public string Token { get; set; }
 
     }
 
