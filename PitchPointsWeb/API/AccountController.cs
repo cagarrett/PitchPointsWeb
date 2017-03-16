@@ -1,9 +1,9 @@
 ﻿using PitchPointsWeb.Models;
 using System.Web.Http;
 using System;
-using static PitchPointsWeb.API.AccountVerifier;
 using System.Data.SqlClient;
 using System.Data;
+using System.Threading.Tasks;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.Models.API.Response;
 
@@ -19,7 +19,7 @@ namespace PitchPointsWeb.API
         /// <returns>A HttpResponseMessage based on the success / failure of the insertion</returns>
         [AllowAnonymous]
         [HttpPost]
-        public PrivateApiResponse Register([FromBody] RegisterModel user)
+        public async Task<PrivateApiResponse> Register([FromBody] RegisterModel user)
         {
             var response = new PrivateApiResponse();
             try
@@ -33,7 +33,7 @@ namespace PitchPointsWeb.API
                     }
                     else
                     {
-                        var insertResponse = InsertUser(user, connection);
+                        var insertResponse = await InsertUser(user, connection);
                         response.ResponseCode = insertResponse.ResponseCode;
                         if (insertResponse.Success)
                         {
@@ -41,7 +41,7 @@ namespace PitchPointsWeb.API
                             response.Email = databaseUser.Email;
                             response.FirstName = databaseUser.FirstName;
                             response.LastName = databaseUser.LastName;
-                            response.PrivateKeyInfo = insertResponse.PrivateKeyInfo;
+                            response.Token = insertResponse.Token;
                         }
                     }
                 }
@@ -61,7 +61,7 @@ namespace PitchPointsWeb.API
         /// <returns>A JSON dictionary with a private key if the login was successful</returns>
         [AllowAnonymous]
         [HttpPost]
-        public PrivateApiResponse Login([FromBody] LoginModel user)
+        public async Task<PrivateApiResponse> Login([FromBody] LoginModel user)
         {
             var response = new PrivateApiResponse();
             try
@@ -78,7 +78,7 @@ namespace PitchPointsWeb.API
                     if (databaseUser.PasswordsMatch(user.Password))
                     {
                         response.ApiResponseCode = ApiResponseCode.Success;
-                        response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(databaseUser.Id.Value, connection);
+                        response.Token = await CreateToken(databaseUser, false);
                         response.Email = databaseUser.Email;
                         response.FirstName = databaseUser.FirstName;
                         response.LastName = databaseUser.LastName;
@@ -237,10 +237,10 @@ namespace PitchPointsWeb.API
             return GetUserFrom(email) != null;
         }
 
-        private static InsertUserResponse InsertUser(RegisterModel model, SqlConnection connection)
+        private async Task<PrivateApiResponse> InsertUser(RegisterModel model, SqlConnection connection)
         {
             var user = Models.User.CreateFrom(model);
-            var response = new InsertUserResponse();
+            var response = new PrivateApiResponse();
             try
             {
                 if (connection.State == ConnectionState.Closed)
@@ -264,10 +264,8 @@ namespace PitchPointsWeb.API
                     var outErrorCode = (errorCode.Value as int?) ?? 0;
                     if (outErrorCode == 0)
                     {
-                        var userId = (int)userIdParam.Value;
                         response.ApiResponseCode = ApiResponseCode.Success;
-                        response.UserId = userId;
-                        response.PrivateKeyInfo = CreateAndInsertPublicKeyFrom(userId, connection);
+                        response.Token = await CreateToken(user, false);
                     }
                     else
                     {
@@ -279,39 +277,6 @@ namespace PitchPointsWeb.API
                 response.ApiResponseCode = ApiResponseCode.InternalError;
             }
             return response;
-        }
-
-        /// <summary>
-        /// Creates and inserts a Public Key / Public Key ID into the database with a given connection.
-        /// The connection provided is not closed and must be closed by the invoked methods used to
-        /// call this method.
-        /// </summary>
-        /// <param name="userId">The user ID to create a key pair for</param>
-        /// <param name="connection">The pre-existing connection to use to access the database</param>
-        /// <returns>A PrivateKeyInfo for the user</returns>
-        private static PrivateKeyInfo CreateAndInsertPublicKeyFrom(int userId, SqlConnection connection)
-        {
-            var pair = GenerateKeyPair();
-            int id;
-            if (connection.State == ConnectionState.Closed)
-            {
-                connection.Open();
-            }
-            using (var command = new SqlCommand("InsertPublicKey", connection))
-            {
-                command.CommandType = CommandType.StoredProcedure;
-                var idParam = new SqlParameter("@id", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                command.Parameters.Add(idParam);
-                command.Parameters.AddWithValue("@userId", userId);
-                command.Parameters.AddWithValue("@key", pair.Item1);
-                command.ExecuteNonQuery();
-                id = idParam.Value as int? ?? 0;
-            }
-            return new PrivateKeyInfo
-            {
-                PrivateKey = Convert.ToBase64String(pair.Item2, Base64FormattingOptions.None),
-                PublicKeyId = id
-            };
         }
 
         /// <summary>
@@ -327,7 +292,7 @@ namespace PitchPointsWeb.API
                 FirstName = ReadObject(reader, "FirstName", ""),
                 LastName = ReadObject(reader, "LastName", ""),
                 Email = ReadObject(reader, "Email", ""),
-                EmailVerified = ReadObject(reader, "EmailConfirmed", (byte) 0) == (byte) 1,
+                EmailVerified = ReadObject(reader, "EmailConfirmed", (byte) 0) == 1,
                 PasswordHash = ReadObject<byte[]>(reader, "PasswordHash", null),
                 Salt = ReadObject<byte[]>(reader, "Salt", null)
             };

@@ -1,11 +1,29 @@
-﻿using System.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
+using Jose;
+using Microsoft.Azure.KeyVault;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Newtonsoft.Json;
+using PitchPointsWeb.Models;
 
 namespace PitchPointsWeb.API
 {
     public class MasterController : ApiController
     {
+
+        private static readonly KeyVaultClient KeyClient = new KeyVaultClient(async (auth, resource, scope) =>
+        {
+            var credential = new ClientCredential(WebConfigurationManager.AppSettings["ClientId"], WebConfigurationManager.AppSettings["ClientSecret"]);
+            var context = new AuthenticationContext(auth, null);
+            var token = await context.AcquireTokenAsync(resource, credential);
+            return token.AccessToken;
+        });
 
         /// <summary>
         /// Obtains the default connection used in this project
@@ -18,6 +36,49 @@ namespace PitchPointsWeb.API
                 ConnectionString =
                     System.Configuration.ConfigurationManager.ConnectionStrings["PitchPointsDB"].ConnectionString
             };
+        }
+
+        internal async Task<string> CreateToken(User user, bool isAdmin)
+        {
+            var payload = new Dictionary<string, object>
+            {
+                {"email", user.Email},
+                {"exp", DateTime.Now.AddHours(isAdmin ? 2 : 1).Ticks },
+                {"admin", isAdmin }
+            };
+            var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
+            var keyBytes = Encoding.UTF8.GetBytes(key.Value);
+            string token;
+            try
+            {
+                token = JWT.Encode(payload, keyBytes, JwsAlgorithm.HS256);
+            }
+            catch
+            {
+                token = null;
+            }
+            return token;
+        }
+
+        internal async Task<bool> VerifyToken(string token)
+        {
+            var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
+            var keyBytes = Encoding.UTF8.GetBytes(key.Value);
+            bool status;
+            try
+            {
+                var json = JWT.Decode(token, keyBytes, JwsAlgorithm.HS256);
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
+                var isAdmin = dict["admin"];
+                var date = new DateTime((long) dict["exp"]);
+                var hoursDifference = (date - DateTime.Now).TotalMinutes;
+                status = hoursDifference > (isAdmin ? 2.0 : 1.0);
+            }
+            catch
+            {
+                status = false;
+            }
+            return status;
         }
 
         /// <summary>
