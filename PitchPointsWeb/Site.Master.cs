@@ -72,6 +72,16 @@ namespace PitchPointsWeb
 
         }
 
+        public void WriteToken(string token)
+        {
+            Response.Cookies.Add(new HttpCookie("Token") { Value = token });
+        }
+
+        public string ReadToken()
+        {
+            return Request.Cookies["Token"]?.Value;
+        }
+
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
