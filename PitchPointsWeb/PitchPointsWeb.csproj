@@ -281,6 +281,7 @@
     <Content Include="Assets\ppCampusHelv.png" />
     <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
     <Content Include="Assets\PPHangLogoTrim.png" />
+    <Content Include="RegisterForComp.aspx" />
     <Content Include="Log_A_Climb.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -467,6 +468,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="RegisterForComp.aspx.cs">
+      <DependentUpon>RegisterForComp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterForComp.aspx.designer.cs">
+      <DependentUpon>RegisterForComp.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Log_A_Climb.aspx.cs">
       <DependentUpon>Log_A_Climb.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
