@@ -31,6 +31,8 @@ namespace PitchPointsWeb.Models
 
         public string Description { get; set; }
 
+        public bool IsRegistered { get; set; }
+
         public void AddRule(CompetitionRule rule)
         {
             if (_mRules.Count(temp => temp.Id == rule.Id) == 0)

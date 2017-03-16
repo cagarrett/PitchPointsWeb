@@ -11,6 +11,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.API
 {
@@ -60,25 +61,23 @@ namespace PitchPointsWeb.API
             return token;
         }
 
-        internal async Task<bool> VerifyToken(string token)
+        internal async Task<TokenContentModel> ConvertTokenToModel(string token)
         {
             var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
             var keyBytes = Encoding.UTF8.GetBytes(key.Value);
-            bool status;
+            var model = new TokenContentModel();
             try
             {
                 var json = JWT.Decode(token, keyBytes, JwsAlgorithm.HS256);
                 var dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
-                var isAdmin = dict["admin"];
-                var date = new DateTime((long) dict["exp"]);
-                var hoursDifference = (date - DateTime.Now).TotalMinutes;
-                status = hoursDifference > (isAdmin ? 2.0 : 1.0);
+                model.Email = dict["email"];
+                model.ExpDateTime = new DateTime((long) dict["exp"]);
             }
             catch
             {
-                status = false;
+                // ignored
             }
-            return status;
+            return model;
         }
 
         /// <summary>

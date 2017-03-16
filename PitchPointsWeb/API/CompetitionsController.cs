@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Web.Http;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.Models.API.Response;
@@ -15,16 +17,17 @@ namespace PitchPointsWeb.API
         [HttpGet]
         public ApiResponse Get()
         {
-            return GetCompetitionsFor(0);
+            return GetCompetitionsFor("");
         }
 
         [HttpPost]
-        public ApiResponse Get(UserIDSignedData data)
+        public async Task<ApiResponse> Get([FromBody] TokenModel data)
         {
-            return data.IsValid() ? GetCompetitionsFor(data.UserID) : ApiResponseCode.AuthError.ToResponse();
+            var content = await data.ToContent();
+            return content.IsValid() ? GetCompetitionsFor(content.Email) : ApiResponseCode.AuthError.ToResponse();
         }
 
-        private static ApiResponse GetCompetitionsFor(int userId)
+        private static ApiResponse GetCompetitionsFor(string email)
         {
             var response = new CompetitionsResponse();
             try
@@ -34,7 +37,8 @@ namespace PitchPointsWeb.API
                     connection.Open();
                     using (var command = new SqlCommand("GetActiveCompetitions", connection))
                     {
-                        command.Parameters.AddWithValue("@userId", userId);
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
                         using (var reader = command.ExecuteReader())
                         {
                             while (reader.Read())
@@ -45,7 +49,7 @@ namespace PitchPointsWeb.API
                     }
                 }
             }
-            catch
+            catch (Exception e)
             {
                 response.ApiResponseCode = ApiResponseCode.InternalError;
             }
@@ -58,7 +62,8 @@ namespace PitchPointsWeb.API
             {
                 CompetitionTitle = ReadObject(reader, "CompTitle", ""),
                 Details = ReadObject(reader, "CompDetails", ""),
-                Description = ReadObject(reader, "Description", "")
+                Description = ReadObject(reader, "Description", ""),
+                IsRegistered = ReadObject(reader, "IsRegistered", 0) == 1
             };
             var id = ReadObjectOrNull<int>(reader, "ID");
             if (id.HasValue)

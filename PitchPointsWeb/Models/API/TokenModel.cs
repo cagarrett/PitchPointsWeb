@@ -33,7 +33,7 @@ namespace PitchPointsWeb.Models.API
 
         public bool IsValid()
         {
-            return (ExpDateTime - DateTime.Now).TotalHours > 1.0;
+            return (ExpDateTime - DateTime.Now).TotalHours < 1.0;
         }
 
     }

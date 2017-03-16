@@ -450,7 +450,6 @@
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
-    <Compile Include="API\AccountVerifier.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
@@ -492,6 +491,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\ApiResponseCode.cs" />
+    <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
     <Compile Include="Models\API\Response\ApiResponse.cs" />
@@ -502,7 +502,6 @@
     <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaderboardModels.cs" />
-    <Compile Include="Models\API\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\LocationModels.cs" />
     <Compile Include="Models\RouteModels.cs" />

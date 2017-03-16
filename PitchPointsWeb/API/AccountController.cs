@@ -159,10 +159,11 @@ namespace PitchPointsWeb.API
         }
 
         [HttpPost]
-        public UserSnapshotResponse GetUserSnapshot([FromBody] UserIDSignedData data)
+        public async Task<UserSnapshotResponse> GetUserSnapshot([FromBody] TokenModel model)
         {
             var snapshot = new UserSnapshotResponse();
-            if (!data.IsValid())
+            var content = await model.ToContent();
+            if (!content.IsValid())
             {
                 snapshot.ApiResponseCode = ApiResponseCode.AuthError;
                 return snapshot;
@@ -175,7 +176,7 @@ namespace PitchPointsWeb.API
                     using (var command = new SqlCommand("GetUserSnapshot", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@userId", data.UserID);
+                        command.Parameters.AddWithValue("@userId", content.Email);
                         using (var reader = command.ExecuteReader())
                         {
                             snapshot.Points = ReadObject(reader, "Points", 0);
