@@ -1,6 +1,12 @@
 <%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="PitchPointsWeb.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>About Us</h2>
+
+    <p>Pitch Points is currently an undergraduate client project that gave our team an opportunity to solve a problem while working with the activates we love and frequent. Being active climbers, we always noticed and were agonized by the flaws of the common competition scoring methods. From there the project was born under the wing of Hoosier Heights with the goal to use modern tech to revamp both the competition and the scoring process.</p>
+    <br />
+    <p>We aim to pursue and improve this project after our mandated and grade determining deadline. We appreciate any comments or criticisms, and for inquiries in Premium Accounts please do not hesitate to contact us. </p>
+
     <h2>Contact Us</h2>
 
     <div class="form-horizontal">
