@@ -176,12 +176,15 @@ namespace PitchPointsWeb.API
                     using (var command = new SqlCommand("GetUserSnapshot", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@userId", content.Email);
+                        command.Parameters.Add("@email", SqlDbType.NVarChar).Value = content.Email;
                         using (var reader = command.ExecuteReader())
                         {
-                            snapshot.Points = ReadObject(reader, "Points", 0);
-                            snapshot.Falls = ReadObject(reader, "Falls", 0);
-                            snapshot.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
+                            if (reader.Read())
+                            {
+                                snapshot.Points = ReadObject(reader, "Points", 0);
+                                snapshot.Falls = ReadObject(reader, "Falls", 0);
+                                snapshot.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
+                            }
                             if (reader.NextResult())
                             {
                                 while (reader.Read())
