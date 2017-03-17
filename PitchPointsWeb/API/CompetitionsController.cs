@@ -32,7 +32,7 @@ namespace PitchPointsWeb.API
             }
             else
             {
-                response = ApiResponseCode.AuthError.ToResponse();
+                response = ApiResponseCode.AuthError.ToResponse<CompetitionsResponse>();
             }
             return response;
         }

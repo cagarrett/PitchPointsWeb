@@ -100,9 +100,10 @@ namespace PitchPointsWeb.API
         public async Task<UserSnapshotResponse> GetUserSnapshot([FromBody] TokenModel model)
         {
             var valid = await model.Validate();
-            var response = new UserSnapshotResponse();
+            UserSnapshotResponse response;
             if (valid)
             {
+                response = new UserSnapshotResponse();
                 try
                 {
                     using (var connection = GetConnection())
@@ -130,6 +131,7 @@ namespace PitchPointsWeb.API
                             }
                         }
                     }
+                    response.Token = model.Token;
                 }
                 catch
                 {
@@ -138,7 +140,7 @@ namespace PitchPointsWeb.API
             }
             else
             {
-                response.ApiResponseCode = ApiResponseCode.AuthError;
+                response = ApiResponseCode.AuthError.ToResponse<UserSnapshotResponse>();
             }
             return response;
         }
