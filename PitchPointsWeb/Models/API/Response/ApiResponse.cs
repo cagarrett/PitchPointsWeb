@@ -59,4 +59,12 @@ namespace PitchPointsWeb.Models.API.Response
         }
 
     }
+
+    public class TokenApiResponse : ApiResponse
+    {
+
+        public string Token { get; set; }
+
+    }
+
 }

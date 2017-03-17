@@ -15,19 +15,29 @@ namespace PitchPointsWeb.API
     {
 
         [HttpGet]
-        public ApiResponse Get()
+        public CompetitionsResponse Get()
         {
             return GetCompetitionsFor("");
         }
 
         [HttpPost]
-        public async Task<ApiResponse> Get([FromBody] TokenModel data)
+        public async Task<CompetitionsResponse> Get([FromBody] TokenModel data)
         {
-            var content = await data.ToContent();
-            return content.IsValid() ? GetCompetitionsFor(content.Email) : ApiResponseCode.AuthError.ToResponse();
+            var valid = await data.Validate();
+            CompetitionsResponse response;
+            if (valid)
+            {
+                response = GetCompetitionsFor(data.Content.Email);
+                response.Token = data.Token;
+            }
+            else
+            {
+                response = ApiResponseCode.AuthError.ToResponse();
+            }
+            return response;
         }
 
-        private static ApiResponse GetCompetitionsFor(string email)
+        private static CompetitionsResponse GetCompetitionsFor(string email)
         {
             var response = new CompetitionsResponse();
             try
@@ -49,7 +59,7 @@ namespace PitchPointsWeb.API
                     }
                 }
             }
-            catch (Exception e)
+            catch
             {
                 response.ApiResponseCode = ApiResponseCode.InternalError;
             }

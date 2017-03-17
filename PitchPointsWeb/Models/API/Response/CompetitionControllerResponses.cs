@@ -2,7 +2,7 @@
 
 namespace PitchPointsWeb.Models.API.Response
 {
-    public class CompetitionsResponse : ApiResponse
+    public class CompetitionsResponse : TokenApiResponse
     {
 
         public List<Competition> Competitions { get; set; }
