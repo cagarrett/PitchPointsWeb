@@ -41,7 +41,7 @@ namespace PitchPointsWeb.API
             };
         }
 
-        internal async Task<string> CreateToken(User user)
+        internal static async Task<string> CreateToken(User user)
         {
             var model = new TokenContent()
             {
@@ -52,7 +52,7 @@ namespace PitchPointsWeb.API
             return token;
         }
 
-        internal async Task<string> CreateToken(TokenContent content)
+        internal static async Task<string> CreateToken(TokenContent content)
         {
             var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
             var keyBytes = Encoding.UTF8.GetBytes(key.Value);
@@ -72,9 +72,9 @@ namespace PitchPointsWeb.API
         /// Attempts to refresh this token by checking the validity of its contents.
         /// If the content is not valid, null is returned.
         /// </summary>
-        internal async Task<string> RefreshToken(TokenContent model)
+        internal static async Task<string> RefreshToken(TokenContent model)
         {
-            if (model.IsValid())
+            if (model.IsExpired())
             {
                 model.UpdateExpiryTime();
             }
@@ -94,7 +94,7 @@ namespace PitchPointsWeb.API
             return token;
         }
 
-        internal async Task<Dictionary<string,dynamic>> ExtractTokenContent(string token)
+        internal static async Task<Dictionary<string,dynamic>> ExtractTokenContent(string token)
         {
             var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
             var keyBytes = Encoding.UTF8.GetBytes(key.Value);
@@ -165,7 +165,7 @@ namespace PitchPointsWeb.API
             }
         }
 
-        private string Sha256(byte[] message)
+        internal static string Sha256(byte[] message)
         {
             var sha256 = new SHA256Managed();
             var hash = sha256.ComputeHash(message);

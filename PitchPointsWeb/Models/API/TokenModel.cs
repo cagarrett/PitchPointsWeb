@@ -17,12 +17,8 @@ namespace PitchPointsWeb.Models.API
         private async Task ExtractContent()
         {
             if (Content != null) return;
-            var controller = new MasterController();
-            var dict = await controller.ExtractTokenContent(Token);
-            if (dict != null)
-            {
-                Content = new TokenContent(dict);
-            }
+            var dict = await MasterController.ExtractTokenContent(Token);
+            Content = dict != null ? new TokenContent(dict) : null;
         }
 
         public async Task<bool> Validate()
@@ -32,7 +28,7 @@ namespace PitchPointsWeb.Models.API
             {
                 return false;
             }
-            Token = await new MasterController().RefreshToken(Content);
+            Token = await MasterController.RefreshToken(Content);
             return Token != null;
         }
 
@@ -72,9 +68,9 @@ namespace PitchPointsWeb.Models.API
             ExpDateTime = DateTime.Now.AddDays(ValidTokenDays);
         }
 
-        public bool IsValid()
+        public bool IsExpired()
         {
-            return (ExpDateTime - DateTime.Now).TotalDays < ValidTokenDays;
+            return (ExpDateTime - DateTime.Now).TotalDays > ValidTokenDays;
         }
 
         public Dictionary<string, object> ToDictionary()
