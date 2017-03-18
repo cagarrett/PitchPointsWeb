@@ -1,9 +1,7 @@
 ﻿using System;
-using PitchPointsWeb.Models.API.Response;
 using System.ComponentModel;
-using System.Linq;
 
-namespace PitchPointsWeb.Models.API
+namespace PitchPointsWeb.Models.API.Response
 {
     /// <summary>
     /// APIResponseCode holds all error codes found in the API namespace.
@@ -55,9 +53,9 @@ namespace PitchPointsWeb.Models.API
             return attribute == null ? value.ToString() : attribute.Description;
         }
 
-        public static ApiResponse ToResponse(this ApiResponseCode code)
+        public static T ToResponse<T>(this ApiResponseCode code) where T: ApiResponse, new()
         {
-            return new ApiResponse(code);
+            return new T {ApiResponseCode = code};
         }
 
     }

@@ -498,7 +498,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\API\ApiResponseCode.cs" />
+    <Compile Include="Models\API\Response\ApiResponseCode.cs" />
     <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
