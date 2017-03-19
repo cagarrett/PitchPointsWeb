@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace PitchPointsWeb.Models
 {
@@ -12,26 +11,17 @@ namespace PitchPointsWeb.Models
 
         public Location Location { get; set; }
 
-        private List<CompetitionRule> mRules = new List<CompetitionRule>();
+        private readonly List<CompetitionRule> _mRules = new List<CompetitionRule>();
 
-        public IEnumerable<CompetitionRule> Rules
-        {
-            get { return mRules.AsReadOnly(); }
-        }
+        public IEnumerable<CompetitionRule> Rules => _mRules.AsReadOnly();
 
-        private List<CompetitionType> mTypes = new List<CompetitionType>();
+        private readonly List<CompetitionType> _mTypes = new List<CompetitionType>();
 
-        public IEnumerable<CompetitionType> Types
-        {
-            get { return mTypes.AsReadOnly(); }
-        }
+        public IEnumerable<CompetitionType> Types => _mTypes.AsReadOnly();
 
-        private List<CompetitionCategory> mCategories = new List<CompetitionCategory>();
+        private readonly List<CompetitionCategory> _mCategories = new List<CompetitionCategory>();
 
-        public IEnumerable<CompetitionCategory> Categories
-        {
-            get { return mCategories.AsReadOnly(); }
-        }
+        public IEnumerable<CompetitionCategory> Categories => _mCategories.AsReadOnly();
 
         public string Details { get; set; }
 
@@ -41,44 +31,68 @@ namespace PitchPointsWeb.Models
 
         public string Description { get; set; }
 
+        public bool IsRegistered { get; set; }
+
         public void AddRule(CompetitionRule rule)
         {
-            if (mRules.Count(temp => temp.ID == rule.ID) == 0)
+            if (_mRules.Count(temp => temp.Id == rule.Id) == 0)
             {
-                mRules.Add(rule);
+                _mRules.Add(rule);
             }
         }
 
         public void RemoveRule(CompetitionRule rule)
         {
-            mRules.RemoveAll(temp => temp.ID == rule.ID);
+            _mRules.RemoveAll(temp => temp.Id == rule.Id);
         }
 
         public void AddType(CompetitionType type)
         {
-            if (mTypes.Count(temp => temp.ID == type.ID) == 0)
+            if (_mTypes.Count(temp => temp.Id == type.Id) == 0)
             {
-                mTypes.Add(type);
+                _mTypes.Add(type);
             }
         }
 
         public void RemoveType(CompetitionType type)
         {
-            mTypes.RemoveAll(temp => temp.ID == type.ID);
+            _mTypes.RemoveAll(temp => temp.Id == type.Id);
         }
 
         public void AddCategory(CompetitionCategory category)
         {
-            if (mCategories.Count(temp => temp.ID == category.ID) == 0)
+            if (_mCategories.Count(temp => temp.Id == category.Id) == 0)
             {
-                mCategories.Add(category);
+                _mCategories.Add(category);
             }
         }
 
         public void RemoveCategory(CompetitionCategory category)
         {
-            mCategories.RemoveAll(temp => temp.ID == category.ID);
+            _mCategories.RemoveAll(temp => temp.Id == category.Id);
         }
 
     }
+
+    public class CompetitionRule : UpdateableData
+    {
+
+        public string Description { get; set; }
+
+    }
+
+    public class CompetitionCategory : UpdateableData
+    {
+
+        public string Name { get; set; }
+
+    }
+
+    public class CompetitionType : UpdateableData
+    {
+
+        public string Type { get; set; }
+
+    }
+
 }
