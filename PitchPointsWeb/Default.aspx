@@ -23,41 +23,41 @@
                     <ContentTemplate>
                         <asp:Label runat="server" ID="BeginnerDateStampLabel" />
                         <table class="table-striped table-bordered table-list">
-                    <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </ContentTemplate>
                 </asp:UpdatePanel>
 
@@ -73,41 +73,41 @@
                     <ContentTemplate>
                         <asp:Label runat="server" ID="IntermediateDateStampLabel" />
                         <table class="table-striped table-bordered table-list">
-                    <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
@@ -121,41 +121,41 @@
                     <ContentTemplate>
                         <asp:Label runat="server" ID="AdvancedDateStampLabel" />
                         <table class="table-striped table-bordered table-list">
-                    <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
@@ -169,45 +169,45 @@
                     <ContentTemplate>
                         <asp:Label runat="server" ID="OpenDateStampLabel" />
                         <table class="table-striped table-bordered table-list">
-                    <thead>
-                        <tr>
-                            <th>Place</th>
-                            <th>Name</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>1000</td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>John Smith</td>
-                            <td>900</td>
-                        </tr>
-                    </tbody>
-                </table>
+                            <thead>
+                                <tr>
+                                    <th>Place</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>1000</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>John Smith</td>
+                                    <td>900</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
         </div>
-        
+
     </div>
 </asp:Content>
