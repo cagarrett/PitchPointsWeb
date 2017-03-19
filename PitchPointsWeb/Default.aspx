@@ -3,7 +3,6 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Leaderboard</h2>
-    <hr />
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#beginner">Beginner</a></li>
@@ -22,42 +21,32 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="BeginnerDateStampLabel" />
-                        <table class="table-striped table-bordered table-list">
-                            <thead>
-                                <tr>
-                                    <th>Place</th>
-                                    <th>Name</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="White" />
+                            <Columns>
+                                <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
+                                <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
+                                <asp:BoundField DataField="LastName" HeaderText="Last Name " SortExpression="LastName" />
+                                <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
+                                <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
+                            </Columns>
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#E3EAEB" />
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                            <SortedAscendingHeaderStyle BackColor="#246B61" />
+                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                            <SortedDescendingHeaderStyle BackColor="#15524A" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="1" Name="catId" Type="Int32" />
+                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </ContentTemplate>
                 </asp:UpdatePanel>
 
@@ -72,42 +61,32 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="IntermediateDateStampLabel" />
-                        <table class="table-striped table-bordered table-list">
-                            <thead>
-                                <tr>
-                                    <th>Place</th>
-                                    <th>Name</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="White" />
+                            <Columns>
+                                <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
+                                <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
+                                <asp:BoundField DataField="LastName" HeaderText="Last Name " SortExpression="LastName" />
+                                <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
+                                <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
+                            </Columns>
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#E3EAEB" />
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                            <SortedAscendingHeaderStyle BackColor="#246B61" />
+                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                            <SortedDescendingHeaderStyle BackColor="#15524A" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="2" Name="catId" Type="Int32" />
+                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
@@ -120,42 +99,32 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="AdvancedDateStampLabel" />
-                        <table class="table-striped table-bordered table-list">
-                            <thead>
-                                <tr>
-                                    <th>Place</th>
-                                    <th>Name</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="White" />
+                            <Columns>
+                                <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
+                                <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
+                                <asp:BoundField DataField="LastName" HeaderText="Last Name " SortExpression="LastName" />
+                                <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
+                                <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
+                            </Columns>
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#E3EAEB" />
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                            <SortedAscendingHeaderStyle BackColor="#246B61" />
+                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                            <SortedDescendingHeaderStyle BackColor="#15524A" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="3" Name="catId" Type="Int32" />
+                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
@@ -168,42 +137,32 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="OpenDateStampLabel" />
-                        <table class="table-striped table-bordered table-list">
-                            <thead>
-                                <tr>
-                                    <th>Place</th>
-                                    <th>Name</th>
-                                    <th>Score</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>John Doe</td>
-                                    <td>1000</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>John Smith</td>
-                                    <td>900</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle BackColor="White" />
+                            <Columns>
+                                <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
+                                <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
+                                <asp:BoundField DataField="LastName" HeaderText="Last Name " SortExpression="LastName" />
+                                <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
+                                <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
+                            </Columns>
+                            <EditRowStyle BackColor="#7C6F57" />
+                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                            <RowStyle BackColor="#E3EAEB" />
+                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                            <SortedAscendingHeaderStyle BackColor="#246B61" />
+                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                            <SortedDescendingHeaderStyle BackColor="#15524A" />
+                        </asp:GridView>
+                        <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
+                            <SelectParameters>
+                                <asp:Parameter DefaultValue="4" Name="catId" Type="Int32" />
+                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                            </SelectParameters>
+                        </asp:SqlDataSource>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>
