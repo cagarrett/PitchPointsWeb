@@ -1,7 +1,7 @@
 ﻿
 namespace PitchPointsWeb.Models.API
 {
-    public class RegistrationModel: TokenModel
+    public class CompetitionRegistrationModel: TokenModel
     {
 
         /// <summary>

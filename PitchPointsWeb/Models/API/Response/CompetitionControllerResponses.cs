@@ -14,7 +14,7 @@ namespace PitchPointsWeb.Models.API.Response
 
     }
 
-    public class RegistrationStatusResponse : TokenApiResponse
+    public class CompetitionRegistrationResponse : TokenApiResponse
     {
 
         public int CompetitionId { get; set; }

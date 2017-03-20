@@ -37,10 +37,10 @@ namespace PitchPointsWeb.API
             return response;
         }
 
-        public async Task<RegistrationStatusResponse> ModifyCompetitionStatus([FromBody] RegistrationModel model)
+        public async Task<CompetitionRegistrationResponse> ModifyCompetitionStatus([FromBody] CompetitionRegistrationModel model)
         {
             var valid = await model.Validate();
-            RegistrationStatusResponse response;
+            CompetitionRegistrationResponse response;
             if (valid)
             {
                 response = ChangeRegistrationStatus(model);
@@ -48,14 +48,14 @@ namespace PitchPointsWeb.API
             }
             else
             {
-                response = ApiResponseCode.AuthError.ToResponse<RegistrationStatusResponse>();
+                response = ApiResponseCode.AuthError.ToResponse<CompetitionRegistrationResponse>();
             }
             return response;
         }
 
-        private static RegistrationStatusResponse ChangeRegistrationStatus(RegistrationModel model)
+        private static CompetitionRegistrationResponse ChangeRegistrationStatus(CompetitionRegistrationModel model)
         {
-            var response = new RegistrationStatusResponse();
+            var response = new CompetitionRegistrationResponse();
             try
             {
                 using (var connection = GetConnection())
