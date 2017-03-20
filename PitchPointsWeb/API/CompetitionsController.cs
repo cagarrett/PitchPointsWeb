@@ -73,31 +73,10 @@ namespace PitchPointsWeb.API
                         command.Parameters.Add(outResponse);
                         command.ExecuteNonQuery();
                         response.CompetitionId = model.CompetitionId;
+                        response.ClimberId = (int)outClimber.Value;
+                        response.IsRegistered = (response.ClimberId != 0);
                         var responseCode = (int) outResponse.Value;
-                        switch (responseCode)
-                        {
-                            case 0:
-                                response.ClimberId = (int) outClimber.Value;
-                                response.IsRegistered = (response.ClimberId != 0);
-                                break;
-                            case 1:
-                                response.ClimberId = (int)outClimber.Value;
-                                response.ApiResponseCode = ApiResponseCode.CompetitionClosed;
-                                break;
-                            case 2:
-                                response.ClimberId = (int) outClimber.Value;
-                                response.ApiResponseCode = ApiResponseCode.AlreadyRegisteredForComp;
-                                break;
-                            case 3:
-                                response.ApiResponseCode = ApiResponseCode.AlreadyUnregisteredForComp;
-                                break;
-                            case 4:
-                                response.ApiResponseCode = ApiResponseCode.AuthError;
-                                break;
-                            default:
-                                response.ApiResponseCode = ApiResponseCode.InternalError;
-                                break;
-                        }
+                        response.ApiResponseCode = responseCode.ParseCompetitionRegistrationCode();
                     }
                 }
             }

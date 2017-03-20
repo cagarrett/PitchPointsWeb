@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Http;
 using PitchPointsWeb.Models;
 using System.Data.SqlClient;
-using PitchPointsWeb.Models.API;
 using PitchPointsWeb.Models.API.Response;
 
 namespace PitchPointsWeb.API

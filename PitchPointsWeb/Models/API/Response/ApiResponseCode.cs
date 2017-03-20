@@ -68,6 +68,19 @@ namespace PitchPointsWeb.Models.API.Response
             return new T {ApiResponseCode = code};
         }
 
+        public static ApiResponseCode ParseCompetitionRegistrationCode(this int code)
+        {
+            switch (code)
+            {
+                case 0: return ApiResponseCode.Success;
+                case 1: return ApiResponseCode.CompetitionClosed;
+                case 2: return ApiResponseCode.AlreadyRegisteredForComp;
+                case 3: return ApiResponseCode.AlreadyUnregisteredForComp;
+                case 4: return ApiResponseCode.AuthError;
+                default: return ApiResponseCode.InternalError;
+            }
+        }
+
     }
 
 }

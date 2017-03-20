@@ -467,6 +467,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\API\CompetitionControllerModels.cs" />
     <Compile Include="RegisterForComp.aspx.cs">
       <DependentUpon>RegisterForComp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
