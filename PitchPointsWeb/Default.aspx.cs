@@ -7,31 +7,11 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb
 {
-    public partial class _Default : Page
+    public partial class Default : System.Web.UI.Page
     {
-        private void Get_Leaders(String Category)
-        {
-
-        }
         protected void Page_Load(object sender, EventArgs e)
         {
 
-        }
-        protected void BeginnerUpdateTimer_Tick(object sender, EventArgs e)
-        {
-            BeginnerDateStampLabel.Text = DateTime.Now.ToString();
-        }
-        protected void IntermediateUpdateTimer_Tick(object sender, EventArgs e)
-        {
-            IntermediateDateStampLabel.Text = DateTime.Now.ToString();
-        }
-        protected void AdvancedUpdateTimer_Tick(object sender, EventArgs e)
-        {
-            AdvancedDateStampLabel.Text = DateTime.Now.ToString();
-        }
-        protected void OpenUpdateTimer_Tick(object sender, EventArgs e)
-        {
-            OpenDateStampLabel.Text = DateTime.Now.ToString();
         }
     }
 }
