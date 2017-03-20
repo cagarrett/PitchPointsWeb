@@ -7,36 +7,36 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PitchPointsWeb.Account {
+namespace PitchPointsWeb {
     
     
-    public partial class VerifyPhoneNumber {
+    public partial class RegisterForComp {
         
         /// <summary>
-        /// ResponseMessage control.
+        /// GridView1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal ErrorMessage;
+        protected global::System.Web.UI.WebControls.GridView GridView1;
         
         /// <summary>
-        /// PhoneNumber control.
+        /// Subject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField PhoneNumber;
+        protected global::System.Web.UI.WebControls.TextBox Subject;
         
         /// <summary>
-        /// Code control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Code;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
     }
 }

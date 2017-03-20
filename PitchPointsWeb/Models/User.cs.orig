@@ -1,10 +1,39 @@
-﻿using PitchPointsWeb.Models.API;
-using System;
+﻿using System;
 using System.Linq;
 using System.Security.Cryptography;
 
 namespace PitchPointsWeb.Models
 {
+
+    /// <summary>
+    /// Represents a user that is used in the API during registration
+    /// </summary>
+    public class RegisterAPIUser
+    {
+
+        public string Email { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public DateTime DateOfBirth { get; set; }
+
+        public string Password { get; set; }
+
+    }
+
+    /// <summary>
+    /// Represents a user that is used in the API during logging in
+    /// </summary>
+    public class LoginAPIUser
+    {
+
+        public string Email { get; set; }
+
+        public string Password { get; set; }
+
+    }
 
     public class User : UpdateableData
     {
@@ -45,15 +74,13 @@ namespace PitchPointsWeb.Models
             return UserUtils.DoPasswordsMatch(password, PasswordHash, Salt);
         }
 
-        public static User CreateFrom(RegisterModel user)
+        public static User CreateFrom(RegisterAPIUser user)
         {
-            var normalUser = new User
-            {
-                Email = user.Email,
-                DateOfBirth = user.DateOfBirth,
-                FirstName = user.FirstName,
-                LastName = user.LastName
-            };
+            User normalUser = new User();
+            normalUser.Email = user.Email;
+            normalUser.DateOfBirth = user.DateOfBirth;
+            normalUser.FirstName = user.FirstName;
+            normalUser.LastName = user.LastName;
             normalUser.UpdatePassword(user.Password);
             normalUser.DateRegistered = DateTime.Now;
             return normalUser;
@@ -66,8 +93,17 @@ namespace PitchPointsWeb.Models
 
         private static readonly int MAX_SALT_LENGTH = 16;
 
+<<<<<<< HEAD
+        //private static readonly int HASH_LEGNTH = 64;
+
         private static readonly int PASSWORD_ITERATIONS = 1024;
 
+        //private static readonly int NUMBER_OF_BYTES = 64;
+
+=======
+        private static readonly int PASSWORD_ITERATIONS = 1024;
+
+>>>>>>> dev
         /// <summary>
         /// Generates a random salt of max length supported in the User table database
         /// </summary>
@@ -93,7 +129,7 @@ namespace PitchPointsWeb.Models
             byte[] hash;
             using (var crypto = new Rfc2898DeriveBytes(password, salt, PASSWORD_ITERATIONS))
             {
-                hash = crypto.GetBytes(64);
+                hash = crypto.GetBytes(20);
             }
             return hash;
         }
@@ -108,7 +144,7 @@ namespace PitchPointsWeb.Models
         public static bool DoPasswordsMatch(string password, byte[] currentHash, byte[] salt)
         {
             byte[] newHash = HashPassword(password, salt);
-            return newHash.SequenceEqual(currentHash);
+            return Enumerable.SequenceEqual(newHash, currentHash);
         }
 
     }

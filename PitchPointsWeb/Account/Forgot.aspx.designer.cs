@@ -22,7 +22,7 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.PlaceHolder loginForm;
         
         /// <summary>
-        /// ErrorMessage control.
+        /// ResponseMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.

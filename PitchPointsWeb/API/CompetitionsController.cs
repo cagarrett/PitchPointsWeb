@@ -1,57 +1,87 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Web.Http;
 using System.Data.SqlClient;
-using System.Net.Http;
-using System.Net.Http.Formatting;
-using System;
+using System.Threading.Tasks;
 using PitchPointsWeb.Models;
-using static PitchPointsWeb.API.APICommon;
+using PitchPointsWeb.Models.API;
+using PitchPointsWeb.Models.API.Response;
+using static System.Int32;
 
 namespace PitchPointsWeb.API
 {
-    public class CompetitionsController : ApiController
+    public class CompetitionsController : MasterController
     {
 
-        public HttpResponseMessage Get()
+        [HttpGet]
+        public CompetitionsResponse Get()
         {
-            var connection = GetConnection();
-            try
+            return GetCompetitionsFor("");
+        }
+
+        [HttpPost]
+        public async Task<CompetitionsResponse> Get([FromBody] TokenModel data)
+        {
+            var valid = await data.Validate();
+            CompetitionsResponse response;
+            if (valid)
             {
-                connection.Open();
-            } catch
-            {
-                return GetUnavailableMessage();
+                response = GetCompetitionsFor(data.Content.Email);
+                response.Token = data.Token;
             }
-            var data = new List<Competition>();
-            using (var command = new SqlCommand("GetActiveCompetitions", connection))
+            else
             {
-                SqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Competition comp = readCompetition(reader);
-                    data.Add(comp);
-                }
-                reader.Close();
+                response = ApiResponseCode.AuthError.ToResponse<CompetitionsResponse>();
             }
-            connection.Close();
-            var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-            response.Content = new ObjectContent<List<Competition>>(data, new JsonMediaTypeFormatter(), "application/json");
             return response;
         }
 
-        private Competition readCompetition(SqlDataReader reader)
+        private static CompetitionsResponse GetCompetitionsFor(string email)
         {
-            var comp = new Competition();
-            int? id = readObjectOrNull<int>(reader, "ID");
+            var response = new CompetitionsResponse();
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("GetActiveCompetitions", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@email", SqlDbType.NVarChar).Value = email;
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                response.Competitions.Add(ReadCompetition(reader));
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                response.ApiResponseCode = ApiResponseCode.InternalError;
+            }
+            return response;
+        }
+
+        internal static Competition ReadCompetition(SqlDataReader reader)
+        {
+            var comp = new Competition
+            {
+                CompetitionTitle = ReadObject(reader, "CompTitle", ""),
+                Details = ReadObject(reader, "CompDetails", ""),
+                Description = ReadObject(reader, "Description", ""),
+                IsRegistered = ReadObject(reader, "IsRegistered", 0) == 1
+            };
+            var id = ReadObjectOrNull<int>(reader, "ID");
             if (id.HasValue)
             {
-                comp.ID = id.Value;
+                comp.Id = id.Value;
             }
-            comp.CompetitionTitle = readObject(reader, "CompTitle", "");
-            comp.Details = readObject(reader, "CompDetails", "");
-            comp.Description = readObject(reader, "Description", "");
-            DateTime? startDate = readObjectOrNull<DateTime>(reader, "StartDate");
-            DateTime? endDate = readObjectOrNull<DateTime>(reader, "EndDate");
+            var startDate = ReadObjectOrNull<DateTime>(reader, "StartDate");
+            var endDate = ReadObjectOrNull<DateTime>(reader, "EndDate");
             if (startDate.HasValue)
             {
                 comp.StartDate = startDate.Value;
@@ -60,56 +90,58 @@ namespace PitchPointsWeb.API
             {
                 comp.EndDate = endDate.Value;
             }
-            comp.Location = readLocation(reader);
-            foreach (CompetitionRule rule in readRules(reader))
+            comp.Location = ReadLocation(reader);
+            foreach (var rule in ReadRules(reader))
             {
                 comp.AddRule(rule);
             }
-            foreach (CompetitionCategory category in readCategories(reader))
+            foreach (var category in ReadCategories(reader))
             {
                 comp.AddCategory(category);
             }
-            foreach (CompetitionType type in readTypes(reader))
+            foreach (var type in ReadTypes(reader))
             {
                 comp.AddType(type);
             }
             return comp;
         }
 
-        private Location readLocation(SqlDataReader reader)
+        internal static Location ReadLocation(SqlDataReader reader)
         {
-            var location = new Location();
-            var id = readObjectOrNull<int>(reader, "LocationID");
+            var location = new Location
+            {
+                Nickname = ReadObject(reader, "LocationNickname", ""),
+                State = ReadObject(reader, "State", ""),
+                City = ReadObject(reader, "City", ""),
+                ZIP = ReadObject(reader, "Zip", ""),
+                AddressLine1 = ReadObject(reader, "AddressLine1", ""),
+                AddressLine2 = ReadObject(reader, "AddressLine2", ""),
+                GooglePlaceId = ReadObject(reader, "GooglePlaceId", "")
+            };
+            var id = ReadObjectOrNull<int>(reader, "LocationID");
             if (id.HasValue)
             {
-                location.ID = id.Value;
+                location.Id = id.Value;
             }
-            location.Nickname = readObject(reader, "LocationNickname", "");
-            location.State = readObject(reader, "State", "");
-            location.City = readObject(reader, "City", "");
-            location.ZIP = readObject(reader, "Zip", "");
-            location.AddressLine1 = readObject(reader, "AddressLine1", "");
-            location.AddressLine2 = readObject(reader, "AddressLine2", "");
-            location.GooglePlaceId = readObject(reader, "GooglePlaceId", "");
             return location;
         }
 
-        private List<CompetitionRule> readRules(SqlDataReader reader)
+        internal static List<CompetitionRule> ReadRules(SqlDataReader reader)
         {
             var list = new List<CompetitionRule>();
-            var stringList = readObject(reader, "Rules", "").Split(new[] { "++" }, StringSplitOptions.None);
-            foreach (string pair in stringList)
+            var stringList = ReadObject(reader, "Rules", "").Split(new[] { "++" }, StringSplitOptions.None);
+            foreach (var pair in stringList)
             {
-                string[] rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
+                var rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
                 int id;
                 var compRule = new CompetitionRule();
                 if (rulePair.Length < 2)
                 {
                     continue;
                 }
-                if (Int32.TryParse(rulePair[0], out id))
+                if (TryParse(rulePair[0], out id))
                 {
-                    compRule.ID = id;
+                    compRule.Id = id;
                 }
                 compRule.Description = rulePair[1];
                 list.Add(compRule);
@@ -117,22 +149,22 @@ namespace PitchPointsWeb.API
             return list;
         }
 
-        private List<CompetitionCategory> readCategories(SqlDataReader reader)
+        internal static List<CompetitionCategory> ReadCategories(SqlDataReader reader)
         {
             var list = new List<CompetitionCategory>();
-            var stringList = readObject(reader, "Categories", "").Split(new[] { "++" }, StringSplitOptions.None);
-            foreach (string pair in stringList)
+            var stringList = ReadObject(reader, "Categories", "").Split(new[] { "++" }, StringSplitOptions.None);
+            foreach (var pair in stringList)
             {
-                string[] rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
+                var rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
                 int id;
                 var compRule = new CompetitionCategory();
                 if (rulePair.Length < 2)
                 {
                     continue;
                 }
-                if (Int32.TryParse(rulePair[0], out id))
+                if (TryParse(rulePair[0], out id))
                 {
-                    compRule.ID = id;
+                    compRule.Id = id;
                 }
                 compRule.Name = rulePair[1];
                 list.Add(compRule);
@@ -140,22 +172,22 @@ namespace PitchPointsWeb.API
             return list;
         }
 
-        private List<CompetitionType> readTypes(SqlDataReader reader)
+        internal static List<CompetitionType> ReadTypes(SqlDataReader reader)
         {
             var list = new List<CompetitionType>();
-            var stringList = readObject(reader, "Types", "").Split(new[] { "++" }, StringSplitOptions.None);
-            foreach (string pair in stringList)
+            var stringList = ReadObject(reader, "Types", "").Split(new[] { "++" }, StringSplitOptions.None);
+            foreach (var pair in stringList)
             {
-                string[] rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
+                var rulePair = pair.Split(new[] { "||" }, StringSplitOptions.None);
                 int id;
                 var compRule = new CompetitionType();
                 if (rulePair.Length < 2)
                 {
                     continue;
                 }
-                if (Int32.TryParse(rulePair[0], out id))
+                if (TryParse(rulePair[0], out id))
                 {
-                    compRule.ID = id;
+                    compRule.Id = id;
                 }
                 compRule.Type = rulePair[1];
                 list.Add(compRule);

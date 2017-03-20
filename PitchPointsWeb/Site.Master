@@ -11,7 +11,7 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -45,10 +45,17 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Leaderboard</a></li>
+                        <li><a runat="server" href="~/">Home</a></li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
+                            <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a runat="server" href="~/RegisterForComp">Register for competitions</a></li>
+                                <li><a runat="server" href="~/Log_A_Climb">Log a Climb</a></li>
+                                <li><a runat="server" href="~/Leaderboard">Leaderboards</a></li>
+                            </ul>
+                        </li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
-                        <li><a runat="server" href="~/Log_A_Climb">Log A Climb</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
                     </ul>
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
@@ -59,7 +66,8 @@
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %>!</a></li>
+                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Session["Username"]  %>!</a></li>
+                                <li><a runat="server" href="~/Account/Profile">My Account</a></li>
                                 <li>
                                     <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
                                 </li>
