@@ -8,6 +8,7 @@ namespace PitchPointsWeb.Models.API.Response
     /// Range 0-99: Basic error codes
     /// Range 100-199: Account error codes
     /// Range 200-299: Route error codes
+    /// Range 300-399: Competition error codes
     /// </summary>
     public enum ApiResponseCode
     {
@@ -34,7 +35,16 @@ namespace PitchPointsWeb.Models.API.Response
         AlreadyLoggedRoute = 200,
 
         [Description("At least one route ID must be supplied")]
-        NoRoutesSupplied = 201
+        NoRoutesSupplied = 201,
+
+        [Description("The competition that you are trying to register / unregister for is closed")]
+        CompetitionClosed = 300,
+
+        [Description("You are already registered for this competition")]
+        AlreadyRegisteredForComp = 301,
+
+        [Description("You are already unregistered from this competition")]
+        AlreadyUnregisteredForComp = 302
 
     }
 
@@ -56,6 +66,19 @@ namespace PitchPointsWeb.Models.API.Response
         public static T ToResponse<T>(this ApiResponseCode code) where T: ApiResponse, new()
         {
             return new T {ApiResponseCode = code};
+        }
+
+        public static ApiResponseCode ParseCompetitionRegistrationCode(this int code)
+        {
+            switch (code)
+            {
+                case 0: return ApiResponseCode.Success;
+                case 1: return ApiResponseCode.CompetitionClosed;
+                case 2: return ApiResponseCode.AlreadyRegisteredForComp;
+                case 3: return ApiResponseCode.AlreadyUnregisteredForComp;
+                case 4: return ApiResponseCode.AuthError;
+                default: return ApiResponseCode.InternalError;
+            }
         }
 
     }
