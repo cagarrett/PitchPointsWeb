@@ -37,6 +37,56 @@ namespace PitchPointsWeb.API
             return response;
         }
 
+        public async Task<CompetitionRegistrationResponse> ModifyCompetitionStatus([FromBody] CompetitionRegistrationModel model)
+        {
+            var valid = await model.Validate();
+            CompetitionRegistrationResponse response;
+            if (valid)
+            {
+                response = ChangeRegistrationStatus(model);
+                response.Token = model.Token;
+            }
+            else
+            {
+                response = ApiResponseCode.AuthError.ToResponse<CompetitionRegistrationResponse>();
+            }
+            return response;
+        }
+
+        private static CompetitionRegistrationResponse ChangeRegistrationStatus(CompetitionRegistrationModel model)
+        {
+            var response = new CompetitionRegistrationResponse();
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("ModifyRegistrationStatus", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.Add("@email", SqlDbType.NVarChar).Value = model.Content.Email;
+                        command.Parameters.Add("@compId", SqlDbType.Int).Value = model.CompetitionId;
+                        command.Parameters.Add("@register", SqlDbType.Bit).Value = model.Register;
+                        var outClimber = new SqlParameter("@climberId", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                        var outResponse = new SqlParameter("@responseCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                        command.Parameters.Add(outClimber);
+                        command.Parameters.Add(outResponse);
+                        command.ExecuteNonQuery();
+                        response.CompetitionId = model.CompetitionId;
+                        response.ClimberId = (int)outClimber.Value;
+                        response.IsRegistered = (response.ClimberId != 0);
+                        var responseCode = (int) outResponse.Value;
+                        response.ApiResponseCode = responseCode.ParseCompetitionRegistrationCode();
+                    }
+                }
+            }
+            catch
+            {
+                response.ApiResponseCode = ApiResponseCode.InternalError;
+            }
+            return response;
+        }
+
         private static CompetitionsResponse GetCompetitionsFor(string email)
         {
             var response = new CompetitionsResponse();

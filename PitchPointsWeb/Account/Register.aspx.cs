@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.API;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.Account
@@ -34,7 +35,7 @@ namespace PitchPointsWeb.Account
             if (validRegister.Success)
             {
                 Master.WriteToken(validRegister.Token);
-                Response.Redirect("../Default.aspx");
+                Response.Redirect("../Default.aspx", false);
             }
         }
     }

@@ -475,6 +475,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\API\CompetitionControllerModels.cs" />
     <Compile Include="RegisterForComp.aspx.cs">
       <DependentUpon>RegisterForComp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

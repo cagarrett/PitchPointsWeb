@@ -13,4 +13,16 @@ namespace PitchPointsWeb.Models.API.Response
         }
 
     }
+
+    public class CompetitionRegistrationResponse : TokenApiResponse
+    {
+
+        public int CompetitionId { get; set; }
+        
+        public bool IsRegistered { get; set; }
+
+        public int ClimberId { get; set; }
+
+    }
+
 }
