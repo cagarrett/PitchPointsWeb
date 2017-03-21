@@ -25,11 +25,15 @@ namespace PitchPointsWeb.Models
 
         public string Details { get; set; }
 
+        public int Climbers { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
 
         public string Description { get; set; }
+
+        public bool IsRegistered { get; set; }
 
         public void AddRule(CompetitionRule rule)
         {

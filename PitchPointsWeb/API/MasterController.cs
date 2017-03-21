@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Configuration;
@@ -11,6 +12,8 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Newtonsoft.Json;
 using PitchPointsWeb.Models;
+using PitchPointsWeb.Models.API;
+using WebGrease.Css.Extensions;
 
 namespace PitchPointsWeb.API
 {
@@ -38,20 +41,25 @@ namespace PitchPointsWeb.API
             };
         }
 
-        internal async Task<string> CreateToken(User user, bool isAdmin)
+        internal static async Task<string> CreateToken(User user)
         {
-            var payload = new Dictionary<string, object>
+            var model = new TokenContent()
             {
-                {"email", user.Email},
-                {"exp", DateTime.Now.AddHours(isAdmin ? 2 : 1).Ticks },
-                {"admin", isAdmin }
+                Email = user.Email,
+                PasswordHash = Sha256(user.PasswordHash)
             };
+            var token = await CreateToken(model);
+            return token;
+        }
+
+        internal static async Task<string> CreateToken(TokenContent content)
+        {
             var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
             var keyBytes = Encoding.UTF8.GetBytes(key.Value);
             string token;
             try
             {
-                token = JWT.Encode(payload, keyBytes, JwsAlgorithm.HS256);
+                token = JWT.Encode(content.ToDictionary(), keyBytes, JwsAlgorithm.HS256);
             }
             catch
             {
@@ -60,25 +68,46 @@ namespace PitchPointsWeb.API
             return token;
         }
 
-        internal async Task<bool> VerifyToken(string token)
+        /// <summary>
+        /// Attempts to refresh this token by checking the validity of its contents.
+        /// If the content is not valid, null is returned.
+        /// </summary>
+        internal static async Task<string> RefreshToken(TokenContent model)
+        {
+            if (model.IsExpired())
+            {
+                model.UpdateExpiryTime();
+            }
+            else
+            {
+                var user = AccountController.GetUserFrom(model.Email);
+                if (Sha256(user.PasswordHash) == model.PasswordHash)
+                {
+                    model.UpdateExpiryTime();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            var token = await CreateToken(model);
+            return token;
+        }
+
+        internal static async Task<Dictionary<string,dynamic>> ExtractTokenContent(string token)
         {
             var key = await KeyClient.GetSecretAsync(WebConfigurationManager.AppSettings["SecretUri"]);
             var keyBytes = Encoding.UTF8.GetBytes(key.Value);
-            bool status;
             try
             {
                 var json = JWT.Decode(token, keyBytes, JwsAlgorithm.HS256);
                 var dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(json);
-                var isAdmin = dict["admin"];
-                var date = new DateTime((long) dict["exp"]);
-                var hoursDifference = (date - DateTime.Now).TotalMinutes;
-                status = hoursDifference > (isAdmin ? 2.0 : 1.0);
+                return dict;
             }
             catch
             {
-                status = false;
+                return null;
             }
-            return status;
         }
 
         /// <summary>
@@ -134,6 +163,15 @@ namespace PitchPointsWeb.API
             {
                 return null;
             }
+        }
+
+        internal static string Sha256(byte[] message)
+        {
+            var sha256 = new SHA256Managed();
+            var hash = sha256.ComputeHash(message);
+            var hashString = "";
+            hash.ForEach(b => hashString += $"{b:x2}");
+            return hashString;
         }
 
     }

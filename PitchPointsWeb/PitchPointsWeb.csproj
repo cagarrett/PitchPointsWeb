@@ -281,6 +281,7 @@
     <Content Include="Assets\ppCampusHelv.png" />
     <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
     <Content Include="Assets\PPHangLogoTrim.png" />
+    <Content Include="Default.aspx" />
     <Content Include="RegisterForComp.aspx" />
     <Content Include="Log_A_Climb.aspx" />
     <Content Include="Contact.aspx" />
@@ -324,7 +325,7 @@
     <Content Include="Scripts\WebForms\WebParts.js" />
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Default.aspx" />
+    <Content Include="Leaderboard.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Site.Master" />
@@ -451,7 +452,6 @@
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
-    <Compile Include="API\AccountVerifier.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
@@ -468,6 +468,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\API\CompetitionControllerModels.cs" />
     <Compile Include="RegisterForComp.aspx.cs">
       <DependentUpon>RegisterForComp.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -489,17 +497,18 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Leaderboard.aspx.cs">
+      <DependentUpon>Leaderboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
+    <Compile Include="Leaderboard.aspx.designer.cs">
+      <DependentUpon>Leaderboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\API\ApiResponseCode.cs" />
+    <Compile Include="Models\API\Response\ApiResponseCode.cs" />
+    <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
     <Compile Include="Models\API\Response\ApiResponse.cs" />
@@ -510,7 +519,6 @@
     <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LeaderboardModels.cs" />
-    <Compile Include="Models\API\SignedModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\LocationModels.cs" />
     <Compile Include="Models\RouteModels.cs" />

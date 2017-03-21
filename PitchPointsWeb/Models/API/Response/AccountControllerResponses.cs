@@ -3,7 +3,7 @@
 namespace PitchPointsWeb.Models.API.Response
 {
 
-    public class PrivateApiResponse : ApiResponse
+    public class PrivateApiResponse : TokenApiResponse
     {
 
         public string Email { get; set; }
@@ -11,8 +11,6 @@ namespace PitchPointsWeb.Models.API.Response
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-
-        public string Token { get; set; }
 
     }
 
@@ -23,7 +21,7 @@ namespace PitchPointsWeb.Models.API.Response
 
     }
 
-    public class UserSnapshotResponse : ApiResponse
+    public class UserSnapshotResponse : TokenApiResponse
     {
 
         public int Points { get; set; }

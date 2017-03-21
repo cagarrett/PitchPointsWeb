@@ -78,7 +78,7 @@ namespace PitchPointsWeb.API
                     if (databaseUser.PasswordsMatch(user.Password))
                     {
                         response.ApiResponseCode = ApiResponseCode.Success;
-                        response.Token = await CreateToken(databaseUser, false);
+                        response.Token = await CreateToken(databaseUser);
                         response.Email = databaseUser.Email;
                         response.FirstName = databaseUser.FirstName;
                         response.LastName = databaseUser.LastName;
@@ -92,6 +92,55 @@ namespace PitchPointsWeb.API
             catch
             {
                 response.ApiResponseCode = ApiResponseCode.InternalError;
+            }
+            return response;
+        }
+
+        [HttpPost]
+        public async Task<UserSnapshotResponse> GetUserSnapshot([FromBody] TokenModel model)
+        {
+            var valid = await model.Validate();
+            UserSnapshotResponse response;
+            if (valid)
+            {
+                response = new UserSnapshotResponse();
+                try
+                {
+                    using (var connection = GetConnection())
+                    {
+                        connection.Open();
+                        using (var command = new SqlCommand("GetUserSnapshot", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.Add("@email", SqlDbType.NVarChar).Value = model.Content.Email;
+                            using (var reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    response.Points = ReadObject(reader, "Points", 0);
+                                    response.Falls = ReadObject(reader, "Falls", 0);
+                                    response.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
+                                }
+                                if (reader.NextResult())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        response.UpcomingCompetitions.Add(CompetitionsController.ReadCompetition(reader));
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    response.Token = model.Token;
+                }
+                catch
+                {
+                    response.ApiResponseCode = ApiResponseCode.InternalError;
+                }
+            }
+            else
+            {
+                response = ApiResponseCode.AuthError.ToResponse<UserSnapshotResponse>();
             }
             return response;
         }
@@ -158,54 +207,13 @@ namespace PitchPointsWeb.API
             return true;
         }
 
-        [HttpPost]
-        public UserSnapshotResponse GetUserSnapshot([FromBody] UserIDSignedData data)
-        {
-            var snapshot = new UserSnapshotResponse();
-            if (!data.IsValid())
-            {
-                snapshot.ApiResponseCode = ApiResponseCode.AuthError;
-                return snapshot;
-            }
-            try
-            {
-                using (var connection = GetConnection())
-                {
-                    connection.Open();
-                    using (var command = new SqlCommand("GetUserSnapshot", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@userId", data.UserID);
-                        using (var reader = command.ExecuteReader())
-                        {
-                            snapshot.Points = ReadObject(reader, "Points", 0);
-                            snapshot.Falls = ReadObject(reader, "Falls", 0);
-                            snapshot.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
-                            if (reader.NextResult())
-                            {
-                                while (reader.Read())
-                                {
-                                    snapshot.UpcomingCompetitions.Add(CompetitionsController.ReadCompetition(reader));
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                snapshot.ApiResponseCode = ApiResponseCode.InternalError;
-            }
-            return snapshot;
-        }
-
         /// <summary>
         /// Creates a user object from the database with the given email
         /// </summary>
         /// <param name="email">The email to use to query the database</param>
         /// <returns>A User if the email exists within the database, null otherwise</returns>
         /// <exception cref="SqlException">Throws if there is an error connecting to the database or any SQL related exception or warning thrown</exception>
-        private static User GetUserFrom(string email)
+        internal static User GetUserFrom(string email)
         {
             User user;
             using (var connection = GetConnection())
@@ -265,7 +273,7 @@ namespace PitchPointsWeb.API
                     if (outErrorCode == 0)
                     {
                         response.ApiResponseCode = ApiResponseCode.Success;
-                        response.Token = await CreateToken(user, false);
+                        response.Token = await CreateToken(user);
                     }
                     else
                     {
