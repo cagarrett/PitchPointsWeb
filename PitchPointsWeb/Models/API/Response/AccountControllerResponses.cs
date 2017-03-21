@@ -30,13 +30,6 @@ namespace PitchPointsWeb.Models.API.Response
 
         public int ParticipatedCompetitions { get; set; }
 
-        public List<Competition> UpcomingCompetitions { get; set; }
-
-        public UserSnapshotResponse()
-        {
-            UpcomingCompetitions = new List<Competition>();
-        }
-
     }
 
 }

@@ -121,13 +121,6 @@ namespace PitchPointsWeb.API
                                     response.Falls = ReadObject(reader, "Falls", 0);
                                     response.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
                                 }
-                                if (reader.NextResult())
-                                {
-                                    while (reader.Read())
-                                    {
-                                        response.UpcomingCompetitions.Add(CompetitionsController.ReadCompetition(reader));
-                                    }
-                                }
                             }
                         }
                     }
@@ -259,7 +252,7 @@ namespace PitchPointsWeb.API
                 {
                     command.CommandType = CommandType.StoredProcedure;
                     var userIdParam = new SqlParameter("@UserId", SqlDbType.Int) { Direction = ParameterDirection.Output };
-                    var errorCode = new SqlParameter("@ResponseCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    var errorCode = new SqlParameter("@ErrorCode", SqlDbType.Int) { Direction = ParameterDirection.Output };
                     command.Parameters.Add(userIdParam);
                     command.Parameters.Add(errorCode);
                     command.Parameters.AddWithValue("@email", user.Email);
