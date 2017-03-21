@@ -71,7 +71,18 @@ namespace PitchPointsWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //read the token
+            //string token = ReadToken();
 
+            //create token model
+            //var model = new TokenModel(token);
+
+            //set the token
+
+            //validate
+
+            //set logged in view
+            
         }
 
         public void WriteToken(string token)
