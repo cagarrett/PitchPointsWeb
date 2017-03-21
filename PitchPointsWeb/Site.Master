@@ -38,7 +38,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div  class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <asp:Image ID="Image1" runat="server" Height="57px" ImageUrl="~/Assets/PPHangLogoTrim.png" Width="115px" />
