@@ -7,6 +7,8 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
+using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb
 {
@@ -80,6 +82,16 @@ namespace PitchPointsWeb
         public string ReadToken()
         {
             return Request.Cookies["Token"]?.Value;
+        }
+
+        public async Task<bool> IsValidLogin()
+        {
+            var token = ReadToken();
+            if (token == null) return false;
+            var tokenModel = new TokenModel() { Token = token };
+            var isValid = await tokenModel.Validate();
+            WriteToken(isValid ? tokenModel.Token : null);
+            return isValid;
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
