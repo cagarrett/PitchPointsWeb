@@ -19,6 +19,7 @@ namespace PitchPointsWeb
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            /*
             var user = FName.Text + " " + LName.Text;
             var fromAddress = new MailAddress("PitchPointsIssueTracking@gmail.com", user);
             var toAddress = new MailAddress("PitchPointsTeam@gmail.com", "Pitch Points Team");
@@ -48,8 +49,9 @@ namespace PitchPointsWeb
                 Message.Text = "";
 
                 lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Your message has been sent to the Pitch Points Support Team.";
+                lblMessage.Text = "Your message has been sent to the Pitch Points Support Team.";   
             }
+            */
         }
     }
 }
