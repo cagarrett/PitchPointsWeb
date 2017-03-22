@@ -37,6 +37,21 @@ namespace PitchPointsWeb.Account
                 Master.WriteToken(validRegister.Token);
                 Response.Redirect("../Default.aspx", false);
             }
+            else {
+                string responseMessage = validRegister.ResponseMessage.ToString();
+                switch(responseMessage)
+                {
+                    case "Error authorizing user":
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
+                    break;
+                    case "Internal server error":
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                    break;
+                    case "User already registered with this email address":
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "emailError();", true);
+                    break;
+                }
+}
         }
     }
 }

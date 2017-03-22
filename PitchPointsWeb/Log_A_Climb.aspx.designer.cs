@@ -13,17 +13,13 @@ namespace PitchPointsWeb {
     public partial class Log_A_Climb {
         
         /// <summary>
-
         /// ClimberID control.
-
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-
         protected global::System.Web.UI.WebControls.TextBox ClimberID;
-
         
         /// <summary>
         /// Witness control.
@@ -44,28 +40,12 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.TextBox RouteClimbed;
         
         /// <summary>
-
         /// numberOfFalls control.
-
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox numberOfFalls;
-
-        /// <summary>
-        /// Master property.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated property.
-        /// </remarks>
-        public new PitchPointsWeb.SiteMaster Master
-        {
-            get
-            {
-                return ((PitchPointsWeb.SiteMaster)(base.Master));
-            }
-        }
     }
 }
