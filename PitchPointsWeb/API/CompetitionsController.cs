@@ -123,7 +123,8 @@ namespace PitchPointsWeb.API
                 CompetitionTitle = ReadObject(reader, "CompTitle", ""),
                 Details = ReadObject(reader, "CompDetails", ""),
                 Description = ReadObject(reader, "Description", ""),
-                IsRegistered = ReadObject(reader, "IsRegistered", 0) == 1
+                IsRegistered = ReadObject(reader, "IsRegistered", 0) == 1,
+                Climbers = ReadObject(reader, "Climbers", 0)
             };
             var id = ReadObjectOrNull<int>(reader, "ID");
             if (id.HasValue)
