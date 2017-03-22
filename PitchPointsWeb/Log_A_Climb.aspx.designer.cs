@@ -53,5 +53,19 @@ namespace PitchPointsWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox numberOfFalls;
+
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new PitchPointsWeb.SiteMaster Master
+        {
+            get
+            {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

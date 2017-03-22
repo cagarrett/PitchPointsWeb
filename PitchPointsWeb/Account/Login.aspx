@@ -1,8 +1,39 @@
 ﻿<%@ Page Title="Login" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="PitchPointsWeb.Account.Login" Async="true" %>
-<%@ MasterType VirtualPath="~/Site.Master" %>
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h2><%: Title %></h2>
 
+<%@ MasterType VirtualPath="~/Site.Master" %>
+
+<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
+    <script type="text/javascript">
+        function incorrectPassword() {
+            swal({
+                title: 'Incorrect Password!',
+                text: 'The password you entered does not match the username provided.',
+                type: 'error'
+            });
+        }
+        function authError() {
+            swal({
+                title: 'Authentication Error!',
+                text: 'We are having trouble authenticating your credentials. Please try again.',
+                type: 'error'
+            });
+        }
+        function serverError() {
+            swal({
+                title: 'Server Error!',
+                text: 'We are having trouble with our server. Please try again.',
+                type: 'error'
+            });
+        }
+        function accountDoesntExist() {
+            swal({
+                title: 'No account registered!',
+                text: 'This email address has not been registered with us.',
+                type: 'error'
+            });
+        }
+    </script>
+    <h2><%: Title %></h2>
 
     <section id="loginForm">
         <div class="form-horizontal">

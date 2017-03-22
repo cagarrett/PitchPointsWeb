@@ -286,6 +286,10 @@
     <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
     <Content Include="Assets\PPHangLogoTrim.png" />
     <Content Include="Assets\SnakePit.PNG" />
+    <Content Include="Content\sweetalert2\sweetalert2.css" />
+    <Content Include="Content\sweetalert2\sweetalert2.js" />
+    <Content Include="Content\sweetalert2\sweetalert2.min.css" />
+    <Content Include="Content\sweetalert2\sweetalert2.min.js" />
     <Content Include="Default.aspx" />
     <Content Include="RegisterForComp.aspx" />
     <Content Include="Log_A_Climb.aspx" />
