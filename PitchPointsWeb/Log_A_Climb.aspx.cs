@@ -11,8 +11,8 @@ namespace PitchPointsWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["Username"] == null)
-                Response.Redirect("Account/Login.aspx");
+            //Master.ReadToken();
+            //Rider switching to is user logged in boolean
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
