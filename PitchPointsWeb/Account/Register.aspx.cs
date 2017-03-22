@@ -36,7 +36,8 @@ namespace PitchPointsWeb.Account
             {
                 Master.WriteToken(validRegister.Token);
                 Response.Redirect("../Default.aspx", false);
-            } else {
+            }
+            else {
                 string responseMessage = validRegister.ResponseMessage.ToString();
                 switch(responseMessage)
                 {
