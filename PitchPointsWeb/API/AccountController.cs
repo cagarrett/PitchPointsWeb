@@ -121,6 +121,13 @@ namespace PitchPointsWeb.API
                                     response.Falls = ReadObject(reader, "Falls", 0);
                                     response.ParticipatedCompetitions = ReadObject(reader, "ParticipatedCompetitions", 0);
                                 }
+                                if (reader.NextResult())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        response.UpcomingCompetitions.Add(CompetitionsController.ReadCompetition(reader));
+                                    }
+                                }
                             }
                         }
                     }
