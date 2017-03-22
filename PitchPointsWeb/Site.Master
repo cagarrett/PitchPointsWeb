@@ -17,6 +17,8 @@
 </head>
 <body>
     <form runat="server">
+        <script src="../Content/sweetalert2/sweetalert2.min.js"></script>
+        <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -38,7 +40,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div  class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <asp:Image ID="Image1" runat="server" Height="57px" ImageUrl="~/Assets/PPHangLogoTrim.png" Width="115px" />
@@ -49,7 +51,8 @@
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
-                            <span class="caret"></span></a>
+                           
+                                <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/RegisterForComp">Register for competitions</a></li>
                                 <li><a runat="server" href="~/Log_A_Climb">Log a Climb</a></li>
