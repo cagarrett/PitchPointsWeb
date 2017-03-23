@@ -37,21 +37,22 @@ namespace PitchPointsWeb.Account
                 Master.WriteToken(validRegister.Token);
                 Response.Redirect("../Default.aspx", false);
             }
-            else {
+            else
+            {
                 int responseCode = validRegister.ResponseCode;
                 switch (responseCode)
                 {
                     case 1:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
-                    break;
+                        break;
                     case 2:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
-                    break;
+                        break;
                     case 100:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "emailError();", true);
-                    break;
+                        break;
                 }
-}
+            }
         }
     }
 }

@@ -19,7 +19,7 @@
     <form runat="server">
         <script src="../Content/sweetalert2/sweetalert2.min.js"></script>
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
-        <link rel="stylesheet" href="../Content/bootstrap.css" />
+        <link rel="stylesheet" href="../Content/theme.css" />
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
@@ -41,7 +41,7 @@
             </Scripts>
         </asp:ScriptManager>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar navbar-custom navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <asp:Image ID="Image1" runat="server" Height="57px" ImageUrl="~/Assets/PPHangLogoTrim.png" Width="115px" />
