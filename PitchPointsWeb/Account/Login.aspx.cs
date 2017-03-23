@@ -31,19 +31,19 @@ namespace PitchPointsWeb.Account
                 Master.WriteToken(validLogin.Token);
                 IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             } else {
-                string responseMessage = validLogin.ResponseMessage.ToString();
-                switch(responseMessage)
+                int responseCode = validLogin.ResponseCode;
+                switch(responseCode)
                 {
-                    case "Error authorizing user":
+                    case 1:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
                     break;
-                    case "Internal server error":
+                    case 2:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
                     break;
-                    case "Incorrect password":
+                    case 102:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "incorrectPassword();", true);
                     break;
-                    case "The email address does not exist":
+                    case 101:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "accountDoesntExist();", true);
                     break;
                 }

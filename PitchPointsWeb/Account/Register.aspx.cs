@@ -38,16 +38,16 @@ namespace PitchPointsWeb.Account
                 Response.Redirect("../Default.aspx", false);
             }
             else {
-                string responseMessage = validRegister.ResponseMessage.ToString();
-                switch(responseMessage)
+                int responseCode = validRegister.ResponseCode;
+                switch (responseCode)
                 {
-                    case "Error authorizing user":
+                    case 1:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
                     break;
-                    case "Internal server error":
+                    case 2:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
                     break;
-                    case "User already registered with this email address":
+                    case 100:
                         ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "emailError();", true);
                     break;
                 }
