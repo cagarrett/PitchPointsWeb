@@ -6,4 +6,12 @@
         public Leaderboard Leaderboard { get; set; }
 
     }
+
+    public class UserSnapshotsResponse : TokenApiResponse
+    {
+
+        public int Points { get; set; }
+        
+    }
+
 }
