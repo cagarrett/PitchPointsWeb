@@ -17,7 +17,11 @@
 </head>
 <body>
     <form runat="server">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="../Content/sweetalert2/sweetalert2.min.js"></script>
+        <script src="../Content/materialize/js/materialize.js"></script>
+        <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
         <link rel="stylesheet" href="../Content/theme.css" />
         <asp:ScriptManager runat="server">
@@ -53,6 +57,8 @@
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
                            
+                               
+
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/RegisterForComp">Register for competitions</a></li>
@@ -84,10 +90,11 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
-            </footer>
+            <div class="navbar navbar-fixed-bottom">               
+                <footer>
+                    <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
+                </footer>
+            </div>
         </div>
     </form>
 </body>
