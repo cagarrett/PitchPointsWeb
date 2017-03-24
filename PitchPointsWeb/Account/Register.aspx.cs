@@ -17,41 +17,50 @@ namespace PitchPointsWeb.Account
 
         protected async void CreateUser_Click(object sender, EventArgs e)
         {
-            if (WaiverSigned.SelectedValue.Equals("No"))
+            if(first_name.Value != "" && last_name.Value != "" && date_of_birth.Value != "" && password.Value != "" && email.Value != "")
             {
-                var redirect = "<script>window.open('https://app.rockgympro.com/waiver/esign/hoosierheightsindy/f84044fe-27c2-4aae-9052-51d220647d4a');</script>";
-                Response.Write(redirect);
-                return;
-            }
-            var registerModel = new RegisterModel
-            {
-                Email = Email.Text,
-                Password = Password.Text,
-                FirstName = FName.Text,
-                LastName = LName.Text,
-                DateOfBirth = DateTime.Parse(DOB.Text)
-            };
-            var validRegister = await new AccountController().Register(registerModel);
-            if (validRegister.Success)
-            {
-                Master.WriteToken(validRegister.Token);
-                Response.Redirect("../Default.aspx", false);
+                if (password.Value == confirm_password.Value)
+                {
+                    var registerModel = new RegisterModel
+                    {
+                        Email = email.Value,
+                        Password = password.Value,
+                        FirstName = first_name.Value,
+                        LastName = last_name.Value,
+                        DateOfBirth = DateTime.Parse(date_of_birth.Value)
+                    };
+
+                    var validRegister = await new AccountController().Register(registerModel);
+                    if (validRegister.Success)
+                    {
+                        Master.WriteToken(validRegister.Token);
+                        Response.Redirect("../Default.aspx", false);
+                    }
+                    else
+                    {
+                        int responseCode = validRegister.ResponseCode;
+                        switch (responseCode)
+                        {
+                            case 1:
+                                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
+                                break;
+                            case 2:
+                                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                                break;
+                            case 100:
+                                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "emailError();", true);
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "passwordMismatch();", true);
+                }
             }
             else
             {
-                int responseCode = validRegister.ResponseCode;
-                switch (responseCode)
-                {
-                    case 1:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
-                        break;
-                    case 2:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
-                        break;
-                    case 100:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "emailError();", true);
-                        break;
-                }
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
             }
         }
     }
