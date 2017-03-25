@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PitchPointsWeb.API;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace PitchPointsWeb.Models.API.Response
@@ -21,6 +22,11 @@ namespace PitchPointsWeb.Models.API.Response
             {
                 return Entries.Sum(e => e.Points);
             }
+        }
+
+        public ScorecardResponse()
+        {
+            Entries = new List<ScorecardEntry>();
         }
         
     }
