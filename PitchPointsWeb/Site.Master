@@ -90,11 +90,12 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <div class="navbar navbar-fixed-bottom">               
-                <footer>
+        </div>
+        <div>
+            <br /><br /><br /><br /><br />
+            <footer>
                     <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
                 </footer>
-            </div>
         </div>
     </form>
 </body>
