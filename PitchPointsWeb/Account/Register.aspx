@@ -13,7 +13,7 @@
         }
         function completeForm() {
             swal({
-                title: 'Please fill out each form!',
+                title: 'Error!',
                 text: 'Please make sure you fill out each form on this page.',
                 type: 'error'
             });
