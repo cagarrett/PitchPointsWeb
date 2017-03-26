@@ -1,55 +1,65 @@
 <%@ Page Title="Contact" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="PitchPointsWeb.Contact" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>About Us</h2>
-
-    <p>Pitch Points is currently an undergraduate client project that gave our team an opportunity to solve a problem while working with the activates we love and frequent. Being active climbers, we always noticed and were agonized by the flaws of the common competition scoring methods. From there the project was born under the wing of Hoosier Heights with the goal to use modern tech to revamp both the competition and the scoring process.</p>
+    <script>
+        function completeForm() {
+            swal({
+                title: 'Error!',
+                text: 'Please make sure you fill out each form on this page.',
+                type: 'error'
+            });
+        }
+        function success() {
+            swal({
+                title: 'Success!',
+                text: 'Your message has been sent to the Pitch Points team!',
+                type: 'success'
+            });
+        }
+    </script>
     <br />
-    <p>We aim to pursue and improve this project after our mandated and grade determining deadline. We appreciate any comments or criticisms, and for inquiries in Premium Accounts please do not hesitate to contact us. </p>
-
-    <h2>Contact Us</h2>
-
+    <h3>About Us</h3>
+    <hr />
+    <p class="flow-text">Pitch Points is currently an undergraduate client project that gave our team an opportunity to solve a problem while working with the activities we love and frequent. Being active climbers, we always noticed and were agonized by the flaws of the common competition scoring methods. From there the project was born under the wing of Hoosier Heights with the goal to use modern tech to revamp both the competition and the scoring process.</p>
+    <br />
+    <p class="flow-text">We aim to pursue and improve this project after our mandated and grade determining deadline. We appreciate any comments or criticisms, and for inquiries in Premium Accounts please do not hesitate to contact us. </p>
+    <br />
+    <h3>Contact Us</h3>
+    <hr />
     <div class="form-horizontal">
-        <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="FName" CssClass="col-md-2 control-label">First Name</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="FName" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="FName"
-                    CssClass="text-danger" ErrorMessage="The first name field is required." />
+            <div class="col-md-offset-0 col-md-10">
+                <div class="input-field col s12">
+                    <input id="first_name" type="text" class="validate" runat="server">
+                    <label for="first_name" data-error="Must input first name" data-success="">First Name</label>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="LName" CssClass="col-md-2 control-label">Last Name</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="LName" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="LName"
-                    CssClass="text-danger" ErrorMessage="The last name field is required." />
+            <div class="col-md-offset-0 col-md-10">
+                <div class="input-field col s12">
+                    <input id="last_name" type="text" class="validate" runat="server">
+                    <label for="last_name" data-error="Must input last name" data-success="">Last Name</label>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Subject" CssClass="col-md-2 control-label">Subject</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Subject" CssClass="form-control" TextMode="SingleLine" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Subject"
-                    CssClass="text-danger" ErrorMessage="The subject field is required." />
+            <div class="col-md-offset-0 col-md-10">
+                <div class="input-field col s12">
+                    <input id="message_subject" type="text" class="validate" runat="server">
+                    <label for="message_subject" data-error="Must input subject line" data-success="">Subject</label>
+                </div>
             </div>
         </div>
         <div class="form-group">
-            <asp:Label runat="server" AssociatedControlID="Message" CssClass="col-md-2 control-label">Message</asp:Label>
-            <div class="col-md-10">
-                <asp:TextBox runat="server" ID="Message" CssClass="form-control" TextMode="MultiLine" Width="280px" Height="50px" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Message"
-                    CssClass="text-danger" ErrorMessage="The message field is required." />
+            <div class="col-md-offset-0 col-md-10">
+                <div class="input-field col s12">
+                    <textarea id="message_content" class="materialize-textarea" style="width:280px" runat="server"></textarea>
+                    <label for="message_content" data-error="Must input message" data-success="">Message</label>
+                    <br />
+                    <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-primary" />
+                </div>
             </div>
-        </div>
-        <div class="col-md-offset-2 col-md-10">
-            <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-primary" />
-        </div>
-        <div>
-            <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
     </div>
-
-
 </asp:Content>

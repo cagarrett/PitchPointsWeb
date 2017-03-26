@@ -13,48 +13,39 @@ namespace PitchPointsWeb {
     public partial class Contact {
         
         /// <summary>
-        /// FName control.
+        /// first_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox FName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText first_name;
         
         /// <summary>
-        /// LName control.
+        /// last_name control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox LName;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText last_name;
         
         /// <summary>
-        /// Subject control.
+        /// message_subject control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Subject;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText message_subject;
         
         /// <summary>
-        /// Message control.
+        /// message_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Message;
-        
-        /// <summary>
-        /// lblMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMessage;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea message_content;
     }
 }

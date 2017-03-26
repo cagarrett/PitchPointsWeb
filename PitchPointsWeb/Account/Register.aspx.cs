@@ -17,7 +17,8 @@ namespace PitchPointsWeb.Account
 
         protected async void CreateUser_Click(object sender, EventArgs e)
         {
-            if(first_name.Value != "" && last_name.Value != "" && date_of_birth.Value != "" && password.Value != "" && email.Value != "")
+            string empty = "";
+            if(!first_name.Value.Equals(empty) && !last_name.Value.Equals(empty) && date_of_birth.Value != empty && !password.Value.Equals(empty) && !email.Value.Equals(empty))
             {
                 if (password.Value == confirm_password.Value)
                 {

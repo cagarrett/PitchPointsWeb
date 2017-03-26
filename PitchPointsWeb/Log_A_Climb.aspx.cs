@@ -17,18 +17,31 @@ namespace PitchPointsWeb
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var controller = new RouteController();
-            var logClimbModel = new LoggedClimbModel
+            string empty = "";
+            if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
             {
-                ClimberId = Convert.ToInt32(ClimberID.Text),
-                WitnessId = Convert.ToInt32(Witness.Text),
-                RouteId = Convert.ToInt32(RouteClimbed.Text),
-                Falls = Convert.ToInt32(numberOfFalls.Text),
-            };
-            var result = controller.LogClimb(logClimbModel);
-            if (result.Success)
+                var controller = new RouteController();
+                var logClimbModel = new LoggedClimbModel
+                {
+                    ClimberId = Convert.ToInt32(climber_id.Value),
+                    WitnessId = Convert.ToInt32(witness_id.Value),
+                    RouteId = Convert.ToInt32(route_id.Value),
+                    Falls = Convert.ToInt32(falls.Value),
+                };
+                var result = controller.LogClimb(logClimbModel);
+                if (result.Success)
+                {
+                    climber_id.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                }
+            }
+            else
             {
-                Response.Redirect("Default.aspx");
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
             }
         }
     }

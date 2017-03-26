@@ -19,36 +19,42 @@ namespace PitchPointsWeb
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            var user = FName.Text + " " + LName.Text;
-            var fromAddress = new MailAddress("PitchPointsIssueTracking@gmail.com", user);
-            var toAddress = new MailAddress("PitchPointsTeam@gmail.com", "Pitch Points Team");
-            const string fromPassword = "PitchPointsBugraCodyRiderSam";
-            var subject = Subject.Text;
-            var body = Message.Text;
+            string empty = "";
+            if(!first_name.Value.Equals(empty) && !last_name.Value.Equals(empty) && !message_subject.Value.Equals(empty) && !message_content.Value.Equals(empty))
+            {
+                var user = first_name.Value + " " + last_name.Value;
+                var fromAddress = new MailAddress("PitchPointsIssueTracking@gmail.com", user);
+                var toAddress = new MailAddress("PitchPointsTeam@gmail.com", "Pitch Points Team");
+                const string fromPassword = "PitchPointsBugraCodyRiderSam";
+                var subject = message_subject.Value;
+                var body = message_content.Value;
 
-            var smtp = new SmtpClient
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
+                };
+                using (var message = new MailMessage(fromAddress, toAddress)
+                {
+                    Subject = subject,
+                    Body = body
+                })
+                {
+                    smtp.Send(message);
+                    first_name.Value = "";
+                    last_name.Value = "";
+                    message_subject.Value = "";
+                    message_content.Value = "";
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                }
+            }
+            else
             {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                EnableSsl = true,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-            };
-            using (var message = new MailMessage(fromAddress, toAddress)
-            {
-                Subject = subject,
-                Body = body
-            })
-            {
-                smtp.Send(message);
-                FName.Text = "";
-                LName.Text = "";
-                Subject.Text = "";
-                Message.Text = "";
-
-                lblMessage.ForeColor = System.Drawing.Color.Red;
-                lblMessage.Text = "Your message has been sent to the Pitch Points Support Team.";
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
             }
         }
     }
