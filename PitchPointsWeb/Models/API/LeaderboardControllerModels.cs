@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using PitchPointsWeb.Models.API;
+using System.Collections.Generic;
 
-namespace PitchPointsWeb.Models
+namespace PitchPointsWeb.API
 {
     public class LeaderboardEntry
     {
@@ -41,6 +42,13 @@ namespace PitchPointsWeb.Models
         public int CompetitionId { get; set; }
 
         public int CategoryId { get; set; }
+
+    }
+
+    public class ScorecardRequest: TokenModel
+    {
+
+        public int CompetitionId { get; set; }
 
     }
 

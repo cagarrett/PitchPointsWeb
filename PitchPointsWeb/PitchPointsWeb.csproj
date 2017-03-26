@@ -551,7 +551,7 @@
     <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
     <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LeaderboardModels.cs" />
+    <Compile Include="Models\API\LeaderboardControllerModels.cs" />
     <Compile Include="Models\Competition.cs" />
     <Compile Include="Models\LocationModels.cs" />
     <Compile Include="Models\RouteModels.cs" />
