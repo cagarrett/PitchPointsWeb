@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using PitchPointsWeb.Models.API;
+using PitchPointsWeb.API;
 
 namespace PitchPointsWeb
 {
@@ -82,7 +83,7 @@ namespace PitchPointsWeb
             //validate
 
             //set logged in view
-            
+
         }
 
         public void WriteToken(string token)
@@ -109,6 +110,67 @@ namespace PitchPointsWeb
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
+
+        public async void PopupLogin(LoginModel model)
+        {
+            var validLogin = await new AccountController().Login(model);
+
+            if (validLogin.Success)
+            {
+                WriteToken(validLogin.Token);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+            }
+            else
+            {
+                int responseCode = validLogin.ResponseCode;
+                switch (responseCode)
+                {
+                    case 1:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
+                        break;
+                    case 2:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                        break;
+                    case 102:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "incorrectPassword();", true);
+                        break;
+                    case 101:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "accountDoesntExist();", true);
+                        break;
+                }
+            }
+        }
+
     }
 
+        public async void login_Click(object sender, EventArgs e)
+        {
+            var validLogin = await new AccountController().Login(new LoginModel { Email = user_email.Value, Password = user_password.Value });
+            
+            if (validLogin.Success)
+            {
+                WriteToken(validLogin.Token);
+                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+            }
+            else
+            {
+                int responseCode = validLogin.ResponseCode;
+                switch (responseCode)
+                {
+                    case 1:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
+                        break;
+                    case 2:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                        break;
+                    case 102:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "incorrectPassword();", true);
+                        break;
+                    case 101:
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "accountDoesntExist();", true);
+                        break;
+                }
+            }
+        }
+    }
 }

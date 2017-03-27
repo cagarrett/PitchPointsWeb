@@ -67,6 +67,12 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <input type="date" class="datepicker" runat="server" id="date_of_birth" style="width: 290px">
+                <script>
+                    $('.datepicker').pickadate({
+                        selectMonths: true, // Creates a dropdown to control month
+                        selectYears: 15 // Creates a dropdown of 15 years to control year
+                    });
+                </script>
                 <label for="date_of_birth" data-error="This date is not valid" data-success="right">Date of Birth</label>
             </div>
         </div>

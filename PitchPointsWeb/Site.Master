@@ -56,9 +56,6 @@
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
-                           
-                               
-
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a runat="server" href="~/RegisterForComp">Register for competitions</a></li>
@@ -71,7 +68,41 @@
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
+                                <li><a runat="server" href="#loginModal">Log in</a></li>
+                                <script>
+                                    $(document).ready(function () {
+                                        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+                                        $('.modal').modal();
+                                    });
+                                </script>
+                                <div id="loginModal" class="modal modal-fixed-footer" style="width: 400px; height: 300px;">
+                                    <div class="modal-content">
+                                        <h4>
+                                            <center>Login</center>
+                                        </h4>
+                                        <div class="form-horizontal" runat="server">
+                                            <div class="form-group">
+                                                <div class="col-md-offset-0 col-md-10">
+                                                    <div class="input-field col s12">
+                                                        <i class="material-icons prefix">account_circle</i>
+                                                        <input id="user_email" type="email" class="validate" runat="server">
+                                                        <label for="user_email" data-error="Invalid email input" data-success="">Email</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-md-offset-0 col-md-10">
+                                                    <div class="input-field col s12">
+                                                        <i class="material-icons prefix">lock_outline</i>
+                                                        <input id="user_password" type="password" class="validate" runat="server">
+                                                        <label for="user_password" data-error="Invalid password input" data-success="">Password</label>
+                                                        <asp:Button runat="server" Text="Log in" CssClass="btn btn-primary" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </ul>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
@@ -92,10 +123,14 @@
             </asp:ContentPlaceHolder>
         </div>
         <div>
-            <br /><br /><br /><br /><br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             <footer>
-                    <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
-                </footer>
+                <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
+            </footer>
         </div>
     </form>
 </body>
