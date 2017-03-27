@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -111,49 +108,25 @@ namespace PitchPointsWeb
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
         }
 
-        public async void PopupLogin(LoginModel model)
+        protected void btnLogin_OnClick(object sender, EventArgs e)
         {
-            var validLogin = await new AccountController().Login(model);
-
+            var email = (LoginViewPopup.Controls[0].FindControl("user_email") as TextBox)?.Text;
+            var password = (LoginViewPopup.Controls[0].FindControl("user_password") as TextBox)?.Text;
+            var model = new LoginModel
+            {
+                Email = email,
+                Password = password
+            };
+            var validLogin = new AccountController().Login(model).Result;
             if (validLogin.Success)
             {
-                WriteToken(validLogin.Token);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                Response.Redirect("Contact.aspx", false);
+                //WriteToken(validLogin.Token);
+                //IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
             }
             else
             {
-                int responseCode = validLogin.ResponseCode;
-                switch (responseCode)
-                {
-                    case 1:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "authError();", true);
-                        break;
-                    case 2:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
-                        break;
-                    case 102:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "incorrectPassword();", true);
-                        break;
-                    case 101:
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "accountDoesntExist();", true);
-                        break;
-                }
-            }
-        }
-
-    }
-
-        public async void login_Click(object sender, EventArgs e)
-        {
-            var validLogin = await new AccountController().Login(new LoginModel { Email = user_email.Value, Password = user_password.Value });
-            
-            if (validLogin.Success)
-            {
-                WriteToken(validLogin.Token);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
-            }
-            else
-            {
+                Response.Write(validLogin.ResponseMessage);
                 int responseCode = validLogin.ResponseCode;
                 switch (responseCode)
                 {

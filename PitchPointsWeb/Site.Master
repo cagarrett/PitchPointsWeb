@@ -1,4 +1,6 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="PitchPointsWeb.SiteMaster" %>
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="PitchPointsWeb.SiteMaster" %>
+<%@ Import Namespace="Microsoft.Ajax.Utilities" %>
+<%@ Import Namespace="PitchPointsWeb" %>
 
 <!DOCTYPE html>
 
@@ -13,7 +15,81 @@
     </asp:PlaceHolder>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    <script type="text/javascript">
+        function login(obj) {
+            //alert(<%= LoginViewPopup.FindControl("user_email").ClientID %>.value);
+            //alert(<%= LoginViewPopup.FindControl("user_password").ClientID %>.value);
+            var model = {};
+            model.Email = <%= LoginViewPopup.FindControl("user_email").ClientID %>.value;
+            model.Password = <%= LoginViewPopup.FindControl("user_password").ClientID %>.value;
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: "../api/Account/Login",
+                data: JSON.stringify(model),
+                accept: "application/json",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (msg) {
+                    $('#loginModal').modal().hide();
+                    if (msg.Success) {
+                        document.cookie = "Token=" + msg.Token;
+                    } else {
+                        switch(msg.ResponseCode) {
+                            case 1:
+                                authError();
+                                break;
+                            case 2:
+                                serverError();
+                                break;
+                            case 101:
+                                accountDoesntExist();
+                                break;
+                            case 102:
+                                incorrectPassword();
+                                break;
+                        }
+                    }
+                },
+                error: function(msg) {
+                    $('#loginModal').modal().hide();
+                    serverError();
+                }
+            });
+            return false;
+        }
+        function incorrectPassword() {
+            swal({
+                title: 'Incorrect Password!',
+                text: 'The password you entered does not match the username provided.',
+                type: 'error'
+            });
+        }
+        function authError() {
+            swal({
+                title: 'Authentication Error!',
+                text: 'We are having trouble authenticating your credentials. Please try again.',
+                type: 'error'
+            });
+        }
+        function serverError() {
+            swal({
+                title: 'Server Error!',
+                text: 'We are having trouble with our server. Please try again.',
+                type: 'error'
+            });
+        }
+        function accountDoesntExist() {
+            swal({
+                title: 'No account registered!',
+                text: 'This email address has not been registered with us.',
+                type: 'error'
+            });
+        }
+    </script>
 </head>
 <body>
     <form runat="server">
@@ -44,7 +120,12 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-
+        <script>
+            $(document).ready(function () {
+                // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+                $('.modal').modal();
+            });
+        </script>
         <div class="navbar navbar-custom navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
@@ -53,28 +134,22 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/Contact.aspx">Contact</a></li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
                                 <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/RegisterForComp">Register for competitions</a></li>
-                                <li><a runat="server" href="~/Log_A_Climb">Log a Climb</a></li>
-                                <li><a runat="server" href="~/Leaderboard">Leaderboards</a></li>
+                                <li><a runat="server" href="~/RegisterForComp.aspx">Register for competitions</a></li>
+                                <li><a runat="server" href="~/Log_A_Climb.aspx">Log a Climb</a></li>
+                                <li><a runat="server" href="~/Leaderboard.aspx">Leaderboards</a></li>
                             </ul>
                         </li>
                     </ul>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
+                    <asp:LoginView ID="LoginViewPopup" runat="server" ViewStateMode="Disabled" ClientIDMode="Static">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
+                                <li><a runat="server" href="~/Account/Register.aspx">Register</a></li>
                                 <li><a runat="server" href="#loginModal">Log in</a></li>
-                                <script>
-                                    $(document).ready(function () {
-                                        // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-                                        $('.modal').modal();
-                                    });
-                                </script>
                                 <div id="loginModal" class="modal modal-fixed-footer" style="width: 400px; height: 300px;">
                                     <div class="modal-content">
                                         <h4>
@@ -85,8 +160,9 @@
                                                 <div class="col-md-offset-0 col-md-10">
                                                     <div class="input-field col s12">
                                                         <i class="material-icons prefix">account_circle</i>
-                                                        <input id="user_email" type="email" class="validate" runat="server">
-                                                        <label for="user_email" data-error="Invalid email input" data-success="">Email</label>
+                                                        <asp:TextBox ID="user_email" TextMode="Email" CssClass="validate" runat="server" ClientIDMode="Static" />
+                                                        <asp:Label runat="server" AssociatedControlID="user_email" CssClass="">Email</asp:Label>
+                                                        <%--<label for="user_email" data-error="Invalid email input" data-success="">Email</label>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,9 +170,11 @@
                                                 <div class="col-md-offset-0 col-md-10">
                                                     <div class="input-field col s12">
                                                         <i class="material-icons prefix">lock_outline</i>
-                                                        <input id="user_password" type="password" class="validate" runat="server">
-                                                        <label for="user_password" data-error="Invalid password input" data-success="">Password</label>
-                                                        <asp:Button runat="server" Text="Log in" CssClass="btn btn-primary" />
+                                                        <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
+                                                        <asp:Label runat="server" AssociatedControlID="user_password" />
+                                                        <%--<label for="user_password" data-error="Invalid password input" data-success="">Password</label>--%>
+                                                    <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -119,8 +197,7 @@
             </div>
         </div>
         <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server">
-            </asp:ContentPlaceHolder>
+            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
         <div>
             <br />
