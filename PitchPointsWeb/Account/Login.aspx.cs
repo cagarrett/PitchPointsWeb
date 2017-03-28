@@ -22,9 +22,9 @@ namespace PitchPointsWeb.Account
             }
         }
 
-        protected async void LogIn(object sender, EventArgs e)
+        public async void LogIn(object sender, EventArgs e)
         {
-            var validLogin = await new AccountController().Login(new LoginModel { Email = Email.Text, Password = Password.Text });
+            var validLogin = await new AccountController().Login(new LoginModel { Email = user_email.Value, Password = user_password.Value });
 
             if (validLogin.Success)
             {

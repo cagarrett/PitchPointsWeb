@@ -5763,7 +5763,7 @@ button.btn-floating {
 
     .modal.modal-fixed-footer .modal-footer {
         border-top: 1px solid rgba(0, 0, 0, 0.1);
-        position: absolute;
+        position: center;
         bottom: 0;
     }
 

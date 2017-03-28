@@ -43,18 +43,19 @@
                 </p>
             </asp:PlaceHolder>
             <div class="form-group">
-                <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
-                <div class="col-md-10">
-                    <asp:TextBox runat="server" ID="Email" CssClass="form-control" TextMode="Email" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                        CssClass="text-danger" ErrorMessage="The email field is required." />
+                <div class="col-md-offset-0 col-md-10">
+                    <div class="input-field col s12">
+                        <input id="user_email" type="email" class="validate" runat="server">
+                        <label for="user_email" data-error="Invalid email input" data-success="">Email</label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
-                <div class="col-md-10">
-                    <asp:TextBox runat="server" ID="Password" TextMode="Password" CssClass="form-control" />
-                    <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="text-danger" ErrorMessage="The password field is required." />
+                <div class="col-md-offset-0 col-md-10">
+                    <div class="input-field col s12">
+                        <input id="user_password" type="password" class="validate" runat="server">
+                        <label for="user_password" data-error="Invalid password input" data-success="">Password</label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
