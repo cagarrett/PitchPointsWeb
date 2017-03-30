@@ -37,6 +37,7 @@ namespace PitchPointsWeb.API
             return response;
         }
 
+        [HttpPost]
         public async Task<CompetitionRegistrationResponse> ModifyCompetitionStatus([FromBody] CompetitionRegistrationModel model)
         {
             var valid = await model.Validate();
