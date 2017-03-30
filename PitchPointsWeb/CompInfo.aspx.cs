@@ -10,8 +10,10 @@ using System.Net.Mail;
 
 namespace PitchPointsWeb
 {
-    public partial class RegisterForComp : Page
+    public partial class CompInfo : Page
     {
+        
+
         protected void Page_Load(object sender, EventArgs e)
         {
 

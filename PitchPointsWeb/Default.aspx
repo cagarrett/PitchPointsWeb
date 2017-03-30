@@ -20,6 +20,40 @@
                 <img src="Assets/Boulder.png" alt="Boulder"></a>
             <a class="carousel-item" href="#five!">
                 <img src="Assets/Snake_Pit.png" alt="SnakePit"></a>
-        </div>      
+
+
+
+            
+
+        </div>
+        <h2>Upcoming Competitions</h2>
+        <asp:GridView ID="CompetitionsGridView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <Columns>
+                    <asp:BoundField DataField="CompTitle"
+                        HeaderText="Comp Title"
+                        InsertVisible="False" ReadOnly="True"
+                        SortExpression="CompTitle" />
+                    <asp:BoundField DataField="LocationID"
+                        HeaderText="LocationID"
+                        SortExpression="LocationID" />
+                    <asp:BoundField DataField="CompDetails"
+                        HeaderText="Comp Details"
+                        SortExpression="CompDetails" />
+                    <asp:BoundField DataField="StartDate"
+                        HeaderText="StartDate"
+                        SortExpression="StartDate" />
+                    <asp:BoundField DataField="EndDate"
+                        HeaderText="EndDate"
+                        SortExpression="EndDate" />
+                    <asp:BoundField DataField="Description"
+                        HeaderText="Description"
+                        SortExpression="Description" />
+                </Columns>
+            </asp:GridView>
+            <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                </SelectParameters>
+            </asp:SqlDataSource>
     </div>
 </asp:Content>

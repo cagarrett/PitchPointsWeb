@@ -294,7 +294,7 @@
     <Content Include="Content\sweetalert2\sweetalert2.min.js" />
     <Content Include="Content\theme.css" />
     <Content Include="Default.aspx" />
-    <Content Include="RegisterForComp.aspx" />
+    <Content Include="CompInfo.aspx" />
     <Content Include="Log_A_Climb.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap.css" />
@@ -509,12 +509,12 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Models\API\CompetitionControllerModels.cs" />
-    <Compile Include="RegisterForComp.aspx.cs">
-      <DependentUpon>RegisterForComp.aspx</DependentUpon>
+    <Compile Include="CompInfo.aspx.cs">
+      <DependentUpon>CompInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="RegisterForComp.aspx.designer.cs">
-      <DependentUpon>RegisterForComp.aspx</DependentUpon>
+    <Compile Include="CompInfo.aspx.designer.cs">
+      <DependentUpon>CompInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Log_A_Climb.aspx.cs">
       <DependentUpon>Log_A_Climb.aspx</DependentUpon>
