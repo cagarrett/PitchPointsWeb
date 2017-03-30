@@ -212,45 +212,35 @@
                             </ul>
                         </div>
                     </div>
-                    <%--<asp:LoginView ID="LoginViewPopup" runat="server" ViewStateMode="Disabled" ClientIDMode="Static">
-                        <AnonymousTemplate>
-                            
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            
-                        </LoggedInTemplate>
-                    </asp:LoginView>--%>
                 </div>
             </div>
         </div>
-        <div class="container body-content">
-            <div id="loginModal" class="modal fade show" tabindex="-1" role="dialog" style="background-color: transparent; box-shadow: none;" aria-labelledby="loginModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title" id="loginModalLabel">Login</h4>
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="background-color: transparent; box-shadow: none;" aria-labelledby="loginModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="loginModalLabel">Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <asp:TextBox ID="user_email" TextMode="Email" CssClass="validate" runat="server" ClientIDMode="Static" />
+                            <asp:Label runat="server" AssociatedControlID="user_email" CssClass="">Email</asp:Label>
                         </div>
-                        <div class="modal-body">
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">account_circle</i>
-                                <asp:TextBox ID="user_email" TextMode="Email" CssClass="validate" runat="server" ClientIDMode="Static" />
-                                <asp:Label runat="server" AssociatedControlID="user_email" CssClass="">Email</asp:Label>
-                            </div>
-                            <div class="input-field col s12">
-                                <i class="material-icons prefix">lock_outline</i>
-                                <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
-                                <asp:Label runat="server" AssociatedControlID="user_password">Password</asp:Label>
-                            </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
+                            <asp:Label runat="server" AssociatedControlID="user_password">Password</asp:Label>
                         </div>
-                        <div class="modal-footer">
-                            <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
                     </div>
                 </div>
             </div>
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
         </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
     </form>
     <footer>
         <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
