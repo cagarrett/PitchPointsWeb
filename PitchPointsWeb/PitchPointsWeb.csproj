@@ -292,7 +292,9 @@
     <Content Include="Assets\PPHangLogoTrim.png" />
     <Content Include="Assets\PPHangLogoTrimBlack.png" />
     <Content Include="Assets\Snake_Pit.PNG" />
+    <Content Include="Content\materialize\css\materialize.clockpicker.css" />
     <Content Include="Content\materialize\css\materialize.css" />
+    <Content Include="Content\materialize\js\materialize.clockpicker.js" />
     <Content Include="Content\materialize\js\materialize.js" />
     <Content Include="Content\sweetalert2\sweetalert2.css" />
     <Content Include="Content\sweetalert2\sweetalert2.js" />
