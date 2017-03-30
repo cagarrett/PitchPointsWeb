@@ -1,4 +1,5 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="PitchPointsWeb.SiteMaster" %>
+
 <%@ Import Namespace="Microsoft.Ajax.Utilities" %>
 <%@ Import Namespace="PitchPointsWeb" %>
 
@@ -37,6 +38,7 @@
                     $('#loginModal').modal().hide();
                     if (msg.Success) {
                         document.cookie = "Token=" + msg.Token;
+                        Materialize.toast('Successfully logged in!', 3000, 'rounded');
                     } else {
                         switch(msg.ResponseCode) {
                             case 1:
@@ -128,22 +130,51 @@
         </script>
         <div class="navbar navbar-custom navbar-fixed-top">
             <div class="container">
-                <div class="navbar-header">
-                    <asp:Image ID="Image1" runat="server" Height="57px" ImageUrl="~/Assets/PPHangLogoTrim.png" Width="115px" />
-                </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/Contact.aspx">Contact</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/RegisterForComp.aspx">Register for competitions</a></li>
-                                <li><a runat="server" href="~/Log_A_Climb.aspx">Log a Climb</a></li>
-                                <li><a runat="server" href="~/Leaderboard.aspx">Leaderboards</a></li>
-                            </ul>
-                        </li>
+                        <div>
+                            <ul id="slide-out" class="side-nav">
+                                <li>
+                                    <div class="userView">
+                                        <div class="background">
+                                            <img src="../Assets/underwater-background.jpeg">
+                                        </div>
+                                        <br />
+                                        <span class="white-text">Navigation Panel</span>
+                                        <a href="#!profile"><span class="white-text name">Pitch Points Admin</span></a>
+                                        <a href="#!email"><span class="white-text email">PitchPointsTeam@gmail.com</span></a>
+                                    </div>
+                                </li>
+                                <li><a class="subheader">Important Links</a></li>
+                                <div class="divider"></div>
+                                <li><a class="waves-effect" href="../Default.aspx"><i class="material-icons">home</i>Home</a></li>
+                                <li><a class="waves-effect" href="../Contact.aspx"><i class="material-icons">contact_mail</i>Contact Us</a></li>
+                                <li class="no-padding">
+                                    <ul class="collapsible collapsible-accordion">
+                                        <li>
+                                            <a class="collapsible-header">Competition Info<i class="material-icons">expand_more</i></a>
+                                            <div class="collapsible-body">
+                                                <ul>
+                                                    <li><a runat="server" href="~/RegisterForComp.aspx"><i class="material-icons">event</i>Register for competitions</a></li>
+                                                    <li><a runat="server" href="~/Log_A_Climb.aspx"><i class="material-icons">edit</i>Log a Climb</a></li>
+                                                    <li><a runat="server" href="~/Leaderboard.aspx"><i class="material-icons">format_list_numbered</i>Leaderboards</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li><a class="subheader">Competition Manager</a></li>
+                                        <div class="divider"></div>
+                                        <li><a class="waves-effect" href="../Admin/CreateCompetition.aspx"><i class="material-icons">queue</i>Create Competition</a></li>
+                                        <li><a class="waves-effect" href="../Admin/EditCompetition.aspx"><i class="material-icons">edit</i>Edit Competitions</a></li>
+                                        <li>
+                                            <div class="divider"></div>
+                                        </li>
+                                        <li><a class="subheader">User Manager</a></li>
+                                        <li><a class="waves-effect" href="../Admin/UserPermissions.aspx"><i class="material-icons">account_box</i>Manage Permissions</a></li>
+                                        <li><a class="waves-effect" href="../Admin/RegisterClimberForCompetition.aspx"><i class="material-icons">event</i>Register Climber for Comp</a></li>
+                                        <li><a class="waves-effect" href="../Admin/LogRouteForClimber.aspx"><i class="material-icons">edit</i>Log Route for Climber</a></li>
+                                    </ul>
+                        </div>
+                        <li><a runat="server" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <asp:LoginView ID="LoginViewPopup" runat="server" ViewStateMode="Disabled" ClientIDMode="Static">
                         <AnonymousTemplate>
@@ -171,10 +202,9 @@
                                                     <div class="input-field col s12">
                                                         <i class="material-icons prefix">lock_outline</i>
                                                         <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
-                                                        <asp:Label runat="server" AssociatedControlID="user_password" />
+                                                        <asp:Label runat="server" AssociatedControlID="user_password" CssClass="">Password</asp:Label>
                                                         <%--<label for="user_password" data-error="Invalid password input" data-success="">Password</label>--%>
-                                                    <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
-                                                        
+                                                        <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,6 +212,7 @@
                                     </div>
                                 </div>
                             </ul>
+                            <script>$(".button-collapse").sideNav();</script>
                         </AnonymousTemplate>
                         <LoggedInTemplate>
                             <ul class="nav navbar-nav navbar-right">
