@@ -31,24 +31,6 @@ namespace PitchPointsWeb.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputText tbxDate;
         
         /// <summary>
-        /// tbxStartTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText tbxStartTime;
-        
-        /// <summary>
-        /// tbxEndTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText tbxEndTime;
-        
-        /// <summary>
         /// tbxAddress1 control.
         /// </summary>
         /// <remarks>

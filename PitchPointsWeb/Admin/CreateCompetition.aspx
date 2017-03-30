@@ -17,14 +17,14 @@
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
-                        <input id="tbxStartTime" type="text" class="validate" runat="server">
                         <label for="tbxStartTime" data-success="">Start Time</label>
+                        <input id="tbxStartTime" class="timepicker" type="time">
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
-                        <input id="tbxEndTime" type="text" class="validate" runat="server">
                         <label for="tbxEndTime" data-success="">End Time</label>
+                        <input id="tbxEndTime" class="timepicker" type="time">
                     </div>
                 </div>
             </div>
@@ -60,7 +60,15 @@
             </div>
         </div>
     </div>
+    <script>
+        $('.timepicker').pickatime({
+            default: 'now',
+            twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
+            donetext: 'OK',
+            autoclose: false,
+            vibrate: true // vibrate the device when dragging clock hand
+        });
+    </script>
     <asp:Table ID="ruleTable" runat="server">
-
     </asp:Table>
 </asp:Content>
