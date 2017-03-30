@@ -14,12 +14,7 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="Content/materialize/css/materialize.css" />
-    <link rel="stylesheet" href="Content/sweetalert2/sweetalert2.css" />
-    <link rel="stylesheet" href="Content/theme.css" />
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-    <script src="Content/sweetalert2/sweetalert2.min.js"></script>
-    <script src="Content/materialize/js/materialize.js"></script>
+    <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-3.1.1.min.js") %>"></script>
     <style>
         #loggedOut {
             display: block;
@@ -32,6 +27,7 @@
     <script type="text/javascript">
         $(function() {
             console.log('ready');
+            $(".button-collapse").sideNav();
             $('.item-modal').click(function(e) {
                 e.stopPropagation();
             });
@@ -45,7 +41,6 @@
             }
             // Verify token
         });
-        $(".button-collapse").sideNav();
         function showPopup() {
             $('#loginModal').modal();
             return false;
@@ -130,19 +125,18 @@
 </head>
 <body>
     <form runat="server">
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
         <link rel="stylesheet" href="../Content/theme.css" />
-        <script src="../Content/sweetalert2/sweetalert2.min.js"></script>
-        <script src="../Content/materialize/js/materialize.js"></script>
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
+                <asp:ScriptReference Path="~/Content/sweetalert2/sweetalert2.min.js"/>
+                <asp:ScriptReference Path="~/Content/materialize/js/materialize.js"/>
                 <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
+                <%--<asp:ScriptReference Path="~/Scripts/jquery-3.1.1.min.js" />--%>
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -165,7 +159,7 @@
                             <li>
                                 <div class="userView">
                                     <div class="background">
-                                        <img src="Assets/underwater-background.jpeg" />
+                                        <img src="/Assets/underwater-background.jpeg" />
                                     </div>
                                     <br />
                                     <span class="white-text">Navigation Panel</span>
