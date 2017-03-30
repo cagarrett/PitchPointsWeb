@@ -161,14 +161,13 @@
                                     <div class="background">
                                         <img src="/Assets/underwater-background.jpeg" />
                                     </div>
-                                    <br />
                                     <span class="white-text">Navigation Panel</span>
                                     <a href="#!profile"><span class="white-text name">Pitch Points Admin</span></a>
                                     <a href="#!email"><span class="white-text email">PitchPointsTeam@gmail.com</span></a>
                                 </div>
                             </li>
                             <li><a class="subheader">Important Links</a></li>
-                            <div class="divider" />
+                            <li><div class="divider" /></li>
                             <li><a class="waves-effect" href="Default.aspx"><i class="material-icons">home</i>Home</a></li>
                             <li><a class="waves-effect" href="Contact.aspx"><i class="material-icons">contact_mail</i>Contact Us</a></li>
                             <li class="no-padding">
@@ -184,12 +183,10 @@
                                         </div>
                                     </li>
                                     <li><a class="subheader">Competition Manager</a></li>
-                                    <div class="divider" />
+                                    <li><div class="divider" /></li>
                                     <li><a class="waves-effect" href="Admin/CreateCompetition.aspx"><i class="material-icons">queue</i>Create Competition</a></li>
                                     <li><a class="waves-effect" href="Admin/EditCompetition.aspx"><i class="material-icons">edit</i>Edit Competitions</a></li>
-                                    <li>
-                                        <div class="divider"></div>
-                                    </li>
+                                    <li><div class="divider"></div></li>
                                     <li><a class="subheader">User Manager</a></li>
                                     <li><a class="waves-effect" href="Admin/UserPermissions.aspx"><i class="material-icons">account_box</i>Manage Permissions</a></li>
                                     <li><a class="waves-effect" href="Admin/RegisterClimberForCompetition.aspx"><i class="material-icons">event</i>Register Climber for Comp</a></li>
