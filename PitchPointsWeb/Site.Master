@@ -159,11 +159,11 @@
                             <li>
                                 <div class="userView">
                                     <div class="background">
-                                        <img src="/Assets/underwater-background.jpeg" />
+                                        <img src="/Assets/PPHangLogoTrimBlack.png" style="width: 270px; height: 155px" />
                                     </div>
-                                    <span class="white-text">Navigation Panel</span>
-                                    <a href="#!profile"><span class="white-text name">Pitch Points Admin</span></a>
-                                    <a href="#!email"><span class="white-text email">PitchPointsTeam@gmail.com</span></a>
+                                    <br /><br />
+                                    <a href="#!profile"><span class="black-text name">Pitch Points Admin</span></a>
+                                    <a href="#!email"><span class="black-text email">PitchPointsTeam@gmail.com</span></a>
                                 </div>
                             </li>
                             <li><a class="subheader">Important Links</a></li>

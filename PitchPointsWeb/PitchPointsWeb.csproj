@@ -290,8 +290,8 @@
     <Content Include="Assets\ppCampusHelv.png" />
     <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
     <Content Include="Assets\PPHangLogoTrim.png" />
+    <Content Include="Assets\PPHangLogoTrimBlack.png" />
     <Content Include="Assets\Snake_Pit.PNG" />
-    <Content Include="Assets\underwater-background.jpeg" />
     <Content Include="Content\materialize\css\materialize.css" />
     <Content Include="Content\materialize\js\materialize.js" />
     <Content Include="Content\sweetalert2\sweetalert2.css" />
