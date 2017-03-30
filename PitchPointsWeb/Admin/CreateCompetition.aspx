@@ -12,7 +12,7 @@
             </div>
             <div class="input-field">
                 <label for="tbxDate" data-success="">Date of Competition</label>
-                <input id="tbxDate" type="text" class="datepicker" runat="server">
+                <input id="tbxDate" type="date" class="datepicker" runat="server">
             </div>
             <div class="row">
                 <div class="col s3">
@@ -67,6 +67,10 @@
             donetext: 'OK',
             autoclose: false,
             vibrate: true // vibrate the device when dragging clock hand
+        });
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 15 // Creates a dropdown of 15 years to control year
         });
     </script>
     <asp:Table ID="ruleTable" runat="server">
