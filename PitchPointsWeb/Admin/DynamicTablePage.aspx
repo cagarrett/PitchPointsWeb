@@ -24,7 +24,7 @@
                             <asp:TextBox runat="server" placeholder="Rule description" ID="ruleDescriptionTextBox" />
                         </ItemTemplate>
                         <FooterTemplate>
-                            <asp:TextBox runat="server" placeholder="Rule description" />
+                            <asp:TextBox runat="server" placeholder="Rule description" ID="ruleTextBox" />
                         </FooterTemplate>
                     </asp:TemplateField>
                     <asp:TemplateField HeaderText="Actions">
@@ -32,7 +32,7 @@
                             <asp:LinkButton runat="server" Text="Add" OnClick="addRuleButton_OnClick"/>
                         </FooterTemplate>
                         <ItemTemplate>
-                            <asp:LinkButton runat="server" Text="Delete" CommandName="Delete" />
+                            <asp:LinkButton runat="server" Text="Delete" OnClick="deleteRuleButton_OnClick" />
                         </ItemTemplate>
                     </asp:TemplateField>
                 </Columns>

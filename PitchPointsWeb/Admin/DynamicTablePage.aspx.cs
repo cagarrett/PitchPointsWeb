@@ -24,45 +24,66 @@ namespace PitchPointsWeb.Admin
             if (ViewState["RuleTable"] != null)
             {
                 var dataTable = (DataTable) ViewState["RuleTable"];
-                DataRow tableRow = null;
-                for (var i = 0; i < dataTable.Rows.Count; i++)
+                var newRule = ((TextBox)ruleGridView.FooterRow.FindControl("ruleTextBox")).Text;
+                var newRow = dataTable.NewRow();
+                newRow["Description"] = newRule;
+                if (ruleGridView.Rows.Count == 1 && !ruleGridView.Rows[0].Visible)
                 {
-                    var box = (TextBox) ruleGridView.Rows[i].Cells[0].FindControl("ruleDescriptionTextBox");
-                    tableRow = dataTable.NewRow();
-                    dataTable.Rows[i]["Description"] = box.Text;
+                    dataTable.Rows.RemoveAt(0);
                 }
-                //if (tableRow == null)
-                //{
-                //    tableRow = dataTable.NewRow();
-                //    tableRow
-                //}
-                //if (tableRow != null)
-                //{
-                //    dataTable.Rows.Add(tableRow);
-                //}
+                else
+                {
+                    ExtractExistingRules(ref dataTable);
+                }
+                dataTable.Rows.Add(newRow);
+
                 ViewState["RuleTable"] = dataTable;
 
                 ruleGridView.DataSource = dataTable;
                 ruleGridView.DataBind();
 
-                for (var i = 0; i < dataTable.Rows.Count; i++)
-                {
-                    var textBox = (TextBox)ruleGridView.Rows[i].Cells[0].FindControl("ruleDescriptionTextBox");
-                    textBox.Text = dataTable.Rows[i]["Description"].ToString();
-                }
+                RestoreValuesToGrid(ref dataTable);
             }
         }
 
         protected void deleteRuleButton_OnClick(object sender, EventArgs e)
         {
+            var button = sender as LinkButton;
+            var dataTable = (DataTable) ViewState["RuleTable"];
+            if (button != null && dataTable != null)
+            {
+                var row = ((GridViewRow) button.Parent.Parent).RowIndex;
+                if (dataTable.Rows.Count == 1) // Last row that is being deleted
+                {
+                    AddInitialRuleRow();
+                }
+                else
+                {
+                    ExtractExistingRules(ref dataTable);
+                    ViewState["RuleTable"] = dataTable;
+                    dataTable.Rows.RemoveAt(row);
+                    ruleGridView.DataSource = dataTable;
+                    ruleGridView.DataBind();
+                    RestoreValuesToGrid(ref dataTable);
+                }
+            }
         }
 
-        private void LoadPreviousData()
+        private void ExtractExistingRules(ref DataTable table)
         {
-            var dataTable = (DataTable) ViewState["RuleTable"];
-            if (dataTable?.Rows.Count > 0)
+            for (var i = 0; i < table.Rows.Count; i++) // Load form into datatable
             {
-                
+                var box = (TextBox)ruleGridView.Rows[i].Cells[0].FindControl("ruleDescriptionTextBox");
+                table.Rows[i]["Description"] = box.Text;
+            }
+        }
+
+        private void RestoreValuesToGrid(ref DataTable table)
+        {
+            for (var i = 0; i < ruleGridView.Rows.Count; i++)
+            {
+                var textBox = (TextBox)ruleGridView.Rows[i].Cells[0].FindControl("ruleDescriptionTextBox");
+                textBox.Text = table.Rows[i]["Description"].ToString();
             }
         }
 
@@ -75,6 +96,7 @@ namespace PitchPointsWeb.Admin
             ViewState["RuleTable"] = dataTable;
             ruleGridView.DataSource = dataTable;
             ruleGridView.DataBind();
+            ruleGridView.Rows[0].Visible = false;
         }
 
     }
