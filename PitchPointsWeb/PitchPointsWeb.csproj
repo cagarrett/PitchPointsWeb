@@ -117,12 +117,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.13.8.999, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.13.9.1126, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.9\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.13.8.999, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.13.9.1126, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.13.9\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Rest.ClientRuntime, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -278,6 +278,11 @@
     <Content Include="Account\ResetPasswordConfirmation.aspx" />
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
+    <Content Include="Admin\CreateCompetition.aspx" />
+    <Content Include="Admin\EditCompetition.aspx" />
+    <Content Include="Admin\LogRouteForClimber.aspx" />
+    <Content Include="Admin\UserPermissions.aspx" />
+    <Content Include="Admin\RegisterClimberForCompetition.aspx" />
     <Content Include="Assets\BatHang.PNG" />
     <Content Include="Assets\Boulder.PNG" />
     <Content Include="Assets\Climb.PNG" />
@@ -285,8 +290,11 @@
     <Content Include="Assets\ppCampusHelv.png" />
     <Content Include="Assets\ppCampusHelvWhiteTrim.png" />
     <Content Include="Assets\PPHangLogoTrim.png" />
+    <Content Include="Assets\PPHangLogoTrimBlack.png" />
     <Content Include="Assets\Snake_Pit.PNG" />
+    <Content Include="Content\materialize\css\materialize.clockpicker.css" />
     <Content Include="Content\materialize\css\materialize.css" />
+    <Content Include="Content\materialize\js\materialize.clockpicker.js" />
     <Content Include="Content\materialize\js\materialize.js" />
     <Content Include="Content\sweetalert2\sweetalert2.css" />
     <Content Include="Content\sweetalert2\sweetalert2.js" />
@@ -333,8 +341,16 @@
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-3.1.1-vsdoc.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.js" />
+    <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -370,6 +386,8 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -483,6 +501,41 @@
     </Compile>
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\CreateCompetition.aspx.cs">
+      <DependentUpon>CreateCompetition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\CreateCompetition.aspx.designer.cs">
+      <DependentUpon>CreateCompetition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\EditCompetition.aspx.cs">
+      <DependentUpon>EditCompetition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\EditCompetition.aspx.designer.cs">
+      <DependentUpon>EditCompetition.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\LogRouteForClimber.aspx.cs">
+      <DependentUpon>LogRouteForClimber.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\LogRouteForClimber.aspx.designer.cs">
+      <DependentUpon>LogRouteForClimber.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserPermissions.aspx.cs">
+      <DependentUpon>UserPermissions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserPermissions.aspx.designer.cs">
+      <DependentUpon>UserPermissions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\RegisterClimberForCompetition.aspx.cs">
+      <DependentUpon>RegisterClimberForCompetition.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\RegisterClimberForCompetition.aspx.designer.cs">
+      <DependentUpon>RegisterClimberForCompetition.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
     <Compile Include="API\CompetitionsController.cs" />
