@@ -1,14 +1,20 @@
 <%@ Page Title="CompInfo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CompInfo.aspx.cs" Inherits="PitchPointsWeb.CompInfo" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Upcoming Competitions</h2>
-
     <div class="form-horizontal">
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="row">
             <div class="col s6">
                 <h1>General</h1>
-                <asp:GridView ID="CompetitionsGridView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <div class="row">
+        <div class="col s12 m7">
+          <div class="card">
+            <div class="card-image">
+              <img src="Assets/NuLuLogo.PNG">
+            </div>
+            <div class="card-content">
+
+                <asp:GridView ID="CompetitionsGridView" Width="100px" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                     <Columns>
                         <asp:BoundField DataField="CompTitle"
                             HeaderText="Comp Title"
@@ -24,51 +30,65 @@
                 </asp:GridView>
                 <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                        <asp:Parameter DefaultValue="9" Name="email" Type="String" />
+                    </SelectParameters>
+                </asp:SqlDataSource>
+            </div>
+          </div>
+        </div>
+      </div>
+                <%----%>
+
+            </div>
+            <div class="col s6">
+                <h1>Location</h1>
+                <asp:GridView ID="LocationView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="LocationDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
+                <Columns>
+                        <asp:BoundField DataField="Nickname"
+                            HeaderText="Gym name"
+                            InsertVisible="False" ReadOnly="True"
+                            SortExpression="Nickname" />
+                        <asp:BoundField DataField="State"
+                            HeaderText="State"
+                            SortExpression="State" />
+                        <asp:BoundField DataField="City"
+                            HeaderText="City"
+                            SortExpression="City" />
+                        <asp:BoundField DataField="Zip"
+                            HeaderText="Zip"
+                            SortExpression="Zip" />
+                        <asp:BoundField DataField="AddressLine1"
+                            HeaderText="AddressLine1"
+                            SortExpression="AddressLine1" />
+                    </Columns>
+                </asp:GridView>
+
+                <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
+                    <SelectParameters>
+                        <asp:Parameter DefaultValue="1" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 
-            </div>
-
-
-            <div class="col s6">
-                <h1>Location</h1>
-                <asp:GridView ID="RulesView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
-                    <Columns>
-                        <asp:BoundField DataField="CompTitle"
-                            HeaderText="Comp Title"
-                            InsertVisible="False" ReadOnly="True"
-                            SortExpression="CompTitle" />
-                        <asp:BoundField DataField="CompDetails"
-                            HeaderText="Comp Details"
-                            SortExpression="CompDetails" />
-                        <asp:BoundField DataField="Description"
-                            HeaderText="Description"
-                            SortExpression="Description" />
-                    </Columns>
-                    <RowStyle Width="50px" />
-                </asp:GridView>
-            </div>
-        </div>
-        <h1>Competition Rules</h1>
-        <asp:GridView ID="GridView3" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
+                <h1>Competition Rules</h1>
+        <asp:GridView ID="RulesView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="RulesDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
             <Columns>
-                <asp:BoundField DataField="CompTitle"
-                    HeaderText="Comp Title"
-                    InsertVisible="False" ReadOnly="True"
-                    SortExpression="CompTitle" />
-                <asp:BoundField DataField="CompDetails"
-                    HeaderText="Comp Details"
-                    SortExpression="CompDetails" />
                 <asp:BoundField DataField="Description"
                     HeaderText="Description"
                     SortExpression="Description" />
             </Columns>
-            <RowStyle Width="50px" />
         </asp:GridView>
-        <br />
-        <asp:Button runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn btn-primary" />
+        <asp:SqlDataSource ID="RulesDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionRules" SelectCommandType="StoredProcedure">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="9" Name="CompetitionID" Type="Int32" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+            </div>
+        </div>
         
+        <br />
+        <asp:Button runat="server" OnClick="btnRegister_Click" Text="Register" CssClass="btn btn-primary" />
+        <asp:Button runat="server" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
+
         <div class="form-group">
             <div class="col-md-10">
             </div>

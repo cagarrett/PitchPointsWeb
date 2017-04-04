@@ -11,15 +11,17 @@
                 });
             </script>
             <a class="carousel-item" href="#one!">
-                <img src="Assets/Bathang.png" alt="Bat hang"></a>
+                <img src="Assets/HHWall.PNG" alt="Bat hang"></a>
             <a class="carousel-item" href="#two!">
                 <img src="Assets/Climb.png" alt="Climb"></a>
             <a class="carousel-item" href="#three!">
-                <img src="Assets/EvoComp.png" alt="Competition"></a>
+                <img src="Assets/HHILogoWall.PNG" alt="Competition"></a>
             <a class="carousel-item" href="#four!">
-                <img src="Assets/Boulder.png" alt="Boulder"></a>
+                <img src="Assets/NuLuLogo.PNG" alt="Boulder"></a>
             <a class="carousel-item" href="#five!">
                 <img src="Assets/Snake_Pit.png" alt="SnakePit"></a>
+            <a class="carousel-item" href="#five!">
+                <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
 
 
 

@@ -31,6 +31,24 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.SqlDataSource CompDataSource;
         
         /// <summary>
+        /// LocationView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView LocationView;
+        
+        /// <summary>
+        /// LocationDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource LocationDataSource;
+        
+        /// <summary>
         /// RulesView control.
         /// </summary>
         /// <remarks>
@@ -40,13 +58,13 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.GridView RulesView;
         
         /// <summary>
-        /// GridView3 control.
+        /// RulesDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GridView3;
+        protected global::System.Web.UI.WebControls.SqlDataSource RulesDataSource;
         
         /// <summary>
         /// lblMessage control.
