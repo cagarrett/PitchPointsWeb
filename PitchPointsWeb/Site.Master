@@ -1,6 +1,4 @@
-﻿<%--<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="PitchPointsWeb.SiteMaster" %>--%>
-<%@ Import Namespace="Microsoft.Ajax.Utilities" %>
-<%@ Import Namespace="PitchPointsWeb" %>
+﻿<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="Site.master.cs" Inherits="PitchPointsWeb.SiteMaster" %>
 
 <!DOCTYPE html>
 
@@ -15,13 +13,42 @@
     </asp:PlaceHolder>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-3.1.1.min.js") %>"></script>
+    <style>
+        #loggedOut {
+            display: block;
+        }
+
+        #loggedIn {
+            display: none;
+        }
+    </style>
     <script type="text/javascript">
+        $(function() {
+            console.log('ready');
+            $(".button-collapse").sideNav();
+            $('.item-modal').click(function(e) {
+                e.stopPropagation();
+            });
+            var token = getCookieValue("Token");
+            if (token === '') {
+                $("div.loggedIn").css("display", "none");
+                $("div.loggedOut").css("display", "block");
+            } else {
+                $("div.loggedIn").css("display", "block");
+                $("div.loggedOut").css("display", "none");
+            }
+            // Verify token
+        });
+        function showPopup() {
+            $('#loginModal').modal();
+            return false;
+        }
         function login(obj) {
-            //alert(<%= LoginViewPopup.FindControl("user_email").ClientID %>.value);
-            //alert(<%= LoginViewPopup.FindControl("user_password").ClientID %>.value);
             var model = {};
-            model.Email = <%= LoginViewPopup.FindControl("user_email").ClientID %>.value;
-            model.Password = <%= LoginViewPopup.FindControl("user_password").ClientID %>.value;
+            model.Email = <%= FindControl("user_email").ClientID %>.value;
+            model.Password = <%= FindControl("user_password").ClientID %>.value;
             $.ajax({
                 headers: {
                     'Accept': 'application/json',
@@ -37,20 +64,21 @@
                     $('#loginModal').modal().hide();
                     if (msg.Success) {
                         document.cookie = "Token=" + msg.Token;
+                        Materialize.toast('Successfully logged in!', 3000, 'rounded');
                     } else {
                         switch(msg.ResponseCode) {
-                            case 1:
-                                authError();
-                                break;
-                            case 2:
-                                serverError();
-                                break;
-                            case 101:
-                                accountDoesntExist();
-                                break;
-                            case 102:
-                                incorrectPassword();
-                                break;
+                        case 1:
+                            authError();
+                            break;
+                        case 2:
+                            serverError();
+                            break;
+                        case 101:
+                            accountDoesntExist();
+                            break;
+                        case 102:
+                            incorrectPassword();
+                            break;
                         }
                     }
                 },
@@ -60,6 +88,10 @@
                 }
             });
             return false;
+        }
+        function getCookieValue(a) {
+            var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+            return b ? b.pop() : '';
         }
         function incorrectPassword() {
             swal({
@@ -92,20 +124,21 @@
     </script>
 </head>
 <body>
-    <form runat="server">
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <form runat="server" class="container body-content">
         <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="../Content/sweetalert2/sweetalert2.min.js"></script>
-        <script src="../Content/materialize/js/materialize.js"></script>
         <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
+        <link type="text/css" rel="stylesheet" href="../Content/materialize/css/materialize.clockpicker.css" media="screen,projection"/>
+        <script src="../Content/materialize/js/materialize.clockpicker.js"></script>
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
         <link rel="stylesheet" href="../Content/theme.css" />
         <asp:ScriptManager runat="server">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see http://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
+                <asp:ScriptReference Path="~/Content/sweetalert2/sweetalert2.min.js"/>
+                <asp:ScriptReference Path="~/Content/materialize/js/materialize.js"/>
                 <asp:ScriptReference Name="MsAjaxBundle" />
-                <asp:ScriptReference Name="jquery" />
+                <%--<asp:ScriptReference Path="~/Scripts/jquery-3.1.1.min.js" />--%>
                 <asp:ScriptReference Name="bootstrap" />
                 <asp:ScriptReference Name="respond" />
                 <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
@@ -120,95 +153,99 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
-        <script>
-            $(document).ready(function () {
-                // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-                $('.modal').modal();
-            });
-        </script>
         <div class="navbar navbar-custom navbar-fixed-top">
             <div class="container">
-                <div class="navbar-header">
-                    <asp:Image ID="Image1" runat="server" Height="57px" ImageUrl="~/Assets/PPHangLogoTrim.png" Width="115px" />
-                </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/Contact.aspx">Contact</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Competition Info
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a runat="server" href="~/RegisterForComp.aspx">Register for competitions</a></li>
-                                <li><a runat="server" href="~/Log_A_Climb.aspx">Log a Climb</a></li>
-                                <li><a runat="server" href="~/Leaderboard.aspx">Leaderboards</a></li>
-                            </ul>
-                        </li>
+                        <ul id="slide-out" class="side-nav">
+                            <li>
+                                <div class="userView">
+                                    <div class="background">
+                                        <img src="/Assets/PPHangLogoTrimBlack.png" style="width: 270px; height: 155px" />
+                                    </div>
+                                    <br /><br />
+                                    <a href="#!profile"><span class="black-text name">Pitch Points Admin</span></a>
+                                    <a href="#!email"><span class="black-text email">PitchPointsTeam@gmail.com</span></a>
+                                </div>
+                            </li>
+                            <li><a class="subheader">Important Links</a></li>
+                            <li><div class="divider" /></li>
+                            <li><a class="waves-effect" href="../Default.aspx"><i class="material-icons">home</i>Home</a></li>
+                            <li><a class="waves-effect" href="../Contact.aspx"><i class="material-icons">contact_mail</i>Contact Us</a></li>
+                            <li class="no-padding">
+                                <ul class="collapsible collapsible-accordion">
+                                    <li>
+                                        <a class="collapsible-header">Competition Info<i class="material-icons">expand_more</i></a>
+                                        <div class="collapsible-body">
+                                            <ul>
+                                                <li><a runat="server" href="RegisterForComp.aspx"><i class="material-icons">event</i>Register for competitions</a></li>
+                                                <li><a runat="server" href="Log_A_Climb.aspx"><i class="material-icons">edit</i>Log a Climb</a></li>
+                                                <li><a runat="server" href="Leaderboard.aspx"><i class="material-icons">format_list_numbered</i>Leaderboards</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li><a class="subheader">Competition Manager</a></li>
+                                    <li><div class="divider" /></li>
+                                    <li><a class="waves-effect" href="../Admin/CreateCompetition.aspx"><i class="material-icons">queue</i>Create Competition</a></li>
+                                    <li><a class="waves-effect" href="../Admin/EditCompetition.aspx"><i class="material-icons">edit</i>Edit Competitions</a></li>
+                                    <li><div class="divider"></div></li>
+                                    <li><a class="subheader">User Manager</a></li>
+                                    <li><a class="waves-effect" href="../Admin/UserPermissions.aspx"><i class="material-icons">account_box</i>Manage Permissions</a></li>
+                                    <li><a class="waves-effect" href="../Admin/RegisterClimberForCompetition.aspx"><i class="material-icons">event</i>Register Climber for Comp</a></li>
+                                    <li><a class="waves-effect" href="../Admin/LogRouteForClimber.aspx"><i class="material-icons">edit</i>Log Route for Climber</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <li><a runat="server" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
                     </ul>
-                    <asp:LoginView ID="LoginViewPopup" runat="server" ViewStateMode="Disabled" ClientIDMode="Static">
-                        <AnonymousTemplate>
+                    <div id="auth">
+                        <div id="loggedOut">
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register.aspx">Register</a></li>
-                                <li><a runat="server" href="#loginModal">Log in</a></li>
-                                <div id="loginModal" class="modal modal-fixed-footer" style="width: 400px; height: 300px;">
-                                    <div class="modal-content">
-                                        <h4>
-                                            <center>Login</center>
-                                        </h4>
-                                        <div class="form-horizontal" runat="server">
-                                            <div class="form-group">
-                                                <div class="col-md-offset-0 col-md-10">
-                                                    <div class="input-field col s12">
-                                                        <i class="material-icons prefix">account_circle</i>
-                                                        <asp:TextBox ID="user_email" TextMode="Email" CssClass="validate" runat="server" ClientIDMode="Static" />
-                                                        <asp:Label runat="server" AssociatedControlID="user_email" CssClass="">Email</asp:Label>
-                                                        <%--<label for="user_email" data-error="Invalid email input" data-success="">Email</label>--%>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-md-offset-0 col-md-10">
-                                                    <div class="input-field col s12">
-                                                        <i class="material-icons prefix">lock_outline</i>
-                                                        <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
-                                                        <asp:Label runat="server" AssociatedControlID="user_password" />
-                                                        <%--<label for="user_password" data-error="Invalid password input" data-success="">Password</label>--%>
-                                                    <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <li><a runat="server" href="#" data-toggle="modal" data-target="#loginModal">Log in</a></li>
                             </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
+                        </div>
+                        <div id="loggedIn" style="">
                             <ul class="nav navbar-nav navbar-right">
-                                <%--<li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Session["Username"]  %>!</a></li>--%>
-                                <li><a runat="server" href="~/Account/Profile">My Account</a></li>
+                                <li><a runat="server" href="~/Account/Profile.aspx">My Account</a></li>
                                 <li>
-                                    <%--<asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />--%>
+                                    <a runat="server" href="#">Log out</a>
                                 </li>
                             </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="container body-content">
-            <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="background-color: transparent; box-shadow: none;" aria-labelledby="loginModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="loginModalLabel">Login</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">account_circle</i>
+                            <asp:TextBox ID="user_email" TextMode="Email" CssClass="validate" runat="server" ClientIDMode="Static" />
+                            <asp:Label runat="server" AssociatedControlID="user_email" CssClass="">Email</asp:Label>
+                        </div>
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock_outline</i>
+                            <asp:TextBox runat="server" ID="user_password" TextMode="Password" CssClass="validate" />
+                            <asp:Label runat="server" AssociatedControlID="user_password">Password</asp:Label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <asp:Button ID="btnLogin" runat="server" Text="Log in" CssClass="btn btn-primary" OnClientClick="return login();" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
-            </footer>
-        </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
     </form>
+    <footer>
+        <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
+    </footer>
 </body>
 </html>

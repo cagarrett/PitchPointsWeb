@@ -13,22 +13,31 @@ namespace PitchPointsWeb {
     public partial class SiteMaster {
         
         /// <summary>
-        /// Image1 control.
+        /// user_email control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1;
+        protected global::System.Web.UI.WebControls.TextBox user_email;
         
         /// <summary>
-        /// LoginViewPopup control.
+        /// user_password control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LoginView LoginViewPopup;
+        protected global::System.Web.UI.WebControls.TextBox user_password;
+        
+        /// <summary>
+        /// btnLogin control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnLogin;
         
         /// <summary>
         /// MainContent control.
