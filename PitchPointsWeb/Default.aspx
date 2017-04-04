@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PitchPointsWeb._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PitchPointsWeb._Default" EnableEventValidation="False" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -29,7 +29,7 @@
 
         </div>
         <h2>Upcoming Competitions</h2>
-        <asp:GridView ID="CompetitionsGridView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+        <asp:GridView ID="CompetitionsGridView" AutoGenerateSelectButton ="true" CssClass="bordered highlight centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 <Columns>
                     <asp:BoundField DataField="CompTitle"
                         HeaderText="Comp Title"
@@ -51,6 +51,7 @@
                         HeaderText="Description"
                         SortExpression="Description" />
                 </Columns>
+
             </asp:GridView>
             <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                 <SelectParameters>

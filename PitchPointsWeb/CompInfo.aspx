@@ -14,7 +14,7 @@
             </div>
             <div class="card-content">
 
-                <asp:GridView ID="CompetitionsGridView" Width="100px" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <asp:GridView ID="CompetitionsGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                     <Columns>
                         <asp:BoundField DataField="CompTitle"
                             HeaderText="Comp Title"
@@ -42,23 +42,23 @@
             </div>
             <div class="col s6">
                 <h1>Location</h1>
-                <asp:GridView ID="LocationView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="LocationDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
+                <asp:GridView ID="LocationView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="LocationDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
                 <Columns>
                         <asp:BoundField DataField="Nickname"
                             HeaderText="Gym name"
                             InsertVisible="False" ReadOnly="True"
                             SortExpression="Nickname" />
                         <asp:BoundField DataField="State"
-                            HeaderText="State"
+                            HeaderText=" State "
                             SortExpression="State" />
                         <asp:BoundField DataField="City"
-                            HeaderText="City"
+                            HeaderText=" City "
                             SortExpression="City" />
                         <asp:BoundField DataField="Zip"
-                            HeaderText="Zip"
+                            HeaderText="  Zip  "
                             SortExpression="Zip" />
                         <asp:BoundField DataField="AddressLine1"
-                            HeaderText="AddressLine1"
+                            HeaderText="Address"
                             SortExpression="AddressLine1" />
                     </Columns>
                 </asp:GridView>
