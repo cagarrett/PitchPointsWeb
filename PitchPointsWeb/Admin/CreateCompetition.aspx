@@ -59,6 +59,52 @@
                 </div>
             </div>
         </div>
+        <div class="col s4">
+            <h5>Rules</h5>
+            <asp:UpdatePanel runat="server" UpdateMode="Always">
+                <ContentTemplate>
+                    <asp:GridView runat="server"  ID="ruleGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Actions">
+                                <ItemTemplate>
+                                    <asp:LinkButton runat="server" Text="Delete" OnClick="deleteRuleButton_OnClick" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:LinkButton runat="server" Text="Add" OnClick="addRuleButton_OnClick"/>
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Description">
+                                <ItemTemplate>
+                                    <asp:TextBox runat="server" placeholder="Rule description" ID="ruleDescriptionTextBox" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox runat="server" placeholder="Rule description" ID="ruleTextBox" />
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
+        <div class="col s8">
+            <asp:UpdatePanel runat="server" UpdateMode="Always">
+                <ContentTemplate>
+                    <asp:GridView runat="server"  ID="routeGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
+                        <Columns>
+                            <asp:TemplateField HeaderText="Column 1">
+                                <%-- Column 1 controls here, normal and footer --%>
+                                <ItemTemplate>
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Column 2">
+                            </asp:TemplateField>
+                        </Columns>
+                    </asp:GridView>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
     </div>
     <script>
         $('.timepicker').pickatime({

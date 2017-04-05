@@ -73,7 +73,7 @@ namespace PitchPointsWeb.Admin
         {
             for (var i = 0; i < table.Rows.Count; i++) // Load form into datatable
             {
-                var box = (TextBox)ruleGridView.Rows[i].Cells[0].FindControl("ruleDescriptionTextBox");
+                var box = (TextBox)ruleGridView.Rows[i].FindControl("ruleDescriptionTextBox");
                 table.Rows[i]["Description"] = box.Text;
             }
         }
