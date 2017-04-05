@@ -4,6 +4,7 @@ using System.Web.Http;
 using PitchPointsWeb.Models;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.Models.API.Response;
+using System.Threading.Tasks;
 
 namespace PitchPointsWeb.API
 {
@@ -11,9 +12,15 @@ namespace PitchPointsWeb.API
     {
 
         [HttpPost]
-        public ApiResponse LogClimb([FromBody] LoggedClimbModel model)
+        public async Task<PrivateApiResponse> LogClimb([FromBody] LoggedClimbModel model)
         {
-            var response = new ApiResponse();
+            var valid = await model.Validate();
+            if (!valid)
+            {
+                return ApiResponseCode.AuthError.ToResponse<PrivateApiResponse>();
+            }
+            var response = new PrivateApiResponse();
+            response.Token = model.Token;
             try
             {
                 using (var connection = GetConnection())

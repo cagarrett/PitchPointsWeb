@@ -1,7 +1,7 @@
 ﻿namespace PitchPointsWeb.Models.API
 {
 
-    public class LoggedClimbModel
+    public class LoggedClimbModel: TokenModel
     {
 
         public int ClimberId { get; set; }
