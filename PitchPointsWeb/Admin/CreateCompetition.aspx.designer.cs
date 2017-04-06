@@ -76,12 +76,21 @@ namespace PitchPointsWeb.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputText tbxZip;
         
         /// <summary>
-        /// ruleTable control.
+        /// ruleGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table ruleTable;
+        protected global::System.Web.UI.WebControls.GridView ruleGridView;
+        
+        /// <summary>
+        /// routeGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView routeGridView;
     }
 }

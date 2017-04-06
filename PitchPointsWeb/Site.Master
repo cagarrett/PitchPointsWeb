@@ -242,7 +242,9 @@
                 </div>
             </div>
         </div>
-        <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        <div style="padding-top: 60px">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
     </form>
     <footer>
         <p>&copy; <%: DateTime.Now.Year %> - Pitch Points</p>
