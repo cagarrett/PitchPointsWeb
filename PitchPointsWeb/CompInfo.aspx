@@ -70,7 +70,7 @@
                 </asp:SqlDataSource>
 
                 <h1>Competition Rules</h1>
-        <asp:GridView ID="RulesView" CssClass="bordered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="RulesDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
+        <asp:GridView ID="RulesView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="RulesDataSource" CellPadding="2" ForeColor="#333333">
             <Columns>
                 <asp:BoundField DataField="Description"
                     HeaderText="Description"

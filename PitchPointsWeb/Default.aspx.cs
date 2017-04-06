@@ -19,7 +19,7 @@ namespace PitchPointsWeb
             {
                 // Attaching one onclick event for the entire row, so that it will
                 // fire SelectedIndexChanged, while we click anywhere on the row.
-                e.Row.Attributes["onclick"] =
+               // e.Row.Attributes["onclick"] =
                   //ClientScript.GetPostBackClientHyperlink(this.CompetitionsGridView, "Select$" + e.Row.RowIndex);
             }
         }
