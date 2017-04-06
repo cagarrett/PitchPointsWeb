@@ -36,12 +36,6 @@
                     <asp:BoundField DataField="CompDetails"
                         HeaderText="Comp Details"
                         SortExpression="CompDetails" />
-                    <asp:BoundField DataField="StartDate"
-                        HeaderText="StartDate"
-                        SortExpression="StartDate" />
-                    <asp:BoundField DataField="EndDate"
-                        HeaderText="EndDate"
-                        SortExpression="EndDate" />
                     <asp:BoundField DataField="Description"
                         HeaderText="Description"
                         SortExpression="Description" />
