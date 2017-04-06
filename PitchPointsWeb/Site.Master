@@ -171,6 +171,7 @@
                             <li><a class="subheader">Important Links</a></li>
                             <li><div class="divider" /></li>
                             <li><a class="waves-effect" href="../Default.aspx"><i class="material-icons">home</i>Home</a></li>
+                            <li><a class="waves-effect" href="../Account/Profile.aspx"><i class="material-icons">A</i>My Account</a></li>
                             <li><a class="waves-effect" href="../Contact.aspx"><i class="material-icons">contact_mail</i>Contact Us</a></li>
                             <li class="no-padding">
                                 <ul class="collapsible collapsible-accordion">

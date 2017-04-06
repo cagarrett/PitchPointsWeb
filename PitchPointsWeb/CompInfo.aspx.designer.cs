@@ -13,22 +13,22 @@ namespace PitchPointsWeb {
     public partial class CompInfo {
         
         /// <summary>
-        /// CompetitionsGridView control.
+        /// CompetitionGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView CompetitionsGridView;
+        protected global::System.Web.UI.WebControls.GridView CompetitionGridView;
         
         /// <summary>
-        /// CompDataSource control.
+        /// UnregisteredCompDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource CompDataSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource UnregisteredCompDataSource;
         
         /// <summary>
         /// LocationView control.

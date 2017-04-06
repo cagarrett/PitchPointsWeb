@@ -14,7 +14,7 @@
             </div>
             <div class="card-content">
 
-                <asp:GridView ID="CompetitionsGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                     <Columns>
                         <asp:BoundField DataField="CompTitle"
                             HeaderText="Comp Title"
@@ -28,9 +28,9 @@
                             SortExpression="Description" />
                     </Columns>
                 </asp:GridView>
-                <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+                <asp:SqlDataSource ID="UnregisteredCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="9" Name="email" Type="String" />
+                        <asp:Parameter DefaultValue=" " Name="email" Type="String" />
                     </SelectParameters>
                 </asp:SqlDataSource>
             </div>

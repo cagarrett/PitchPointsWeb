@@ -10,20 +10,19 @@
                 <div class="col s12 m7">
                     <div class="card">
                         <div class="card-content">
-
                             <h2>Info</h2>
                             <p></p>
-                            <asp:Label ID="Label1" runat="server" Text="Email">Email  </asp:Label>
+                            <asp:Label ID="Label1" runat="server" Text="Email :  ">  </asp:Label><asp:Label ID="EmailLabel" runat="server" Text=""></asp:Label>
                             <p></p>
-                            <asp:Label ID="Label2" runat="server" Text="First"></asp:Label>
+                            <asp:Label ID="Label2" runat="server" Text="First :  "></asp:Label><asp:Label ID="FirstLabel" runat="server" Text="Label"></asp:Label>
                             <p></p>
-                            <asp:Label ID="Label3" runat="server" Text="Last"></asp:Label>
+                            <asp:Label ID="Label3" runat="server" Text="Last :  "></asp:Label><asp:Label ID="LastLabel" runat="server" Text="Label"></asp:Label>
                             <p></p>
-                            <asp:Label ID="Label4" runat="server" Text="Lifetime Points"></asp:Label>
+                            <asp:Label ID="Label4" runat="server" Text="Lifetime Points : "></asp:Label><asp:Label ID="LifeTimePointsLabel" runat="server" Text="Label"></asp:Label>
                             <p></p>
-                            <asp:Label ID="Label5" runat="server" Text="Falls"></asp:Label>
+                            <asp:Label ID="Label5" runat="server" Text="Falls :  "></asp:Label><asp:Label ID="FallsLabel" runat="server" Text="Label"></asp:Label>
                             <p></p>
-                            <asp:Label ID="Label6" runat="server" Text="Participated Comps"></asp:Label>
+                            <asp:Label ID="Label6" runat="server" Text="Participated Comps : "></asp:Label><asp:Label ID="ParticipatedCompsLabel" runat="server" Text="Label"></asp:Label>
                             
                         </div>
                     </div>

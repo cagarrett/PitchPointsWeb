@@ -22,11 +22,6 @@
                 <img src="Assets/Snake_Pit.png" alt="SnakePit"></a>
             <a class="carousel-item" href="#five!">
                 <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
-
-
-
-            
-
         </div>
         <h2>Upcoming Competitions</h2>
         <asp:GridView ID="CompetitionsGridView" AutoGenerateSelectButton ="true" CssClass="bordered highlight centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
@@ -55,7 +50,7 @@
             </asp:GridView>
             <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                 <SelectParameters>
-                    <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="9" Name="email" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
     </div>
