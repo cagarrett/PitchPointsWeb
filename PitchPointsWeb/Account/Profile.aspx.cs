@@ -11,9 +11,32 @@ namespace PitchPointsWeb.Account
 {
     public partial class Profile : Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
             Master.ReadToken();
+
+            
+            string empty = "";
+            if (EmailLabel.Text == empty)
+            {
+                var controller = new AccountController();
+                var TokenModel = new TokenModel
+                {
+                  Token = Master.ReadToken()
+                };
+                var result = await controller.GetUserSnapshot(TokenModel);
+                if (result.Success)
+                {
+                    LifeTimePointsLabel.Text = result.Points.ToString();
+                    FallsLabel.Text = result.Falls.ToString();
+                    ParticipatedCompsLabel.Text = result.ParticipatedCompetitions.ToString();
+                }
+                else
+                {
+
+                }
+            }
+
         }
     }
 }
