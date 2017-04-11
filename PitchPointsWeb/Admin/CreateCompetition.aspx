@@ -126,12 +126,44 @@
                                     </asp:DropDownList>
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Points">
+                            <asp:TemplateField HeaderText="Grade">
                                 <ItemTemplate>
-                                    <asp:TextBox runat="server" ID="routePointsValue" Enabled="False" Text="100" Width="50 px" />
+                                    <asp:DropDownList ID="gradeInput" runat="server" CssClass="browser-default" Width="100 px">
+                                        <asp:ListItem Text="V0" Value="100" />
+                                        <asp:ListItem Text="V1" Value="120" />
+                                        <asp:ListItem Text="V2" Value="140" />
+                                        <asp:ListItem Text="V3" Value="160" />
+                                        <asp:ListItem Text="V4" Value="180" />
+                                        <asp:ListItem Text="V5" Value="200" />
+                                        <asp:ListItem Text="V6" Value="220" />
+                                        <asp:ListItem Text="V7" Value="240" />
+                                        <asp:ListItem Text="V8" Value="260" />
+                                        <asp:ListItem Text="V9" Value="280" />
+                                        <asp:ListItem Text="V10" Value="300" />
+                                    </asp:DropDownList>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox runat="server" Text="100" ID="routePoints" Enabled="False" Width="50 px" />
+                                    <asp:DropDownList ID="grade" runat="server" CssClass="browser-default" Width="100 px">
+                                        <asp:ListItem Text="V0" Value="100" />
+                                        <asp:ListItem Text="V1" Value="120" />
+                                        <asp:ListItem Text="V2" Value="140" />
+                                        <asp:ListItem Text="V3" Value="160" />
+                                        <asp:ListItem Text="V4" Value="180" />
+                                        <asp:ListItem Text="V5" Value="200" />
+                                        <asp:ListItem Text="V6" Value="220" />
+                                        <asp:ListItem Text="V7" Value="240" />
+                                        <asp:ListItem Text="V8" Value="260" />
+                                        <asp:ListItem Text="V9" Value="280" />
+                                        <asp:ListItem Text="V10" Value="300" />
+                                    </asp:DropDownList>
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Points">
+                                <ItemTemplate>
+                                    <asp:TextBox runat="server" ID="routePointsValue" Enabled="False" Text="" Width="50 px" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox runat="server" Text="" ID="routePoints" Enabled="False" Width="50 px" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                         </Columns>

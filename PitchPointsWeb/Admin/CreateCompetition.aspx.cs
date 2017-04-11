@@ -52,15 +52,18 @@ namespace PitchPointsWeb.Admin
             var dataTable = (DataTable)ViewState[RouteTable];
             var newIDBox = (TextBox)routeGridView.FooterRow.FindControl("routeID");
             var newRouteID = Convert.ToInt32(newIDBox.Text);
-            var newCategoryBox = (DropDownList)routeGridView.FooterRow.FindControl("category");
-            var newCategory = newCategoryBox.SelectedValue.ToString();
+
+            var newGradeBox = (DropDownList)routeGridView.FooterRow.FindControl("grade");
+            var newGrade = newGradeBox.SelectedItem.Value.ToString();
             var newRow = dataTable.NewRow();
+
             newRow["ID"] = newRouteID;
-            newRow["Category"] = newCategory;
+            newRow["Grade"] = newGrade;
             
             if (routeGridView.Rows.Count >= 1)
             {
                 newRow["ID"] = routeGridView.Rows.Count;
+                newRow["Grade"] = newGradeBox.SelectedItem.Value.ToString();
             }
             if (routeGridView.Rows.Count == 1 && !routeGridView.Rows[0].Visible)
             {
@@ -143,6 +146,8 @@ namespace PitchPointsWeb.Admin
                 table.Rows[i]["ID"] = IDBox.Text;
                 var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
                 table.Rows[i]["Category"] = categoryBox.SelectedValue.ToString();
+                var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
+                table.Rows[i]["Grade"] = gradeBox.SelectedItem.Value.ToString();
             }
         }
 
@@ -154,9 +159,14 @@ namespace PitchPointsWeb.Admin
                 textBox.Text = Convert.ToString(i+1);
                 var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
                 categoryBox.SelectedValue = table.Rows[i]["Category"].ToString();
+                var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
+                gradeBox.SelectedItem.Value = table.Rows[i]["Grade"].ToString();
             }
             var footerID = (TextBox)routeGridView.FooterRow.FindControl("routeID");
             footerID.Text = Convert.ToString(routeGridView.Rows.Count + 1);
+            var footerPoints = (TextBox)routeGridView.FooterRow.FindControl("routePoints");
+            var footerGrade = (DropDownList)routeGridView.FooterRow.FindControl("grade");
+            footerPoints.Text = Convert.ToString(footerGrade.SelectedItem.Value);
         }
 
         private void ExtractExistingRules(ref DataTable table)
@@ -195,6 +205,7 @@ namespace PitchPointsWeb.Admin
             dataTable.Columns.Add("Actions");
             dataTable.Columns.Add("ID");
             dataTable.Columns.Add("Category");
+            dataTable.Columns.Add("Grade");
             dataTable.Columns.Add("Points");
             dataTable.Rows.Add(dataTable.NewRow());
             ViewState[RouteTable] = dataTable;
@@ -202,6 +213,5 @@ namespace PitchPointsWeb.Admin
             routeGridView.DataBind();
             routeGridView.Rows[0].Visible = false;
         }
-
     }
 }
