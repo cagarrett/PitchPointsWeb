@@ -12,19 +12,19 @@
             </div>
             <div class="input-field">
                 <label for="tbxDate" data-success="">Date of Competition</label>
-                <input id="tbxDate" type="date" class="datepicker" runat="server"/>
+                <input id="tbxDate" type="date" class="datepicker" runat="server" />
             </div>
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxStartTime" data-success="">Start Time</label>
-                        <input id="tbxStartTime" class="timepicker" type="time"/>
+                        <input id="tbxStartTime" class="timepicker" type="time" />
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxEndTime" data-success="">End Time</label>
-                        <input id="tbxEndTime" class="timepicker" type="time"/>
+                        <input id="tbxEndTime" class="timepicker" type="time" />
                     </div>
                 </div>
             </div>
@@ -47,30 +47,30 @@
                 </div>
                 <div class="col s2">
                     <div class="input-field">
-                        <input id="tbxState" type="text" class="validate" runat="server"/>
+                        <input id="tbxState" type="text" class="validate" runat="server" />
                         <label for="tbxState" data-success="">State</label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
-                        <input id="tbxZip" type="text" class="validate" runat="server"/>
+                        <input id="tbxZip" type="text" class="validate" runat="server" />
                         <label for="tbxZip" data-success="">Zip</label>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col s4">
+        <div class="col s6">
             <h5>Rules</h5>
             <asp:UpdatePanel runat="server" UpdateMode="Always">
                 <ContentTemplate>
-                    <asp:GridView runat="server"  ID="ruleGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
+                    <asp:GridView runat="server" ID="ruleGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
                         <Columns>
                             <asp:TemplateField HeaderText="Actions">
                                 <ItemTemplate>
                                     <asp:LinkButton runat="server" Text="Delete" OnClick="deleteRuleButton_OnClick" />
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:LinkButton runat="server" Text="Add" OnClick="addRuleButton_OnClick"/>
+                                    <asp:LinkButton runat="server" Text="Add" OnClick="addRuleButton_OnClick" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Description">
@@ -86,19 +86,53 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-        <div class="col s8">
+        <div class="col s6">
+            <h5>Routes</h5>
             <asp:UpdatePanel runat="server" UpdateMode="Always">
                 <ContentTemplate>
-                    <asp:GridView runat="server"  ID="routeGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
+                    <asp:GridView runat="server" ID="routeGridView" ShowFooter="True" ShowHeaderWhenEmpty="True" AutoGenerateColumns="False">
                         <Columns>
-                            <asp:TemplateField HeaderText="Column 1">
-                                <%-- Column 1 controls here, normal and footer --%>
+                            <asp:TemplateField HeaderText="Actions">
                                 <ItemTemplate>
+                                    <asp:LinkButton runat="server" Text="Delete" OnClick="deleteRouteButton_OnClick" />
                                 </ItemTemplate>
                                 <FooterTemplate>
+                                    <asp:LinkButton runat="server" Text="Add" OnClick="addRouteButton_OnClick" />
                                 </FooterTemplate>
                             </asp:TemplateField>
-                            <asp:TemplateField HeaderText="Column 2">
+                            <asp:TemplateField HeaderText="ID">
+                                <ItemTemplate>
+                                    <asp:TextBox runat="server" ID="routeIDInput" Enabled="False" Text="" Width="20 px" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox runat="server" Text="1" ID="routeID" Enabled="False" Width="20 px" />
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Category">
+                                <ItemTemplate>
+                                    <asp:DropDownList ID="categoryInput" runat="server" CssClass="browser-default" Width="100 px">
+                                        <asp:ListItem Text="Beginner" Value="0" />
+                                        <asp:ListItem Text="Intermediate" Value="1" />
+                                        <asp:ListItem Text="Advanced" Value="2" />
+                                        <asp:ListItem Text="Open" Value="3" />
+                                    </asp:DropDownList>
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:DropDownList ID="category" runat="server" CssClass="browser-default" Width="100 px">
+                                        <asp:ListItem Text="Beginner" Value="0" />
+                                        <asp:ListItem Text="Intermediate" Value="1" />
+                                        <asp:ListItem Text="Advanced" Value="2" />
+                                        <asp:ListItem Text="Open" Value="3" />
+                                    </asp:DropDownList>
+                                </FooterTemplate>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="Points">
+                                <ItemTemplate>
+                                    <asp:TextBox runat="server" ID="routePointsValue" Enabled="False" Text="100" Width="50 px" />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <asp:TextBox runat="server" Text="100" ID="routePoints" Enabled="False" Width="50 px" />
+                                </FooterTemplate>
                             </asp:TemplateField>
                         </Columns>
                     </asp:GridView>
@@ -107,6 +141,9 @@
         </div>
     </div>
     <script>
+        $(document).ready(function () {
+            $('select').material_select();
+        });
         $('.timepicker').pickatime({
             default: 'now',
             twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
