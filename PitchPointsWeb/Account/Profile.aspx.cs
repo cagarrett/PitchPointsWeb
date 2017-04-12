@@ -8,23 +8,37 @@ using System.Diagnostics;
 using PitchPointsWeb.Models.API;
 using System.Data.SqlClient;
 using System.Data;
+using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb.Account
 {
     public partial class Profile : Page
     {
+
+        static string UppercaseFirst(string s)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+        int prevComps = 0;
+
         protected async void Page_Load(object sender, EventArgs e)
         {
             Master.ReadToken();
 
-            
+
             string empty = "";
             if (EmailLabel.Text == empty)
             {
                 var controller = new AccountController();
                 var TokenModel = new TokenModel
                 {
-                  Token = Master.ReadToken()
+                    Token = Master.ReadToken()
                 };
 
                 var result = await controller.GetUserSnapshot(TokenModel);
@@ -36,29 +50,80 @@ namespace PitchPointsWeb.Account
                         using (var command = new SqlCommand("GetAllUserInfo", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@userId", TokenModel.Content.Email);
+                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
                             SqlDataReader rdr = command.ExecuteReader();
                             while (rdr.Read())
                             {
-                                FirstLabel.Text = (rdr["FirstName"].ToString());
-                                LastLabel.Text = (rdr["LastName"].ToString());
+                                FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
+                                LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
                                 //courseNums.Add(rdr["CourseNumber"].ToString());
                             }
                             rdr.Close();
                             command.ExecuteNonQuery();
                         }
                     }
+                    UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
                     EmailLabel.Text = TokenModel.Content.Email;
                     LifeTimePointsLabel.Text = result.Points.ToString();
                     FallsLabel.Text = result.Falls.ToString();
                     ParticipatedCompsLabel.Text = result.ParticipatedCompetitions.ToString();
+                    prevComps = Convert.ToInt32(result.ParticipatedCompetitions.ToString());
                 }
                 else
                 {
 
                 }
             }
-
+            while (prevComps > 0)
+            {
+                Table table = new Table();
+                table.ID = "PreviousComp";
+                Page.Form.Controls.Add(table);
+                for (int i = 0; i < 4; i++)
+                {
+                    TableRow tRow = new TableRow();
+                    for (int j = 0; j < 6; j++)
+                    {
+                        if (i == 0)
+                        {
+                            TableCell cell = new TableCell();
+                            TextBox tb = new TextBox();
+                            tb.ID = "tbxRow_" + i + "_Col_" + j;
+                            tb.Text = "";
+                            cell.Controls.Add(tb);
+                            tRow.Cells.Add(cell);
+                        }
+                        if (i == 1)
+                        {
+                            TableCell cell = new TableCell();
+                            cell.Text = "";
+                            tRow.Cells.Add(cell);
+                        }
+                        if (i == 2)
+                        {
+                            TableCell cell = new TableCell();
+                            TextBox tb = new TextBox();
+                            tb.ID = "tbxRow_" + i + "_Col_" + j;
+                            tb.Text = "";
+                            cell.Controls.Add(tb);
+                            tRow.Cells.Add(cell);
+                        }
+                        if (i == 3)
+                        {
+                            TableCell cell = new TableCell();
+                            TextBox tb = new TextBox();
+                            tb.ID = "tbxRow_" + i + "_Col_" + j;
+                            tb.Text = "";
+                            cell.Controls.Add(tb);
+                            tRow.Cells.Add(cell);
+                        }
+                    }
+                    table.Rows.Add(tRow);
+                    prevComps = prevComps - 1;
+                }
+            }
         }
     }
 }

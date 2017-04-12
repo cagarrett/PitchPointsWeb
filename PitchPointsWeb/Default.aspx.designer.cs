@@ -22,12 +22,12 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.GridView CompetitionsGridView;
         
         /// <summary>
-        /// CompDataSource control.
+        /// UpCompDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource CompDataSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource UpCompDataSource;
     }
 }

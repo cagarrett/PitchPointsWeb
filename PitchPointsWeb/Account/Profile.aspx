@@ -10,7 +10,7 @@
                 <div class="col s12 m7">
                     <div class="card">
                         <div class="card-content">
-                            <h2>Info</h2>
+                            <h1>Info</h1>
                             <p></p>
                             <asp:Label ID="Label1" runat="server" Text="Email :  ">  </asp:Label><asp:Label ID="EmailLabel" runat="server" Text=""></asp:Label>
                             <p></p>
@@ -33,7 +33,7 @@
         <div class="col s6">
 
             <h1>Upcoming Competitions</h1>
-            <asp:GridView ID="CompetitionsGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+            <asp:GridView ID="CompetitionsGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 <Columns>
                     <asp:BoundField DataField="CompTitle"
                         HeaderText="Competition Title"
@@ -45,14 +45,37 @@
                     <asp:BoundField DataField="Description"
                         HeaderText="Description"
                         SortExpression="Description" />
+                    <asp:BoundField DataField="Date"
+                        HeaderText="Date"
+                        SortExpression="Date" />
+                    <asp:BoundField DataField="City"
+                        HeaderText="City"
+                        SortExpression="City" />
+                    <asp:BoundField DataField="State"
+                        HeaderText="State"
+                        SortExpression="State" />
                 </Columns>
             </asp:GridView>
-            <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+            <asp:SqlDataSource ID="UpCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                 <SelectParameters>
-                    <asp:Parameter DefaultValue="9" Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="" Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="True" Name="onlyReturnRegistered" Type="Boolean" />
                 </SelectParameters>
             </asp:SqlDataSource>
+
         </div>
-    </div>
+        </div>
+        <h1>Completed Competitions</h1>
+            <asp:Label ID="Comp1Label" runat="server" Text=""></asp:Label>
+            <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                
+            </asp:GridView>
+            <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetScoreCard" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="" Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                </SelectParameters>
+            </asp:SqlDataSource>
+    
 
 </asp:Content>
