@@ -24,6 +24,9 @@
                 <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
         </div>
         <h1>Upcoming Competitions</h1>
+
+<asp:GridView ID="GridView1" runat="server"></asp:GridView>
+
         <asp:GridView ID="CompetitionsGridView" class="centered" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
             <Columns>
                 <asp:BoundField DataField="CompTitle"
@@ -47,7 +50,7 @@
                     SortExpression="State" />
                 <asp:TemplateField HeaderText="Logged Ticket">
                     <ItemTemplate>
-                        <asp:LinkButton ID="btnview" runat="server" Text="Logged Ticket" CommandName="More Info">More Info
+                        <asp:LinkButton ID="btnview" runat="server" OnClick="sessionLink_Click" Text="Logged Ticket" CommandName="More Info">More Info
                         </asp:LinkButton>
                     </ItemTemplate>
                 </asp:TemplateField>

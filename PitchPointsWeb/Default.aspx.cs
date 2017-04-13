@@ -9,6 +9,8 @@ namespace PitchPointsWeb
 {
     public partial class Default : Page
     {
+        protected GridView CompetitionsGridView;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             
@@ -22,6 +24,13 @@ namespace PitchPointsWeb
                // e.Row.Attributes["onclick"] =
                   //ClientScript.GetPostBackClientHyperlink(this.CompetitionsGridView, "Select$" + e.Row.RowIndex);
             }
+        }
+        protected void sessionLink_Click(object sender, EventArgs e)
+        {
+            GridViewRow row = CompetitionsGridView.SelectedRow;
+            
+
+
         }
     }
 }
