@@ -58,7 +58,7 @@ namespace PitchPointsWeb
 
                    
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
+                    RulesDataSource.SelectParameters["compId"].DefaultValue = CompId;
                    
                 }
                 else

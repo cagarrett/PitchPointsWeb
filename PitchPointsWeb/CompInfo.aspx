@@ -64,7 +64,7 @@
 
                 <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="1" Name="comp" Type="Int32" />
+                        <asp:Parameter DefaultValue="2" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 
@@ -78,7 +78,7 @@
                 </asp:GridView>
                 <asp:SqlDataSource ID="RulesDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionRules" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="9" Name="CompetitionID" Type="Int32" />
+                        <asp:Parameter DefaultValue="" Name="CompetitionID" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
             </div>
@@ -88,7 +88,7 @@
         <asp:Button runat="server" OnClick="btnRegister_Click" Text="Register" CssClass="btn btn-primary" />
         <asp:Button runat="server" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
 
-
+        <br />
         <asp:Label ID="CompetitionResults" runat="server" Text=""></asp:Label>
             <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 
