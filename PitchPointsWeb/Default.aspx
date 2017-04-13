@@ -1,52 +1,57 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PitchPointsWeb._Default" %>
+﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="PitchPointsWeb._Default" EnableEventValidation="False" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <script>
-        $(document).ready(function () {
-            console.log('carousel');
-            $('#mainCarousel').carousel();
-        });
-    </script>
-    <div>
-        <div class="row">
-            <div class="col s6">
-                <h2>Home Page</h2>
-            </div>
-        </div>
-    </div>
+
+    <h2>Home Page</h2>
     <div class="container">
-        <div id="mainCarousel" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#mainCarousel" data-slide-to="1"></li>
-                <li data-target="#mainCarousel" data-slide-to="2"></li>
-                <li data-target="#mainCarousel" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner" role="listbox">
-                <div class="item active">
-                    <img src="Assets/Bathang.png" alt="Bat hang">
-                </div>
-                <div class="item">
-                    <img src="Assets/Climb.png" alt="Climb">
-                </div>
-                <div class="item">
-                    <img src="Assets/EvoComp.png" alt="Competition">
-                </div>
-                <div class="item">
-                    <img src="Assets/Boulder.png" alt="Boulder">
-                </div>
-                <div class="item">
-                    <img src="Assets/Snake_Pit.png" alt="SnakePit">
-                </div>
-            </div>
-            <a class="left carousel-control" href="#mainCarousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#mainCarousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
+        <div class="carousel">
+            <script>
+                $(document).ready(function () {
+                    $('.carousel').carousel();
+                });
+            </script>
+            <a class="carousel-item" href="#one!">
+                <img src="Assets/HHWall.PNG" alt="Bat hang"></a>
+            <a class="carousel-item" href="#two!">
+                <img src="Assets/Climb.png" alt="Climb"></a>
+            <a class="carousel-item" href="#three!">
+                <img src="Assets/HHILogoWall.PNG" alt="Competition"></a>
+            <a class="carousel-item" href="#four!">
+                <img src="Assets/NuLuLogo.PNG" alt="Boulder"></a>
+            <a class="carousel-item" href="#five!">
+                <img src="Assets/Snake_Pit.png" alt="SnakePit"></a>
+            <a class="carousel-item" href="#five!">
+                <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
         </div>
+        <h1>Upcoming Competitions</h1>
+            <asp:GridView ID="CompetitionsGridView" class="centered" AutoGenerateSelectButton ="true" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <Columns>
+                    <asp:BoundField DataField="CompTitle"
+                        HeaderText="  Competition Title"
+                        InsertVisible="False" ReadOnly="True"
+                        SortExpression="CompTitle" />
+                    <asp:BoundField DataField="CompDetails"
+                        HeaderText="   Competition Details"
+                        SortExpression="CompDetails" />
+                    <asp:BoundField DataField="Description"
+                        HeaderText="   Description"
+                        SortExpression="Description" />
+                    <asp:BoundField DataField="Date"
+                        HeaderText="   Date"
+                        SortExpression="Date" />
+                    <asp:BoundField DataField="City"
+                        HeaderText="  City"
+                        SortExpression="City" />
+                    <asp:BoundField DataField="State"
+                        HeaderText="  State"
+                        SortExpression="State" />
+                </Columns>
+            </asp:GridView>
+            <asp:SqlDataSource ID="UpCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="False" Name="onlyReturnRegistered" Type="Boolean" />
+                </SelectParameters>
+            </asp:SqlDataSource>
     </div>
 </asp:Content>

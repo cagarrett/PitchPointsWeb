@@ -7,72 +7,72 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PitchPointsWeb.Admin {
+namespace PitchPointsWeb {
     
     
-    public partial class LogRouteForClimber {
+    public partial class CompInfo {
         
         /// <summary>
-        /// AdminFirstLabel control.
+        /// CompetitionGridView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AdminFirstLabel;
+        protected global::System.Web.UI.WebControls.GridView CompetitionGridView;
         
         /// <summary>
-        /// AdminLastLabel control.
+        /// UnregisteredCompDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label AdminLastLabel;
+        protected global::System.Web.UI.WebControls.SqlDataSource UnregisteredCompDataSource;
         
         /// <summary>
-        /// climber_id control.
+        /// LocationView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl climber_id;
+        protected global::System.Web.UI.WebControls.GridView LocationView;
         
         /// <summary>
-        /// witness_id control.
+        /// LocationDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl witness_id;
+        protected global::System.Web.UI.WebControls.SqlDataSource LocationDataSource;
         
         /// <summary>
-        /// route_id control.
+        /// RulesView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl route_id;
+        protected global::System.Web.UI.WebControls.GridView RulesView;
         
         /// <summary>
-        /// falls control.
+        /// RulesDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl falls;
+        protected global::System.Web.UI.WebControls.SqlDataSource RulesDataSource;
         
         /// <summary>
-        /// errorPanel control.
+        /// lblMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder errorPanel;
+        protected global::System.Web.UI.WebControls.Label lblMessage;
     }
 }
