@@ -76,7 +76,7 @@ namespace PitchPointsWeb.Account
 
                 }
             }
-            while (prevComps > 0)
+            /*while (prevComps > 0)
             {
                 Table table = new Table();
                 table.ID = "PreviousComp";
@@ -123,7 +123,7 @@ namespace PitchPointsWeb.Account
                     table.Rows.Add(tRow);
                     prevComps = prevComps - 1;
                 }
-            }
+            }*/
         }
     }
 }
