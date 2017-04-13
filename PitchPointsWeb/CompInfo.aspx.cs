@@ -24,6 +24,7 @@ namespace PitchPointsWeb
 
         protected async void Page_Load(object sender, EventArgs e)
         {
+            String CompId = Request.QueryString["Id"];
             string empty = "";
             if (CompetitionResults.Text == empty)
             {
@@ -57,7 +58,7 @@ namespace PitchPointsWeb
 
                    
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
+                    CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
                    
                 }
                 else
