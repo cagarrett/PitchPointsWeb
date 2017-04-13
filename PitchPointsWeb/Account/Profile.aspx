@@ -65,7 +65,7 @@
 
         </div>
         </div>
-        <h1>Completed Competitions</h1>
+        <h1>Previous Competitions</h1>
             <asp:Label ID="Comp1Label" runat="server" Text=""></asp:Label>
             <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 
