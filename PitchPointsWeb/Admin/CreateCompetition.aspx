@@ -128,7 +128,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Grade">
                                 <ItemTemplate>
-                                    <asp:DropDownList ID="gradeInput" runat="server" CssClass="browser-default" Width="100 px">
+                                    <asp:DropDownList ID="gradeInput" OnChange="return gradeChanged(this);" runat="server" CssClass="browser-default" Width="100 px">
                                         <asp:ListItem Text="V0" Value="100" />
                                         <asp:ListItem Text="V1" Value="120" />
                                         <asp:ListItem Text="V2" Value="140" />
@@ -143,7 +143,7 @@
                                     </asp:DropDownList>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:DropDownList ID="grade" runat="server" CssClass="browser-default" Width="100 px">
+                                    <asp:DropDownList ID="gradeInput" OnChange="return gradeChanged(this);" runat="server" CssClass="browser-default" Width="100 px">
                                         <asp:ListItem Text="V0" Value="100" />
                                         <asp:ListItem Text="V1" Value="120" />
                                         <asp:ListItem Text="V2" Value="140" />
@@ -160,10 +160,10 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Points">
                                 <ItemTemplate>
-                                    <asp:TextBox runat="server" ID="routePointsValue" Enabled="False" Text="" Width="50 px" />
+                                    <asp:TextBox runat="server" ClientIDMode="static" ID="routePointsValue" Enabled="False" Text="" Width="50 px" />
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:TextBox runat="server" Text="" ID="routePoints" Enabled="False" Width="50 px" />
+                                    <asp:TextBox runat="server" Text="" ClientIDMode="static" ID="routePointsValue" Enabled="False" Width="50 px" />
                                 </FooterTemplate>
                             </asp:TemplateField>
                         </Columns>
@@ -171,6 +171,7 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
+        <asp:Button runat="server" OnClick="btnCreate_Click" Text="Create" CssClass="btn btn-primary" />
     </div>
     <script>
         $(document).ready(function () {
@@ -187,5 +188,14 @@
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
         });
+        function gradeChanged(gradeDropdown) {
+            var pointCell = $(gradeDropdown.id).closest('td').next();
+            var pointBox = pointCell.find('routePointsValue');
+            alert(JSON.stringify(pointBox));
+            //var pointBox = pointCell.find("td.routePointsValue");
+            //pointBox.value = gradeDropdown.value;
+            //alert(JSON.stringify(pointBox));
+            return false;
+        }
     </script>
 </asp:Content>

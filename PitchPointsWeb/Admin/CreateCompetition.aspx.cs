@@ -23,6 +23,11 @@ namespace PitchPointsWeb.Admin
             }
         }
 
+        protected void btnCreate_Click(object sender, EventArgs e)
+        {
+
+        }
+
         protected void deleteRouteButton_OnClick(object sender, EventArgs e)
         {
             var button = sender as LinkButton;
@@ -53,7 +58,7 @@ namespace PitchPointsWeb.Admin
             var newIDBox = (TextBox)routeGridView.FooterRow.FindControl("routeID");
             var newRouteID = Convert.ToInt32(newIDBox.Text);
 
-            var newGradeBox = (DropDownList)routeGridView.FooterRow.FindControl("grade");
+            var newGradeBox = (DropDownList)routeGridView.FooterRow.FindControl("gradeInput");
             var newGrade = newGradeBox.SelectedItem.Value.ToString();
             var newRow = dataTable.NewRow();
 
@@ -164,8 +169,8 @@ namespace PitchPointsWeb.Admin
             }
             var footerID = (TextBox)routeGridView.FooterRow.FindControl("routeID");
             footerID.Text = Convert.ToString(routeGridView.Rows.Count + 1);
-            var footerPoints = (TextBox)routeGridView.FooterRow.FindControl("routePoints");
-            var footerGrade = (DropDownList)routeGridView.FooterRow.FindControl("grade");
+            var footerPoints = (TextBox)routeGridView.FooterRow.FindControl("routePointsValue");
+            var footerGrade = (DropDownList)routeGridView.FooterRow.FindControl("gradeInput");
             footerPoints.Text = Convert.ToString(footerGrade.SelectedItem.Value);
         }
 
