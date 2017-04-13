@@ -24,9 +24,6 @@
                 <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
         </div>
         <h1>Upcoming Competitions</h1>
-
-        <asp:GridView ID="GridView12" DataSourceID="UpCompDataSource" AutoGenerateCollumns ="True" runat="server"></asp:GridView>
-
         <asp:GridView ID="CompetitionsGridView" class="centered" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
             <Columns>
                 <asp:BoundField DataField="CompTitle"
