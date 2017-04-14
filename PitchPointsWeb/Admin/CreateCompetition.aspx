@@ -128,7 +128,7 @@
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="Grade">
                                 <ItemTemplate>
-                                    <asp:DropDownList ID="gradeInput" OnChange="return gradeChanged(this);" runat="server" CssClass="browser-default" Width="100 px">
+                                    <asp:DropDownList ID="gradeInput" runat="server" CssClass="browser-default" Width="100 px">
                                         <asp:ListItem Text="V0" Value="100" />
                                         <asp:ListItem Text="V1" Value="120" />
                                         <asp:ListItem Text="V2" Value="140" />
@@ -143,7 +143,7 @@
                                     </asp:DropDownList>
                                 </ItemTemplate>
                                 <FooterTemplate>
-                                    <asp:DropDownList ID="gradeInput" OnChange="return gradeChanged(this);" runat="server" CssClass="browser-default" Width="100 px">
+                                    <asp:DropDownList ID="gradeInput" runat="server" CssClass="browser-default" Width="100 px">
                                         <asp:ListItem Text="V0" Value="100" />
                                         <asp:ListItem Text="V1" Value="120" />
                                         <asp:ListItem Text="V2" Value="140" />
@@ -176,7 +176,17 @@
     <script>
         $(document).ready(function () {
             $('select').material_select();
+            CreateCompStartup();
         });
+        function CreateCompStartup() {
+            $('.browser-default').change(function () {
+                console.log(this.value);
+                var parent = $(this).closest("td").next();
+                var input = parent.find("input");
+                input.val(this.value);
+                return false;
+            });
+        }
         $('.timepicker').pickatime({
             default: 'now',
             twelvehour: false, // change to 12 hour AM/PM clock from 24 hour
@@ -189,9 +199,9 @@
             selectYears: 15 // Creates a dropdown of 15 years to control year
         });
         function gradeChanged(gradeDropdown) {
-            var pointCell = $(gradeDropdown.id).closest('td').next();
+            var pointCell = gradeDropdown.parentNode
+            alert(JSON.stringify(pointCell));
             var pointBox = pointCell.find('routePointsValue');
-            alert(JSON.stringify(pointBox));
             //var pointBox = pointCell.find("td.routePointsValue");
             //pointBox.value = gradeDropdown.value;
             //alert(JSON.stringify(pointBox));

@@ -16,6 +16,7 @@ namespace PitchPointsWeb.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Init", "CreateCompStartup();", true);
             if (!Page.IsPostBack)
             {
                 SetInitialRuleTableSource();
