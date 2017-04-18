@@ -20,8 +20,8 @@ namespace PitchPointsWeb
 {
     public partial class CompInfo : Page
     {
-        
 
+        int locationID = 0;
         protected async void Page_Load(object sender, EventArgs e)
         {
             String CompId = Request.QueryString["Id"];
@@ -43,7 +43,7 @@ namespace PitchPointsWeb
                     using (var connection = MasterController.GetConnection())
                     {
                         connection.Open();
-                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        using (var command = new SqlCommand("GetActiveCompetitions", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
@@ -61,6 +61,10 @@ namespace PitchPointsWeb
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
+                    if (Convert.ToInt32(locationID) == 2)
+                    {
+                        //GymImage.Attributes["src"] = ResolveUrl("~/Assets/NuLuLogo.PNG");
+                    }
                 }
                 else
                 {
