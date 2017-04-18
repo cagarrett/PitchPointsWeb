@@ -3,22 +3,36 @@ using System.Web;
 using System.Web.UI;
 using PitchPointsWeb.API;
 using PitchPointsWeb.Models.API;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PitchPointsWeb
 {
     public partial class Log_A_Climb : Page
     {
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
-            //Master.ReadToken();
-            //Rider switching to is user logged in boolean
+            Master.ReadToken();
+
+            string empty = "";
+            var TokenModel = new TokenModel
+            {
+                Token = Master.ReadToken()
+            };
+
+            var loggedIn = await TokenModel.Validate();
+            if (loggedIn)
+            {
+                getActiveCompetitions.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             string empty = "";
-            if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
+            /*if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
             {
                 var controller = new RouteController();
                 var logClimbModel = new LoggedClimbModel
@@ -42,7 +56,7 @@ namespace PitchPointsWeb
             else
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
-            }
+            }*/
         }
     }
 }

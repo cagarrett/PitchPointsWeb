@@ -37,7 +37,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col s6">
                 <h1>Location</h1>

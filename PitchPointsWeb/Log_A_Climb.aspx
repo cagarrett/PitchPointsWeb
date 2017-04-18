@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Log_A_Climb" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" %>
-
+﻿<%@ Page Title="Log_A_Climb" Language="C#" Async="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         function completeForm() {
@@ -32,8 +32,14 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
-                    <input id="climber_id" type="number" class="validate" runat="server" style="width: 200px">
-                    <label for="climber_id" data-error="Must input climber ID" data-success="">Climber ID</label>
+                    <asp:SqlDataSource
+                        ID="getActiveCompetitions"
+                        runat="server"
+                        ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
+                        SelectCommand="GetActiveCompetitions"
+                        SelectCommandType="StoredProcedure">
+                    </asp:SqlDataSource>
+                    <asp:DropDownList ID="competitionName" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
@@ -67,5 +73,5 @@
             </div>
         </div>
     </div>
-    
+
 </asp:Content>
