@@ -44,10 +44,10 @@ namespace PitchPointsWeb
                     using (var connection = MasterController.GetConnection())
                     {
                         connection.Open();
-                        using (var command = new SqlCommand("GetActiveCompetitions", connection))
+                        using (var command = new SqlCommand("GetCompetitionLocation", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
+                            command.Parameters.AddWithValue("@comp", CompId);
                             SqlDataReader rdr = command.ExecuteReader();
                             while (rdr.Read())
                             {
