@@ -10,7 +10,7 @@
                     <div class="col s12 m7">
                         <div class="card">
                             <div class="card-image">
-                                <img src="Assets/NuLuLogo.PNG">
+                                <img id="GymImage" runat="server" src="">
                             </div>
                             <div class="card-content">
 
@@ -63,7 +63,7 @@
 
                 <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="2" Name="comp" Type="Int32" />
+                        <asp:Parameter DefaultValue="" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 
