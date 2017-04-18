@@ -13,9 +13,6 @@ namespace PitchPointsWeb
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            Master.ReadToken();
-
-            string empty = "";
             var TokenModel = new TokenModel
             {
                 Token = Master.ReadToken()
@@ -29,7 +26,17 @@ namespace PitchPointsWeb
             }
         }
 
+        
+
+        protected void competitionChanged(object sneder, EventArgs e)
+        {
+            int Id = Convert.ToInt32(competitionName.SelectedValue);
+            getClimbersInCompetition.SelectParameters["compID"].DefaultValue = Id.ToString();
+            getClimbersInCompetition.DataBind();
+        }
+
         protected async void btnSubmit_Click(object sender, EventArgs e)
+
         {
             string empty = "";
             /*if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
