@@ -89,6 +89,7 @@
         <asp:Button runat="server" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
 
         <br />
+        <br />
         <asp:Label ID="CompetitionResults" runat="server" Text=""></asp:Label>
             <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 

@@ -83,7 +83,8 @@ namespace PitchPointsWeb.Account
 
                     UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
+                    //CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    //CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
                     EmailLabel.Text = TokenModel.Content.Email;
                     LifeTimePointsLabel.Text = result.Points.ToString();
                     FallsLabel.Text = result.Falls.ToString();
@@ -95,6 +96,7 @@ namespace PitchPointsWeb.Account
 
                 }
             }
+            /*
             while (prevComps > 0)
             {
                 Table table = new Table();
@@ -141,6 +143,7 @@ namespace PitchPointsWeb.Account
                     prevComps = prevComps - 1;
                 }
             }
+            */
         }
     }
 }
