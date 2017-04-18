@@ -11,60 +11,28 @@ namespace PitchPointsWeb
     public partial class Log_A_Climb : Page
     {
 
-        static string UppercaseFirst(string s)
-        {
-            // Check for empty string.
-            if (string.IsNullOrEmpty(s))
-            {
-                return string.Empty;
-            }
-            // Return char and concat substring.
-            return char.ToUpper(s[0]) + s.Substring(1);
-        }
-
         protected async void Page_Load(object sender, EventArgs e)
         {
             Master.ReadToken();
-            //Rider switching to is user logged in boolean
 
             string empty = "";
-            if (FirstName.Text == empty)
+            var TokenModel = new TokenModel
             {
-                var controller = new AccountController();
-                var TokenModel = new TokenModel
-                {
-                    Token = Master.ReadToken()
-                };
+                Token = Master.ReadToken()
+            };
 
-                var result = await controller.GetUserSnapshot(TokenModel);
-                if (result.Success)
-                {
-                    using (var connection = MasterController.GetConnection())
-                    {
-                        connection.Open();
-                        using (var command = new SqlCommand("GetAllUserInfo", connection))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
-                            SqlDataReader rdr = command.ExecuteReader();
-                            while (rdr.Read())
-                            {
-                                FirstName.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
-                                LastName.Text = (UppercaseFirst(rdr["LastName"].ToString()));
-                                //courseNums.Add(rdr["CourseNumber"].ToString());
-                            }
-                            rdr.Close();
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                }
+            var loggedIn = await TokenModel.Validate();
+            if (loggedIn)
+            {
+                getActiveCompetitions.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
             }
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected async void btnSubmit_Click(object sender, EventArgs e)
         {
             string empty = "";
-            if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
+            /*if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
             {
                 var controller = new RouteController();
                 var logClimbModel = new LoggedClimbModel
@@ -74,7 +42,7 @@ namespace PitchPointsWeb
                     RouteId = Convert.ToInt32(route_id.Value),
                     Falls = Convert.ToInt32(falls.Value),
                 };
-                var result = controller.LogClimb(logClimbModel);
+                var result = await controller.LogClimb(logClimbModel);
                 if (result.Success)
                 {
                     climber_id.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
@@ -88,7 +56,7 @@ namespace PitchPointsWeb
             else
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
-            }
+            }*/
         }
     }
 }
