@@ -132,15 +132,15 @@ namespace PitchPointsWeb.API
             {
                 comp.Id = id.Value;
             }
-            var startDate = ReadObjectOrNull<DateTime>(reader, "StartDate");
-            var endDate = ReadObjectOrNull<DateTime>(reader, "EndDate");
-            if (startDate.HasValue)
+            var date = ReadObjectOrNull<DateTime>(reader, "Date");
+            var time = ReadObjectOrNull<TimeSpan>(reader, "StartTime");
+            if (date.HasValue)
             {
-                comp.StartDate = startDate.Value;
+                comp.Date = date.Value;
             }
-            if (endDate.HasValue)
+            if (time.HasValue)
             {
-                comp.EndDate = endDate.Value;
+                comp.Time = time.Value;
             }
             comp.Location = ReadLocation(reader);
             foreach (var rule in ReadRules(reader))
