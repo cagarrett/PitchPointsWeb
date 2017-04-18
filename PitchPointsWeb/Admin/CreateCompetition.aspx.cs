@@ -61,15 +61,24 @@ namespace PitchPointsWeb.Admin
 
             var newGradeBox = (DropDownList)routeGridView.FooterRow.FindControl("gradeInput");
             var newGrade = newGradeBox.SelectedItem.Value.ToString();
+
+            var newCategoryBox = (DropDownList)routeGridView.FooterRow.FindControl("category");
+            var newCategory = newCategoryBox.SelectedValue.ToString();
+
+            var newPoints = newGradeBox.SelectedItem.Value.ToString();
             var newRow = dataTable.NewRow();
 
             newRow["ID"] = newRouteID;
             newRow["Grade"] = newGrade;
+            newRow["Points"] = newPoints;
+            newRow["Category"] = newCategory;
             
             if (routeGridView.Rows.Count >= 1)
             {
                 newRow["ID"] = routeGridView.Rows.Count;
                 newRow["Grade"] = newGradeBox.SelectedItem.Value.ToString();
+                newRow["Points"] = newGradeBox.SelectedItem.Value.ToString();
+                newRow["Category"] = newCategoryBox.SelectedValue.ToString();
             }
             if (routeGridView.Rows.Count == 1 && !routeGridView.Rows[0].Visible)
             {
@@ -153,7 +162,9 @@ namespace PitchPointsWeb.Admin
                 var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
                 table.Rows[i]["Category"] = categoryBox.SelectedValue.ToString();
                 var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
-                table.Rows[i]["Grade"] = gradeBox.SelectedItem.Value.ToString();
+                table.Rows[i]["Grade"] = gradeBox.SelectedValue.ToString();
+                var pointsBox = (TextBox)routeGridView.Rows[i].FindControl("routePointsValue");
+                table.Rows[i]["Points"] = pointsBox.Text; 
             }
         }
 
@@ -166,7 +177,9 @@ namespace PitchPointsWeb.Admin
                 var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
                 categoryBox.SelectedValue = table.Rows[i]["Category"].ToString();
                 var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
-                gradeBox.SelectedItem.Value = table.Rows[i]["Grade"].ToString();
+                gradeBox.SelectedValue = table.Rows[i]["Grade"].ToString();
+                var pointsBox = (TextBox)routeGridView.Rows[i].FindControl("routePointsValue");
+                pointsBox.Text = table.Rows[i]["Points"].ToString();
             }
             var footerID = (TextBox)routeGridView.FooterRow.FindControl("routeID");
             footerID.Text = Convert.ToString(routeGridView.Rows.Count + 1);
