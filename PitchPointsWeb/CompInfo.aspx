@@ -61,7 +61,7 @@
                     </Columns>
                 </asp:GridView>
 
-                <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
+                <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetLocationInfo" SelectCommandType="StoredProcedure">
                     <SelectParameters>
                         <asp:Parameter DefaultValue="" Name="comp" Type="Int32" />
                     </SelectParameters>
