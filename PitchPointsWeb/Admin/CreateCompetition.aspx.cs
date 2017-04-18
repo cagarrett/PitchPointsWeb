@@ -8,7 +8,7 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb.Admin
 {
-    public partial class CreateCompetition : System.Web.UI.Page
+    public partial class CreateCompetition : Page
     {
 
         private const string RuleTable = "RuleTable";
@@ -16,10 +16,86 @@ namespace PitchPointsWeb.Admin
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Init", "CreateCompStartup();", true);
             if (!Page.IsPostBack)
             {
                 SetInitialRuleTableSource();
+                SetInitialRouteTableSource();
             }
+        }
+
+        protected void btnCreate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void deleteRouteButton_OnClick(object sender, EventArgs e)
+        {
+            var button = sender as LinkButton;
+            var dataTable = (DataTable)ViewState[RouteTable];
+            if (button != null && dataTable != null)
+            {
+                var row = ((GridViewRow)button.Parent.Parent).RowIndex;
+                if (dataTable.Rows.Count == 1) // Last row that is being deleted
+                {
+                    SetInitialRouteTableSource();
+                }
+                else
+                {
+                    ExtractExistingRoutes(ref dataTable);
+                    ViewState[RouteTable] = dataTable;
+                    dataTable.Rows.RemoveAt(row);
+                    routeGridView.DataSource = dataTable;
+                    routeGridView.DataBind();
+                    RestoreRouteValuesToGrid(ref dataTable);
+                }
+            }
+        }
+
+        protected void addRouteButton_OnClick(object sender, EventArgs e)
+        {
+            if (ViewState[RouteTable] == null) return;
+            var dataTable = (DataTable)ViewState[RouteTable];
+            var newIDBox = (TextBox)routeGridView.FooterRow.FindControl("routeID");
+            var newRouteID = Convert.ToInt32(newIDBox.Text);
+
+            var newGradeBox = (DropDownList)routeGridView.FooterRow.FindControl("gradeInput");
+            var newGrade = newGradeBox.SelectedItem.Value.ToString();
+
+            var newCategoryBox = (DropDownList)routeGridView.FooterRow.FindControl("category");
+            var newCategory = newCategoryBox.SelectedValue.ToString();
+
+            var newPoints = newGradeBox.SelectedItem.Value.ToString();
+            var newRow = dataTable.NewRow();
+
+            newRow["ID"] = newRouteID;
+            newRow["Grade"] = newGrade;
+            newRow["Points"] = newPoints;
+            newRow["Category"] = newCategory;
+            
+            if (routeGridView.Rows.Count >= 1)
+            {
+                newRow["ID"] = routeGridView.Rows.Count;
+                newRow["Grade"] = newGradeBox.SelectedItem.Value.ToString();
+                newRow["Points"] = newGradeBox.SelectedItem.Value.ToString();
+                newRow["Category"] = newCategoryBox.SelectedValue.ToString();
+            }
+            if (routeGridView.Rows.Count == 1 && !routeGridView.Rows[0].Visible)
+            {
+                dataTable.Rows.RemoveAt(0);
+            }
+            else
+            {
+                ExtractExistingRoutes(ref dataTable);
+            }
+            dataTable.Rows.Add(newRow);
+
+            ViewState[RouteTable] = dataTable;
+
+            routeGridView.DataSource = dataTable;
+            routeGridView.DataBind();
+
+            RestoreRouteValuesToGrid(ref dataTable);
         }
 
         protected void addRuleButton_OnClick(object sender, EventArgs e)
@@ -77,6 +153,41 @@ namespace PitchPointsWeb.Admin
             }
         }
 
+        private void ExtractExistingRoutes(ref DataTable table)
+        {
+            for (var i = 0; i < table.Rows.Count; i++) // Load form into datatable
+            {
+                var IDBox = (TextBox)routeGridView.Rows[i].FindControl("routeIDInput");
+                table.Rows[i]["ID"] = IDBox.Text;
+                var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
+                table.Rows[i]["Category"] = categoryBox.SelectedValue.ToString();
+                var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
+                table.Rows[i]["Grade"] = gradeBox.SelectedValue.ToString();
+                var pointsBox = (TextBox)routeGridView.Rows[i].FindControl("routePointsValue");
+                table.Rows[i]["Points"] = pointsBox.Text; 
+            }
+        }
+
+        private void RestoreRouteValuesToGrid(ref DataTable table)
+        {
+            for (var i = 0; i < routeGridView.Rows.Count; i++)
+            {
+                var textBox = (TextBox)routeGridView.Rows[i].FindControl("routeIDInput");
+                textBox.Text = Convert.ToString(i+1);
+                var categoryBox = (DropDownList)routeGridView.Rows[i].FindControl("categoryInput");
+                categoryBox.SelectedValue = table.Rows[i]["Category"].ToString();
+                var gradeBox = (DropDownList)routeGridView.Rows[i].FindControl("gradeInput");
+                gradeBox.SelectedValue = table.Rows[i]["Grade"].ToString();
+                var pointsBox = (TextBox)routeGridView.Rows[i].FindControl("routePointsValue");
+                pointsBox.Text = table.Rows[i]["Points"].ToString();
+            }
+            var footerID = (TextBox)routeGridView.FooterRow.FindControl("routeID");
+            footerID.Text = Convert.ToString(routeGridView.Rows.Count + 1);
+            var footerPoints = (TextBox)routeGridView.FooterRow.FindControl("routePointsValue");
+            var footerGrade = (DropDownList)routeGridView.FooterRow.FindControl("gradeInput");
+            footerPoints.Text = Convert.ToString(footerGrade.SelectedItem.Value);
+        }
+
         private void ExtractExistingRules(ref DataTable table)
         {
             for (var i = 0; i < table.Rows.Count; i++) // Load form into datatable
@@ -94,7 +205,7 @@ namespace PitchPointsWeb.Admin
                 textBox.Text = table.Rows[i]["Description"].ToString();
             }
         }
-
+        
         private void SetInitialRuleTableSource()
         {
             var dataTable = new DataTable();
@@ -110,13 +221,16 @@ namespace PitchPointsWeb.Admin
         private void SetInitialRouteTableSource()
         {
             var dataTable = new DataTable();
-            // add dataTable columns by name here
+            dataTable.Columns.Add("Actions");
+            dataTable.Columns.Add("ID");
+            dataTable.Columns.Add("Category");
+            dataTable.Columns.Add("Grade");
+            dataTable.Columns.Add("Points");
             dataTable.Rows.Add(dataTable.NewRow());
             ViewState[RouteTable] = dataTable;
             routeGridView.DataSource = dataTable;
             routeGridView.DataBind();
             routeGridView.Rows[0].Visible = false;
         }
-
     }
 }

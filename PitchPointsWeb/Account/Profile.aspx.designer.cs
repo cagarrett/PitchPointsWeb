@@ -13,13 +13,13 @@ namespace PitchPointsWeb.Account {
     public partial class Profile {
         
         /// <summary>
-        /// EmailTag control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EmailTag;
+        protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
         /// EmailLabel control.
@@ -31,13 +31,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label EmailLabel;
         
         /// <summary>
-        /// FirstTag control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label FirstTag;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
         /// FirstLabel control.
@@ -49,13 +49,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label FirstLabel;
         
         /// <summary>
-        /// SecondTag control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label SecondTag;
+        protected global::System.Web.UI.WebControls.Label Label3;
         
         /// <summary>
         /// LastLabel control.
