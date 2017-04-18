@@ -1,5 +1,5 @@
-<%@ Page Title="CompInfo" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CompInfo.aspx.cs" Inherits="PitchPointsWeb.CompInfo" %>
-
+<%@ Page Title="CompInfo" Language="C#" MasterPageFile="~/Site.Master" Async="true"  AutoEventWireup="true" CodeBehind="CompInfo.aspx.cs" Inherits="PitchPointsWeb.CompInfo" %>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div class="form-horizontal">
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
@@ -37,7 +37,6 @@
                         </div>
                     </div>
                 </div>
-                <%----%>
             </div>
             <div class="col s6">
                 <h1>Location</h1>
@@ -64,7 +63,7 @@
 
                 <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="1" Name="comp" Type="Int32" />
+                        <asp:Parameter DefaultValue="2" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 
@@ -78,7 +77,7 @@
                 </asp:GridView>
                 <asp:SqlDataSource ID="RulesDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionRules" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="9" Name="CompetitionID" Type="Int32" />
+                        <asp:Parameter DefaultValue="" Name="CompetitionID" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
             </div>
@@ -87,6 +86,19 @@
         <br />
         <asp:Button runat="server" OnClick="btnRegister_Click" Text="Register" CssClass="btn btn-primary" />
         <asp:Button runat="server" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
+
+        <br />
+        <br />
+        <asp:Label ID="CompetitionResults" runat="server" Text=""></asp:Label>
+            <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                
+            </asp:GridView>
+            <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetScoreCard" SelectCommandType="StoredProcedure">
+                <SelectParameters>
+                    <asp:Parameter DefaultValue="" Name="email" Type="String" />
+                    <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                </SelectParameters>
+            </asp:SqlDataSource>
 
         <div class="form-group">
             <div class="col-md-10">

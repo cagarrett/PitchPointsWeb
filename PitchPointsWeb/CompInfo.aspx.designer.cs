@@ -67,6 +67,33 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.SqlDataSource RulesDataSource;
         
         /// <summary>
+        /// CompetitionResults control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label CompetitionResults;
+        
+        /// <summary>
+        /// CompCompGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CompCompGridView;
+        
+        /// <summary>
+        /// CompCompDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource CompCompDataSource;
+        
+        /// <summary>
         /// lblMessage control.
         /// </summary>
         /// <remarks>
@@ -74,5 +101,17 @@ namespace PitchPointsWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMessage;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new PitchPointsWeb.SiteMaster Master {
+            get {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

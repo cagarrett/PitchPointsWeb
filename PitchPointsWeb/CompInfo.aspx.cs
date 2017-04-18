@@ -6,6 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net;
 using System.Net.Mail;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using PitchPointsWeb.Models;
+using PitchPointsWeb.API;
+using System.Diagnostics;
+using PitchPointsWeb.Models.API;
+using System.Data.SqlClient;
+using System.Data;
 
 
 namespace PitchPointsWeb
@@ -14,9 +22,55 @@ namespace PitchPointsWeb
     {
         
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
+            String CompId = Request.QueryString["Id"];
+            //int CompId = Convert.ToInt32(ComId);
+            RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
 
+            string empty = "";
+            if (CompetitionResults.Text == empty)
+            {
+                var controller = new AccountController();
+                var TokenModel = new TokenModel
+                {
+                    Token = Master.ReadToken()
+                };
+
+                var result = await controller.GetUserSnapshot(TokenModel);
+                if (result.Success)
+                {
+                    using (var connection = MasterController.GetConnection())
+                    {
+                        connection.Open();
+                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
+                            SqlDataReader rdr = command.ExecuteReader();
+                            while (rdr.Read())
+                            {
+                                //FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
+                                //LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
+                                //courseNums.Add(rdr["CourseNumber"].ToString());
+                            }
+                            rdr.Close();
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
+                    //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
+                }
+                else
+                {
+
+                }
+            }
+
+
+
+            CompetitionResults.Text = "Competition Results";
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)

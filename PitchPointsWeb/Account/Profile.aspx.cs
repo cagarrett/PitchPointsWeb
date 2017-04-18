@@ -9,11 +9,29 @@ using PitchPointsWeb.Models.API;
 using System.Data.SqlClient;
 using System.Data;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 
 namespace PitchPointsWeb.Account
 {
     public partial class Profile : Page
     {
+
+        public class Climbs
+        {
+            
+            public int WitnessID { get; set; }
+            public string WitnessName { get; set; }
+            public int Falls { get; set; }
+            public int Points { get; set; }
+            public int RouteID { get; set; }
+            public int CompID { get; set; }
+
+            public Climbs() { }
+
+        }
+
+        public List<Climbs> CompletedClimbs = new List<Climbs>();
+        public List<int> CompetedComps = new List<int>();
 
         static string UppercaseFirst(string s)
         {
@@ -62,9 +80,11 @@ namespace PitchPointsWeb.Account
                             command.ExecuteNonQuery();
                         }
                     }
+
                     UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
+                    //CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    //CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
                     EmailLabel.Text = TokenModel.Content.Email;
                     LifeTimePointsLabel.Text = result.Points.ToString();
                     FallsLabel.Text = result.Falls.ToString();
@@ -76,10 +96,12 @@ namespace PitchPointsWeb.Account
 
                 }
             }
-            /*while (prevComps > 0)
+            /*
+            while (prevComps > 0)
             {
                 Table table = new Table();
                 table.ID = "PreviousComp";
+                table.CssClass = "bordered centered highlight responsive-table";
                 Page.Form.Controls.Add(table);
                 for (int i = 0; i < 4; i++)
                 {
@@ -89,25 +111,22 @@ namespace PitchPointsWeb.Account
                         if (i == 0)
                         {
                             TableCell cell = new TableCell();
-                            TextBox tb = new TextBox();
-                            tb.ID = "tbxRow_" + i + "_Col_" + j;
-                            tb.Text = "";
-                            cell.Controls.Add(tb);
+                            cell.ID = "tbxRow_" + i + "_Col_" + j;
+                            cell.Text = "bitch";
                             tRow.Cells.Add(cell);
                         }
                         if (i == 1)
                         {
                             TableCell cell = new TableCell();
-                            cell.Text = "";
+                            cell.ID = "tbxRow_" + i + "_Col_" + j;
+                            cell.Text = "bitch";
                             tRow.Cells.Add(cell);
                         }
                         if (i == 2)
                         {
                             TableCell cell = new TableCell();
-                            TextBox tb = new TextBox();
-                            tb.ID = "tbxRow_" + i + "_Col_" + j;
-                            tb.Text = "";
-                            cell.Controls.Add(tb);
+                            cell.ID = "tbxRow_" + i + "_Col_" + j;
+                            cell.Text = "bitch";
                             tRow.Cells.Add(cell);
                         }
                         if (i == 3)
@@ -123,7 +142,8 @@ namespace PitchPointsWeb.Account
                     table.Rows.Add(tRow);
                     prevComps = prevComps - 1;
                 }
-            }*/
+            }
+            */
         }
     }
 }
