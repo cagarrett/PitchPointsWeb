@@ -73,6 +73,11 @@ namespace PitchPointsWeb.Models.API
             return (ExpDateTime - DateTime.Now).TotalDays > ValidTokenDays;
         }
 
+        public bool IsAdmin()
+        {
+            return MasterController.IsUserAdmin(this);
+        }
+
         public Dictionary<string, object> ToDictionary()
         {
             return new Dictionary<string, object>

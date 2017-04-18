@@ -551,6 +551,7 @@
       <DependentUpon>RegisterClimberForCompetition.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
+    <Compile Include="API\Admin\AdminController.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
