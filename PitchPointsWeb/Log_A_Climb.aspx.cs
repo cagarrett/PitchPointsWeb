@@ -13,9 +13,6 @@ namespace PitchPointsWeb
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            Master.ReadToken();
-
-            string empty = "";
             var TokenModel = new TokenModel
             {
                 Token = Master.ReadToken()
@@ -27,6 +24,13 @@ namespace PitchPointsWeb
                 getActiveCompetitions.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                 getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
             }
+        }
+
+        protected void competitionChanged(object sneder, EventArgs e)
+        {
+            int Id = Convert.ToInt32(competitionName.SelectedValue);
+            getClimbersInCompetition.SelectParameters["compID"].DefaultValue = Id.ToString();
+            getClimbersInCompetition.DataBind();
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

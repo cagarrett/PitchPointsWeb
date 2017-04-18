@@ -39,7 +39,7 @@
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
                         SelectCommand="GetActiveCompetitions"
                         SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                    <asp:DropDownList ID="competitionName" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
+                    <asp:DropDownList ID="competitionName" DataValueField="Id" OnSelectedIndexChanged="competitionChanged" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
@@ -64,7 +64,7 @@
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
                         SelectCommand="GetClimbersInCompetition"
                         SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                    <asp:DropDownList ID="witnessName" DataTextField="Witness" DataSourceID="getClimbersInCompetition" runat="server" Width="100 px" />
+                    <asp:DropDownList ID="witnessName" DataTextField="Witness" DataSourceID="getClimbersInCompetition" DataValueField="Id" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
