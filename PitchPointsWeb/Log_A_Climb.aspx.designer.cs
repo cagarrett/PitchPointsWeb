@@ -31,22 +31,31 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.DropDownList competitionName;
         
         /// <summary>
-        /// witness_id control.
+        /// categoryInput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl witness_id;
+        protected global::System.Web.UI.WebControls.DropDownList categoryInput;
         
         /// <summary>
-        /// route_id control.
+        /// getClimbersInCompetition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl route_id;
+        protected global::System.Web.UI.WebControls.SqlDataSource getClimbersInCompetition;
+        
+        /// <summary>
+        /// witnessName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList witnessName;
         
         /// <summary>
         /// falls control.
