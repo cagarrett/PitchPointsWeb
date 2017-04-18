@@ -28,7 +28,6 @@ namespace PitchPointsWeb
         protected async void Page_Load(object sender, EventArgs e)
         {
             String CompId = Request.QueryString["Id"];
-            RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
 
             string empty = "";
             if (CompetitionResults.Text == empty)
@@ -62,6 +61,8 @@ namespace PitchPointsWeb
                     }
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
+                    UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
                     if (LocationId == 0)
                     {
