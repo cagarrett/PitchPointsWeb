@@ -10,7 +10,7 @@
                     <div class="col s12 m7">
                         <div class="card">
                             <div class="card-image">
-                                <img src="Assets/NuLuLogo.PNG">
+                                <img id="GymImage" src="Assets/NuLuLogo.PNG">
                             </div>
                             <div class="card-content">
 

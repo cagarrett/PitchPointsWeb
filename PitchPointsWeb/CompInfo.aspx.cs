@@ -20,12 +20,14 @@ namespace PitchPointsWeb
 {
     public partial class CompInfo : Page
     {
-        
+
+        int LocationId = 0;
+        int climberID = 0;
+        bool registered = false;
 
         protected async void Page_Load(object sender, EventArgs e)
         {
             String CompId = Request.QueryString["Id"];
-            //int CompId = Convert.ToInt32(ComId);
             RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
 
             string empty = "";
@@ -52,7 +54,7 @@ namespace PitchPointsWeb
                             {
                                 //FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
                                 //LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
-                                //courseNums.Add(rdr["CourseNumber"].ToString());
+                               
                             }
                             rdr.Close();
                             command.ExecuteNonQuery();
@@ -61,6 +63,10 @@ namespace PitchPointsWeb
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
+                    if (LocationId == 0)
+                    {
+                        //GymImage.Attributes["src"] = ResolveUrl("~/Assets/NuLuLogo.PNG");
+                    }
                 }
                 else
                 {
