@@ -65,9 +65,14 @@ namespace PitchPointsWeb
                     UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
-                    if (LocationId == 0)
+                    if (LocationId == 2)
                     {
-                        //GymImage.Attributes["src"] = ResolveUrl("~/Assets/NuLuLogo.PNG");
+                        GymImage.Attributes["src"] = ResolveUrl("Assets/NuLuLogo.PNG");
+                        // GymImage.src = Page.ResolveUrl("relative/path/to/image");
+                    }
+                    else if (LocationId == 1)
+                    {
+                        GymImage.Attributes["src"] = ResolveUrl("Assets/HHILogoWall.PNG");
                     }
                 }
                 else
