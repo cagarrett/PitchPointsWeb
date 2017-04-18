@@ -37,6 +37,8 @@ namespace PitchPointsWeb.Models.API.Response
         [Description("At least one route ID must be supplied")]
         NoRoutesSupplied = 201,
 
+        CompetitionClosedForLogging = 202,
+
         [Description("The competition that you are trying to register / unregister for is closed")]
         CompetitionClosed = 300,
 

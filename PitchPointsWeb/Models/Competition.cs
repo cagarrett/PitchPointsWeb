@@ -27,9 +27,9 @@ namespace PitchPointsWeb.Models
 
         public int Climbers { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime Date { get; set; }
 
-        public DateTime EndDate { get; set; }
+        public TimeSpan Time { get; set; }
 
         public string Description { get; set; }
 

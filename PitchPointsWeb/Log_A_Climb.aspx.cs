@@ -29,7 +29,7 @@ namespace PitchPointsWeb
             }
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected async void btnSubmit_Click(object sender, EventArgs e)
         {
             string empty = "";
             /*if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
@@ -42,7 +42,7 @@ namespace PitchPointsWeb
                     RouteId = Convert.ToInt32(route_id.Value),
                     Falls = Convert.ToInt32(falls.Value),
                 };
-                var result = controller.LogClimb(logClimbModel);
+                var result = await controller.LogClimb(logClimbModel);
                 if (result.Success)
                 {
                     climber_id.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
