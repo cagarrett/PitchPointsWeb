@@ -23,29 +23,41 @@
             <a class="carousel-item" href="#five!">
                 <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
         </div>
-        <h2>Upcoming Competitions</h2>
-        <asp:GridView ID="CompetitionsGridView" AutoGenerateSelectButton ="true" CssClass="bordered highlight centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
-                <Columns>
-                    <asp:BoundField DataField="CompTitle"
-                        HeaderText="Comp Title"
-                        InsertVisible="False" ReadOnly="True"
-                        SortExpression="CompTitle" />
-                    <asp:BoundField DataField="LocationID"
-                        HeaderText="LocationID"
-                        SortExpression="LocationID" />
-                    <asp:BoundField DataField="CompDetails"
-                        HeaderText="Comp Details"
-                        SortExpression="CompDetails" />
-                    <asp:BoundField DataField="Description"
-                        HeaderText="Description"
-                        SortExpression="Description" />
-                </Columns>
-
-            </asp:GridView>
-            <asp:SqlDataSource ID="CompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
-                <SelectParameters>
-                    <asp:Parameter DefaultValue="9" Name="email" Type="String" />
-                </SelectParameters>
-            </asp:SqlDataSource>
+        <h1>Upcoming Competitions</h1>
+        <asp:GridView ID="CompetitionsGridView" class="centered" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+            <Columns>
+                <asp:BoundField DataField="CompTitle"
+                    HeaderText="  Competition Title"
+                    InsertVisible="False" ReadOnly="True"
+                    SortExpression="CompTitle" />
+                <asp:BoundField DataField="CompDetails"
+                    HeaderText="   Competition Details"
+                    SortExpression="CompDetails" />
+                <asp:BoundField DataField="Description"
+                    HeaderText="   Description"
+                    SortExpression="Description" />
+                <asp:BoundField DataField="Date"
+                    HeaderText="   Date"
+                    SortExpression="Date" />
+                <asp:BoundField DataField="City"
+                    HeaderText="  City"
+                    SortExpression="City" />
+                <asp:BoundField DataField="State"
+                    HeaderText="  State"
+                    SortExpression="State" />
+                <asp:TemplateField HeaderText="Logged Ticket">
+                    <ItemTemplate>
+                        <asp:LinkButton ID="btnview" runat="server" href='<%# String.Format("/CompInfo.aspx?ID={0}", Eval("Id")) %>'  Text="Logged Ticket" CommandName="More Info">More Info
+                        </asp:LinkButton>
+                    </ItemTemplate>
+                </asp:TemplateField>
+            </Columns>
+        </asp:GridView>
+        <asp:SqlDataSource ID="UpCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+            <SelectParameters>
+                <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                <asp:Parameter DefaultValue="False" Name="onlyReturnRegistered" Type="Boolean" />
+            </SelectParameters>
+        </asp:SqlDataSource>
     </div>
 </asp:Content>

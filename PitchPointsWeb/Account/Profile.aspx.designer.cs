@@ -130,13 +130,40 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.GridView CompetitionsGridView;
         
         /// <summary>
-        /// CompDataSource control.
+        /// UpCompDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource CompDataSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource UpCompDataSource;
+        
+        /// <summary>
+        /// Comp1Label control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Comp1Label;
+        
+        /// <summary>
+        /// CompCompGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CompCompGridView;
+        
+        /// <summary>
+        /// CompCompDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource CompCompDataSource;
         
         /// <summary>
         /// Master property.
