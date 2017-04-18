@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="Log_A_Climb" Language="C#" Async="true" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" %>
+
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
@@ -37,8 +38,7 @@
                         runat="server"
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
                         SelectCommand="GetActiveCompetitions"
-                        SelectCommandType="StoredProcedure">
-                    </asp:SqlDataSource>
+                        SelectCommandType="StoredProcedure"></asp:SqlDataSource>
                     <asp:DropDownList ID="competitionName" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                 </div>
             </div>
@@ -46,23 +46,32 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
-                    <input id="witness_id" type="number" class="validate" runat="server" style="width: 200px">
-                    <label for="witness_id" data-error="Must input witness ID" data-success="">Witness ID</label>
+                    <asp:DropDownList ID="categoryInput" runat="server" CssClass="browser-default" Width="100 px">
+                        <asp:ListItem Text="Beginner" Value="0" />
+                        <asp:ListItem Text="Intermediate" Value="1" />
+                        <asp:ListItem Text="Advanced" Value="2" />
+                        <asp:ListItem Text="Open" Value="3" />
+                    </asp:DropDownList>
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
-                    <input id="route_id" type="number" class="validate" runat="server" style="width: 200px">
-                    <label for="route_id" data-error="Must input route ID" data-success="">Route ID</label>
+                    <asp:SqlDataSource
+                        ID="getClimbersInCompetition"
+                        runat="server"
+                        ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
+                        SelectCommand="GetClimbersInCompetition"
+                        SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                    <asp:DropDownList ID="witnessName" DataTextField="Witness" DataSourceID="getClimbersInCompetition" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
-                    <input id="falls" type="number" class="validate" runat="server" style="width: 200px">
+                    <input id="falls" type="number" class="validate" runat="server" style="width: 200px" required="" aria-required="true">
                     <label for="falls" data-error="Must input number of falls" data-success="">Falls</label>
                 </div>
             </div>
