@@ -7,32 +7,32 @@
     <div class="row">
         <div class="col s6">
             <div class="input-field">
-                <input id="tbxTitle" type="text" class="validate" runat="server" />
+                <input id="tbxTitle" type="text" class="validate" runat="server" required="" aria-required="true"/>
                 <label for="tbxTitle" data-success="">Competition Title</label>
             </div>
             <div class="input-field">
                 <label for="tbxDate" data-success="">Date of Competition</label>
-                <input id="tbxDate" type="date" class="datepicker" runat="server" />
+                <input id="tbxDate" type="date" class="datepicker" runat="server" required="" aria-required="true"/>
             </div>
             <div class="row">
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxStartTime" data-success="">Start Time</label>
-                        <input id="tbxStartTime" class="timepicker" type="time" />
+                        <input id="tbxStartTime" class="timepicker" type="time" required="" aria-required="true"/>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxEndTime" data-success="">End Time</label>
-                        <input id="tbxEndTime" class="timepicker" type="time" />
+                        <input id="tbxEndTime" class="timepicker" type="time" required="" aria-required="true"/>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col s6">
             <div class="input-field">
-                <input id="tbxAddress1" type="text" class="validate" runat="server" />
-                <label for="tbxAddress1" data-success="">Address Line 1</label>
+                <input id="tbxAddress1" type="text" class="validate" runat="server" required="" aria-required="true"/>
+                <label for="tbxAddress1" data-error="Invalid Address" data-success="">Address Line 1</label>
             </div>
             <div class="input-field">
                 <input id="tbxAddress2" type="text" class="validate" runat="server" />
@@ -41,19 +41,19 @@
             <div class="row">
                 <div class="col s2">
                     <div class="input-field">
-                        <input id="tbxCity" type="text" class="validate" runat="server" />
+                        <input id="tbxCity" type="text" class="validate" runat="server" required="" aria-required="true"/>
                         <label for="tbxCity" data-success="">City</label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
-                        <input id="tbxState" type="text" class="validate" runat="server" />
+                        <input id="tbxState" type="text" class="validate" runat="server" required="" aria-required="true"/>
                         <label for="tbxState" data-success="">State</label>
                     </div>
                 </div>
                 <div class="col s2">
                     <div class="input-field">
-                        <input id="tbxZip" type="text" class="validate" runat="server" />
+                        <input id="tbxZip" type="text" class="validate" runat="server" required="" aria-required="true"/>
                         <label for="tbxZip" data-success="">Zip</label>
                     </div>
                 </div>
