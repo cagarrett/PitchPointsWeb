@@ -14,8 +14,19 @@
                             </div>
                             <div class="card-content">
 
-                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
-                                    
+                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                                    <Columns>
+                                        <asp:BoundField DataField="CompTitle"
+                                            HeaderText="Comp Title"
+                                            InsertVisible="False" ReadOnly="True"
+                                            SortExpression="CompTitle" />
+                                        <asp:BoundField DataField="CompDetails"
+                                            HeaderText="Comp Details"
+                                            SortExpression="CompDetails" />
+                                        <asp:BoundField DataField="Description"
+                                            HeaderText="Description"
+                                            SortExpression="Description" />
+                                    </Columns>
                                 </asp:GridView>
                                 <asp:SqlDataSource ID="UnregisteredCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                                     <SelectParameters>
@@ -52,7 +63,7 @@
 
                 <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="2" Name="comp" Type="Int32" />
+                        <asp:Parameter DefaultValue="" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 

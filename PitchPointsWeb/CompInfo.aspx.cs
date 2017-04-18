@@ -44,16 +44,15 @@ namespace PitchPointsWeb
                     using (var connection = MasterController.GetConnection())
                     {
                         connection.Open();
-                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        using (var command = new SqlCommand("GetActiveCompetitions", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
                             SqlDataReader rdr = command.ExecuteReader();
                             while (rdr.Read())
                             {
-                                //FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
-                                //LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
-                               
+                                LocationId = (Convert.ToInt32(rdr["LocationID"]));
+
                             }
                             rdr.Close();
                             command.ExecuteNonQuery();
@@ -61,6 +60,8 @@ namespace PitchPointsWeb
                     }
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
+
+                    LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
                     UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
