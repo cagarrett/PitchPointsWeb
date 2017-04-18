@@ -83,8 +83,6 @@ namespace PitchPointsWeb.Account
 
                     UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    //CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    //CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
                     EmailLabel.Text = TokenModel.Content.Email;
                     LifeTimePointsLabel.Text = result.Points.ToString();
                     FallsLabel.Text = result.Falls.ToString();

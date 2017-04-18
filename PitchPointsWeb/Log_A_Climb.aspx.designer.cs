@@ -13,6 +13,24 @@ namespace PitchPointsWeb {
     public partial class Log_A_Climb {
         
         /// <summary>
+        /// FirstName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FirstName;
+        
+        /// <summary>
+        /// LastName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LastName;
+        
+        /// <summary>
         /// climber_id control.
         /// </summary>
         /// <remarks>
@@ -47,5 +65,17 @@ namespace PitchPointsWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl falls;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new PitchPointsWeb.SiteMaster Master {
+            get {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

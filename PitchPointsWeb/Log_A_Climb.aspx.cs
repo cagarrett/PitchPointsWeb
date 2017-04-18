@@ -3,16 +3,62 @@ using System.Web;
 using System.Web.UI;
 using PitchPointsWeb.API;
 using PitchPointsWeb.Models.API;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PitchPointsWeb
 {
     public partial class Log_A_Climb : Page
     {
 
-        protected void Page_Load(object sender, EventArgs e)
+        static string UppercaseFirst(string s)
         {
-            //Master.ReadToken();
+            // Check for empty string.
+            if (string.IsNullOrEmpty(s))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
+
+        protected async void Page_Load(object sender, EventArgs e)
+        {
+            Master.ReadToken();
             //Rider switching to is user logged in boolean
+
+            string empty = "";
+            if (FirstName.Text == empty)
+            {
+                var controller = new AccountController();
+                var TokenModel = new TokenModel
+                {
+                    Token = Master.ReadToken()
+                };
+
+                var result = await controller.GetUserSnapshot(TokenModel);
+                if (result.Success)
+                {
+                    using (var connection = MasterController.GetConnection())
+                    {
+                        connection.Open();
+                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
+                            SqlDataReader rdr = command.ExecuteReader();
+                            while (rdr.Read())
+                            {
+                                FirstName.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
+                                LastName.Text = (UppercaseFirst(rdr["LastName"].ToString()));
+                                //courseNums.Add(rdr["CourseNumber"].ToString());
+                            }
+                            rdr.Close();
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)

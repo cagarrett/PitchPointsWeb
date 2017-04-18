@@ -1,5 +1,5 @@
-﻿<%@ Page Title="Log_A_Climb" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" %>
-
+﻿<%@ Page Title="Log_A_Climb" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" Async="true"%>
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
         function completeForm() {
@@ -28,7 +28,8 @@
         <br />
         <h4>Log a Climb</h4>
         <hr />
-
+        <asp:Label ID="FirstName" runat="server" Text=""></asp:Label>
+        <asp:Label ID="LastName" runat="server" Text=""></asp:Label>
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
