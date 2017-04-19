@@ -63,6 +63,7 @@ namespace PitchPointsWeb
 
                     LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
                     UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    UnregisteredCompDataSource.SelectParameters["targetComp"].DefaultValue = CompId;
                     RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
                     if (LocationId == 2)

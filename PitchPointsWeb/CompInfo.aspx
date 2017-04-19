@@ -31,6 +31,8 @@
                                 <asp:SqlDataSource ID="UnregisteredCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                                     <SelectParameters>
                                         <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                                        <asp:Parameter DefaultValue="" Name="targetComp" Type="String" />
+                         
                                     </SelectParameters>
                                 </asp:SqlDataSource>
                             </div>
