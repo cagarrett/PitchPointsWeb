@@ -62,7 +62,6 @@
                     <asp:Parameter DefaultValue="True" Name="onlyReturnRegistered" Type="Boolean" />
                 </SelectParameters>
             </asp:SqlDataSource>
-
         </div>
         </div>
         <h1>Previous Competitions</h1>
@@ -89,6 +88,4 @@
                     <asp:Parameter DefaultValue="" Name="email" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-    
-
 </asp:Content>
