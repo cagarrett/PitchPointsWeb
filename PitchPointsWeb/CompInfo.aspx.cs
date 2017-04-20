@@ -89,9 +89,6 @@ namespace PitchPointsWeb
 
                 }
             }
-
-
-
             CompetitionResults.Text = "Competition Results";
         }
 
@@ -128,7 +125,7 @@ namespace PitchPointsWeb
         }
         protected void btnUnregister_Click(object sender, EventArgs e)
         {
-            if (logIn)
+            if (logIn && registered)
             {
 
             }

@@ -1,6 +1,29 @@
 <%@ Page Title="CompInfo" Language="C#" MasterPageFile="~/Site.Master" Async="true"  AutoEventWireup="true" CodeBehind="CompInfo.aspx.cs" Inherits="PitchPointsWeb.CompInfo" %>
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script>
+        function completeForm() {
+            swal({
+                title: 'Error!',
+                text: 'Please make sure you fill out each form on this page.',
+                type: 'error'
+            });
+        }
+        function serverError() {
+            swal({
+                title: 'Error!',
+                text: 'There was an issue with logging this climb. Please try again.',
+                type: 'error'
+            });
+        }
+        function success() {
+            swal({
+                title: 'Success!',
+                text: 'You have successfully logged this climb!',
+                type: 'success'
+            });
+        }
+    </script>
     <div class="form-horizontal">
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="row">

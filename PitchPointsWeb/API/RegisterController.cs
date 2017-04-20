@@ -29,7 +29,7 @@ namespace PitchPointsWeb.API
                     using (var command = new SqlCommand("ModifyRegistrationStatus", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-                        command.Parameters.AddWithValue("@ClimberId", model.ClimberId);
+                        command.Parameters.AddWithValue("@climberId", model.ClimberId);
                         command.Parameters.AddWithValue("@category", model.Category);
                         command.Parameters.AddWithValue("@compId", model.CompetitionId);
                         //command.Parameters.AddWithValue("@register", 1);
