@@ -69,8 +69,11 @@ namespace PitchPointsWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
+            var TokenModel = new TokenModel
+            {
+                Token = ReadToken()
+            };
+            //accountName.Text = TokenModel.
         }
 
         public void WriteToken(string token)

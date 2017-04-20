@@ -186,7 +186,7 @@
                                         <img src="/Assets/PPHangLogoTrimBlack.png" style="width: 270px; height: 155px" />
                                     </div>
                                     <br /><br />
-                                    <a href="#!profile"><span class="black-text name">Pitch Points Admin</span></a>
+                                    <asp:LinkButton runat="server" href="#!profile" id="accountName"><span class="black-text name">Pitch Points Admin</span></asp:LinkButton>
                                     <a href="#!email"><span class="black-text email">PitchPointsTeam@gmail.com</span></a>
                                 </div>
                             </li>
