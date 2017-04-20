@@ -118,10 +118,7 @@ namespace PitchPointsWeb
                 }
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
             }
-            else
-            {
-                
-            }
+            
         }
         protected void btnUnregister_Click(object sender, EventArgs e)
         {
