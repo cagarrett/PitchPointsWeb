@@ -30,7 +30,11 @@
                 e.stopPropagation();
             });
             $('#logoutLink').click(function() {
-                alert("Log out");
+                swal({
+                    title: 'Logged out!',
+                    text: 'You have successfully logged out!',
+                    type: 'success'
+                });
                 deleteToken();
             });
             updateAccountLoginStatus();
