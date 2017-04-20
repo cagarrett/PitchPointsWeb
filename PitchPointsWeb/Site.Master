@@ -16,30 +16,24 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-3.1.1.min.js") %>"></script>
     <style>
-        #loggedOut {
+        loggedOut {
             display: block;
         }
-
-        #loggedIn {
+        loggedIn {
             display: none;
         }
     </style>
     <script type="text/javascript">
         $(function() {
-            console.log('ready');
             $(".button-collapse").sideNav();
             $('.item-modal').click(function(e) {
                 e.stopPropagation();
             });
-            var token = getCookieValue("Token");
-            if (token === '') {
-                $("div.loggedIn").css("display", "none");
-                $("div.loggedOut").css("display", "block");
-            } else {
-                $("div.loggedIn").css("display", "block");
-                $("div.loggedOut").css("display", "none");
-            }
-            // Verify token
+            $('#logoutLink').click(function() {
+                alert("Log out");
+                deleteToken();
+            });
+            updateAccountLoginStatus();
         });
         function showPopup() {
             $('#loginModal').modal();
@@ -63,7 +57,7 @@
                 success: function (msg) {
                     $('#loginModal').modal().hide();
                     if (msg.Success) {
-                        document.cookie = "Token=" + msg.Token;
+                        updateToken(msg.Token);
                         Materialize.toast('Successfully logged in!', 3000, 'rounded');
                     } else {
                         switch(msg.ResponseCode) {
@@ -83,11 +77,34 @@
                     }
                 },
                 error: function(msg) {
-                    $('#loginModal').modal().hide();
+                    $('#loginModal').modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
                     serverError();
+                    deleteToken();
                 }
             });
             return false;
+        }
+        function updateToken(token) {
+            document.cookie = "Token=" + token;
+            updateAccountLoginStatus();
+        }
+        function deleteToken() {
+            document.cookie = "Token=;Max-Age=0";
+            updateAccountLoginStatus();
+        }
+        function updateAccountLoginStatus() {
+            var cookieToken = getCookieValue("Token");
+            if (cookieToken === '') {
+                $('.loggedIn')
+                $(".loggedIn").css("display", "none");
+                $(".loggedOut").css("display", "block");
+            } else {
+                $(".loggedIn").css("display", "block");
+                $(".loggedOut").css("display", "none");
+            }
+            $(".loggedIn").addClass("")
         }
         function getCookieValue(a) {
             var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
@@ -201,18 +218,16 @@
                         <li><a runat="server" href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a></li>
                     </ul>
                     <div id="auth">
-                        <div id="loggedOut">
+                        <div id="loggedOut" class="loggedOut">
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Register.aspx">Register</a></li>
                                 <li><a runat="server" href="#" data-toggle="modal" data-target="#loginModal">Log in</a></li>
                             </ul>
                         </div>
-                        <div id="loggedIn" style="">
+                        <div id="loggedIn" class="loggedIn">
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Profile.aspx">My Account</a></li>
-                                <li>
-                                    <a runat="server" href="#">Log out</a>
-                                </li>
+                                <li><a runat="server" id="logoutLink" href="#">Log out</a></li>
                             </ul>
                         </div>
                     </div>

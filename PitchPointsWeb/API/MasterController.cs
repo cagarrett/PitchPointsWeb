@@ -110,6 +110,32 @@ namespace PitchPointsWeb.API
             }
         }
 
+        internal static bool IsUserAdmin(TokenContent content)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("IsUserAdmin", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@email", content.Email);
+                        var isAdminParam = new SqlParameter()
+                        {
+                            ParameterName = "@isAdmin",
+                            Direction = ParameterDirection.Output,
+                            SqlDbType = SqlDbType.Bit
+                        };
+                        command.Parameters.Add(isAdminParam);
+                        command.ExecuteNonQuery();
+                        return (bool)isAdminParam.Value;
+                    }
+                }
+            } catch { }
+            return false;
+        }
+
         /// <summary>
         /// Creates an ID table that is used within the database when passing more then 1 id is desired
         /// </summary>
