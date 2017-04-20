@@ -555,6 +555,7 @@
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
+    <Compile Include="API\RegisterController.cs" />
     <Compile Include="API\RouteController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Account\Profile.aspx.cs">
@@ -608,6 +609,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\Response\ApiResponseCode.cs" />
+    <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
+    <Compile Include="Models\API\RegisterControllerModels.cs" />
     <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
@@ -615,7 +618,6 @@
     <Compile Include="Models\API\Response\AccountControllerResponses.cs" />
     <Compile Include="Models\API\Response\CompetitionControllerResponses.cs" />
     <Compile Include="Models\API\Response\LeaderboardControllerResponses.cs" />
-    <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
     <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\API\LeaderboardControllerModels.cs" />

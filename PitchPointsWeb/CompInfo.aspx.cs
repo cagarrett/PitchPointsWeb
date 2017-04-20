@@ -22,12 +22,19 @@ namespace PitchPointsWeb
     {
 
         int LocationId = 0;
+
+        String email = "";
         int climberID = 0;
         bool registered = false;
+        int competitionId = 0;
+        int category = 0;
+        bool logIn = false; 
 
         protected async void Page_Load(object sender, EventArgs e)
         {
+            
             String CompId = Request.QueryString["Id"];
+            competitionId = Convert.ToInt32(CompId);
 
             string empty = "";
             if (CompetitionResults.Text == empty)
@@ -41,6 +48,7 @@ namespace PitchPointsWeb
                 var result = await controller.GetUserSnapshot(TokenModel);
                 if (result.Success)
                 {
+                    logIn = true;
                     using (var connection = MasterController.GetConnection())
                     {
                         connection.Open();
@@ -87,13 +95,47 @@ namespace PitchPointsWeb
             CompetitionResults.Text = "Competition Results";
         }
 
-        protected void btnRegister_Click(object sender, EventArgs e)
+        protected async void btnRegister_Click(object sender, EventArgs e)
         {
-
+            if (logIn)
+            {
+                String empty = "";
+                var controller = new RegisterController();
+                var RegClimberModel = new RegisteredClimberModel
+                {
+                    ClimberId = climberID,
+                    Category = category,
+                    CompetitionId = competitionId
+                    //Register = 1
+                    
+                };
+                var result = await controller.RegisterClimber(RegClimberModel);
+                if (result.Success)
+                {
+                    //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                }
+                else
+                {
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                }
+                 
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+            }
         }
         protected void btnUnregister_Click(object sender, EventArgs e)
         {
+            if (logIn)
+            {
 
+            }
+            else
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+            }
         }
     }
 }
