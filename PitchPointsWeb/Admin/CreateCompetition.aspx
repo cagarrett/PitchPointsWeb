@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Create Competition" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CreateCompetition.aspx.cs" Inherits="PitchPointsWeb.Admin.CreateCompetition" Async="true" %>
 
+<%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <br />
     <h3>Create Competition</h3>
@@ -18,13 +19,13 @@
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxStartTime" data-success="">Start Time</label>
-                        <input id="tbxStartTime" class="timepicker" type="time" required="" aria-required="true"/>
+                        <input id="tbxStartTime" class="timepicker" type="time" runat="server" required="" aria-required="true"/>
                     </div>
                 </div>
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxEndTime" data-success="">End Time</label>
-                        <input id="tbxEndTime" class="timepicker" type="time" required="" aria-required="true"/>
+                        <input id="tbxEndTime" class="timepicker" type="time" runat="server" required="" aria-required="true"/>
                     </div>
                 </div>
             </div>
@@ -119,10 +120,10 @@
                                 </ItemTemplate>
                                 <FooterTemplate>
                                     <asp:DropDownList ID="category" runat="server" CssClass="browser-default" Width="100 px">
-                                        <asp:ListItem Text="Beginner" Value="0" />
-                                        <asp:ListItem Text="Intermediate" Value="1" />
-                                        <asp:ListItem Text="Advanced" Value="2" />
-                                        <asp:ListItem Text="Open" Value="3" />
+                                        <asp:ListItem Text="Beginner" Value="1" />
+                                        <asp:ListItem Text="Intermediate" Value="2" />
+                                        <asp:ListItem Text="Advanced" Value="3" />
+                                        <asp:ListItem Text="Open" Value="4" />
                                     </asp:DropDownList>
                                 </FooterTemplate>
                             </asp:TemplateField>

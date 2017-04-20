@@ -1,6 +1,10 @@
-﻿using System;
+﻿using PitchPointsWeb.API.Admin;
+using PitchPointsWeb.Models;
+using PitchPointsWeb.Models.API;
+using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -24,9 +28,39 @@ namespace PitchPointsWeb.Admin
             }
         }
 
-        protected void btnCreate_Click(object sender, EventArgs e)
+        protected async void btnCreate_Click(object sender, EventArgs e)
         {
-
+            var competition = new Competition()
+            {
+                CompetitionTitle = tbxTitle.Value,
+                Date = Convert.ToDateTime(tbxDate.Value),
+                Time = Convert.ToDateTime(tbxStartTime.Value).TimeOfDay,
+                Location = new Location()
+                {
+                    City = tbxCity.Value,
+                    State = tbxState.Value,
+                    ZIP = tbxZip.Value,
+                    AddressLine1 = tbxAddress1.Value,
+                    AddressLine2 = tbxAddress2.Value
+                }
+            };
+            GetCurrentRules().ForEach(rule => competition.AddRule(rule));
+            var token = new TokenModel()
+            {
+                Token = Master.ReadToken()
+            };
+            var controller = new AdminController();
+            var success = await controller.CreateCompetition(token, competition);
+            Response.Write(success);
+            success = success && controller.InsertRoutes(GetCurrentRoutes());
+            Response.Write(success);
+            if (success)
+            {
+                // Handle
+            } else
+            {
+                // Handle
+            }
         }
 
         protected void deleteRouteButton_OnClick(object sender, EventArgs e)
@@ -151,6 +185,34 @@ namespace PitchPointsWeb.Admin
                     RestoreRuleValuesToGrid(ref dataTable);
                 }
             }
+        }
+
+        private List<Route> GetCurrentRoutes()
+        {
+            var routes = new List<Route>();
+            foreach (GridViewRow row in routeGridView.Rows)
+            {
+                routes.Add(new Route()
+                {
+                    MaxPoints = Convert.ToInt32(((DropDownList)row.FindControl("gradeInput")).SelectedValue),
+                    CategoryId = Convert.ToInt32(((DropDownList)row.FindControl("categoryInput")).SelectedValue),
+                    Name = ((TextBox)row.FindControl("routeIDInput")).Text
+                });
+            }
+            return routes;
+        }
+
+        private List<CompetitionRule> GetCurrentRules()
+        {
+            var rules = new List<CompetitionRule>();
+            foreach(GridViewRow row in ruleGridView.Rows)
+            {
+                rules.Add(new CompetitionRule()
+                {
+                    Description = ((TextBox)row.FindControl("ruleDescriptionTextBox")).Text
+                });
+            }
+            return rules;
         }
 
         private void ExtractExistingRoutes(ref DataTable table)

@@ -31,6 +31,24 @@ namespace PitchPointsWeb.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxDate;
         
         /// <summary>
+        /// tbxStartTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxStartTime;
+        
+        /// <summary>
+        /// tbxEndTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxEndTime;
+        
+        /// <summary>
         /// tbxAddress1 control.
         /// </summary>
         /// <remarks>
@@ -92,5 +110,17 @@ namespace PitchPointsWeb.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView routeGridView;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new PitchPointsWeb.SiteMaster Master {
+            get {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }
