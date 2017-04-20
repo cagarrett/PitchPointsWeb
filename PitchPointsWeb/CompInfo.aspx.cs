@@ -98,16 +98,15 @@ namespace PitchPointsWeb
             if (logIn)
             {
                 String empty = "";
-                var controller = new RegisterController();
-                var RegClimberModel = new RegisteredClimberModel
+                var controller = new CompetitionsController();
+                var RegClimberModel = new CompetitionRegistrationModel
                 {
-                    Email = email,
-                    Category = category,
-                    CompetitionId = competitionId
-                    //Register = 1
+                    
+                    CompetitionId = competitionId,
+                    Register = true
                     
                 };
-                var result = await controller.RegisterClimber(RegClimberModel);
+                var result = await controller.ModifyCompetitionStatus(RegClimberModel);
                 if (result.Success)
                 {
                     //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
