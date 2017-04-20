@@ -12,14 +12,14 @@
         function serverError() {
             swal({
                 title: 'Error!',
-                text: 'There was an issue with logging this climb. Please try again.',
+                text: 'There was an issue with your registration. Please try again.',
                 type: 'error'
             });
         }
         function success() {
             swal({
                 title: 'Success!',
-                text: 'You have successfully logged this climb!',
+                text: 'You have successfully registered!',
                 type: 'success'
             });
         }

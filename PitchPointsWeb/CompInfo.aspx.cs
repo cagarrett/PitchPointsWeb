@@ -28,7 +28,7 @@ namespace PitchPointsWeb
         bool registered = false;
         int competitionId = 0;
         int category = 0;
-        bool logIn = false; 
+        bool logIn = true; 
 
         protected async void Page_Load(object sender, EventArgs e)
         {
@@ -70,6 +70,7 @@ namespace PitchPointsWeb
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
 
                     LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
+                    email = TokenModel.Content.Email;
                     UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     UnregisteredCompDataSource.SelectParameters["targetComp"].DefaultValue = CompId;
                     RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
@@ -100,7 +101,7 @@ namespace PitchPointsWeb
                 var controller = new RegisterController();
                 var RegClimberModel = new RegisteredClimberModel
                 {
-                    ClimberId = climberID,
+                    Email = email,
                     Category = category,
                     CompetitionId = competitionId
                     //Register = 1

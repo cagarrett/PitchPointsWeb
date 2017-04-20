@@ -4,13 +4,15 @@
     public class RegisteredClimberModel: TokenModel
     {
 
-        public int ClimberId { get; set; }
+        //public int ClimberId { get; set; }
+
+        public string Email { get; internal set; }
 
         public int Category { get; set; }
 
         public int CompetitionId { get; set; }
 
-        //public int Register { get; set; }
+        //public byte Register { get; set; }
 
 
     }
