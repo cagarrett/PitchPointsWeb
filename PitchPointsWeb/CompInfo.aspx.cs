@@ -20,13 +20,14 @@ namespace PitchPointsWeb
 {
     public partial class CompInfo : Page
     {
-        
+
+        int LocationId = 0;
+        int climberID = 0;
+        bool registered = false;
 
         protected async void Page_Load(object sender, EventArgs e)
         {
             String CompId = Request.QueryString["Id"];
-            //int CompId = Convert.ToInt32(ComId);
-            RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
 
             string empty = "";
             if (CompetitionResults.Text == empty)
@@ -43,16 +44,15 @@ namespace PitchPointsWeb
                     using (var connection = MasterController.GetConnection())
                     {
                         connection.Open();
-                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        using (var command = new SqlCommand("GetCompetitionLocation", connection))
                         {
                             command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@email", TokenModel.Content.Email);
+                            command.Parameters.AddWithValue("@comp", CompId);
                             SqlDataReader rdr = command.ExecuteReader();
                             while (rdr.Read())
                             {
-                                //FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
-                                //LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
-                                //courseNums.Add(rdr["CourseNumber"].ToString());
+                                LocationId = (Convert.ToInt32(rdr["LocationID"]));
+
                             }
                             rdr.Close();
                             command.ExecuteNonQuery();
@@ -60,7 +60,21 @@ namespace PitchPointsWeb
                     }
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
+
+                    LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
+                    UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                    UnregisteredCompDataSource.SelectParameters["targetComp"].DefaultValue = CompId;
+                    RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
                     //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
+                    if (LocationId == 2)
+                    {
+                        GymImage.Attributes["src"] = ResolveUrl("Assets/NuLuLogo.PNG");
+                        // GymImage.src = Page.ResolveUrl("relative/path/to/image");
+                    }
+                    else if (LocationId == 1)
+                    {
+                        GymImage.Attributes["src"] = ResolveUrl("Assets/HHILogoWall.PNG");
+                    }
                 }
                 else
                 {

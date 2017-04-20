@@ -10,7 +10,7 @@
                     <div class="col s12 m7">
                         <div class="card">
                             <div class="card-image">
-                                <img src="Assets/NuLuLogo.PNG">
+                                <img id="GymImage" runat="server" src="">
                             </div>
                             <div class="card-content">
 
@@ -31,6 +31,8 @@
                                 <asp:SqlDataSource ID="UnregisteredCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                                     <SelectParameters>
                                         <asp:Parameter DefaultValue=" " Name="email" Type="String" />
+                                        <asp:Parameter DefaultValue="" Name="targetComp" Type="String" />
+                         
                                     </SelectParameters>
                                 </asp:SqlDataSource>
                             </div>
@@ -61,9 +63,9 @@
                     </Columns>
                 </asp:GridView>
 
-                <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitionLocation" SelectCommandType="StoredProcedure">
+                <asp:SqlDataSource ID="LocationDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetLocationInfo" SelectCommandType="StoredProcedure">
                     <SelectParameters>
-                        <asp:Parameter DefaultValue="2" Name="comp" Type="Int32" />
+                        <asp:Parameter DefaultValue="" Name="comp" Type="Int32" />
                     </SelectParameters>
                 </asp:SqlDataSource>
 

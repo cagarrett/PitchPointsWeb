@@ -33,7 +33,7 @@
         <div class="col s6">
 
             <h1>Upcoming Competitions</h1>
-            <asp:GridView ID="CompetitionsGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+            <asp:GridView ID="CompetitionsGridView" ItemStyle-HorizontalAlign="Center" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 <Columns>
                     <asp:BoundField DataField="CompTitle"
                         HeaderText="Competition Title"
@@ -62,19 +62,30 @@
                     <asp:Parameter DefaultValue="True" Name="onlyReturnRegistered" Type="Boolean" />
                 </SelectParameters>
             </asp:SqlDataSource>
-
         </div>
         </div>
         <h1>Previous Competitions</h1>
             <asp:Label ID="Comp1Label" runat="server" Text=""></asp:Label>
-            <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
-                
+            <asp:GridView ID="CompCompGridView" ItemStyle-HorizontalAlign="Center" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                <Columns>
+                    <asp:BoundField DataField="CompTitle"
+                        HeaderText="Competition Title"
+                        InsertVisible="False" ReadOnly="True"
+                        SortExpression="CompTitle" />
+                    <asp:BoundField DataField="Points"
+                        HeaderText="Points"
+                        SortExpression="Points" />
+                    <asp:BoundField DataField="Falls"
+                        HeaderText="Falls"
+                        SortExpression="Falls" />
+                    <asp:BoundField DataField="Rank"
+                        HeaderText="Rank"
+                        SortExpression="Rank" />
+                </Columns>
             </asp:GridView>
             <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetPastCompetitions" SelectCommandType="StoredProcedure">
                 <SelectParameters>
                     <asp:Parameter DefaultValue="" Name="email" Type="String" />
                 </SelectParameters>
             </asp:SqlDataSource>
-    
-
 </asp:Content>

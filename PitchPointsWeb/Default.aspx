@@ -24,7 +24,7 @@
                 <img src="Assets/HHComp.PNG" alt="SnakePit"></a>
         </div>
         <h1>Upcoming Competitions</h1>
-        <asp:GridView ID="CompetitionsGridView" class="centered" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+        <asp:GridView ID="CompetitionsGridView" ItemStyle-HorizontalAlign="Center" class="centered" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UpCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
             <Columns>
                 <asp:BoundField DataField="CompTitle"
                     HeaderText="  Competition Title"
@@ -45,7 +45,7 @@
                 <asp:BoundField DataField="State"
                     HeaderText="  State"
                     SortExpression="State" />
-                <asp:TemplateField HeaderText="Logged Ticket">
+                <asp:TemplateField HeaderText="More Info">
                     <ItemTemplate>
                         <asp:LinkButton ID="btnview" runat="server" href='<%# String.Format("/CompInfo.aspx?ID={0}", Eval("Id")) %>'  Text="Logged Ticket" CommandName="More Info">More Info
                         </asp:LinkButton>
