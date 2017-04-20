@@ -12,7 +12,7 @@
 
         public int CompetitionId { get; set; }
 
-        //public byte Register { get; set; }
+        //public int Register { get; set; }
 
 
     }
