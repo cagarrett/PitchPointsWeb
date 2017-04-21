@@ -12,14 +12,15 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb.Admin
 {
-    public partial class CreateCompetition : Page
+    public partial class CreateCompetition : AdminPage
     {
 
         private const string RuleTable = "RuleTable";
         private const string RouteTable = "RouteTable";
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected override void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "Init", "CreateCompStartup();", true);
             if (!Page.IsPostBack)
             {

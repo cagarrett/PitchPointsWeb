@@ -508,6 +508,9 @@
     <Compile Include="Account\VerifyPhoneNumber.aspx.designer.cs">
       <DependentUpon>VerifyPhoneNumber.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AdminPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Admin\CreateCompetition.aspx.cs">
       <DependentUpon>CreateCompetition.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
