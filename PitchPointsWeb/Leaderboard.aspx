@@ -3,6 +3,12 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Leaderboard</h2>
+    <p>Select Competition</p>
+    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" CssClass="browser-default" runat="server"></asp:DropDownList>
+    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
+    </asp:SqlDataSource>
+
+
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#beginner">Beginner</a></li>
@@ -21,8 +27,8 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="BeginnerDateStampLabel" />
-                        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
+                        <asp:GridView ID="GridView1" class="bordered responsive-table centered highlight" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle />
                             <Columns>
                                 <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
@@ -30,16 +36,6 @@
                                 <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
                                 <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57" />
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#E3EAEB" />
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                            <SortedAscendingHeaderStyle BackColor="#246B61" />
-                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                            <SortedDescendingHeaderStyle BackColor="#15524A" />
                         </asp:GridView>
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
@@ -61,8 +57,8 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="IntermediateDateStampLabel" />
-                        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
+                        <asp:GridView ID="GridView2" class="bordered responsive-table centered highlight" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource2" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle/>
                             <Columns>
                                 <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
@@ -70,16 +66,6 @@
                                 <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
                                 <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57" />
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#E3EAEB" />
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                            <SortedAscendingHeaderStyle BackColor="#246B61" />
-                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                            <SortedDescendingHeaderStyle BackColor="#15524A" />
                         </asp:GridView>
                         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
@@ -99,8 +85,8 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="AdvancedDateStampLabel" />
-                        <asp:GridView ID="GridView3" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
+                        <asp:GridView ID="GridView3" class="bordered responsive-table centered highlight" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource3" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle/>
                             <Columns>
                                 <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
@@ -108,16 +94,6 @@
                                 <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
                                 <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57" />
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#E3EAEB" />
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                            <SortedAscendingHeaderStyle BackColor="#246B61" />
-                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                            <SortedDescendingHeaderStyle BackColor="#15524A" />
                         </asp:GridView>
                         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
@@ -137,8 +113,8 @@
                     </Triggers>
                     <ContentTemplate>
                         <asp:Label runat="server" ID="OpenDateStampLabel" />
-                        <asp:GridView ID="GridView4" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" CellPadding="4" ForeColor="#333333" GridLines="None">
-                            <AlternatingRowStyle BackColor="White" />
+                        <asp:GridView ID="GridView4" class="bordered responsive-table centered highlight" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource4" CellPadding="4" ForeColor="#333333" GridLines="None">
+                            <AlternatingRowStyle/>
                             <Columns>
                                 <asp:BoundField DataField="UserID" HeaderText="User ID " SortExpression="UserID" />
                                 <asp:BoundField DataField="FirstName" HeaderText="First Name " SortExpression="FirstName" />
@@ -146,16 +122,6 @@
                                 <asp:BoundField DataField="Points" HeaderText="Points " ReadOnly="True" SortExpression="Points" />
                                 <asp:BoundField DataField="Falls" HeaderText="Falls " ReadOnly="True" SortExpression="Falls" />
                             </Columns>
-                            <EditRowStyle BackColor="#7C6F57" />
-                            <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
-                            <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
-                            <RowStyle BackColor="#E3EAEB" />
-                            <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
-                            <SortedAscendingCellStyle BackColor="#F8FAFA" />
-                            <SortedAscendingHeaderStyle BackColor="#246B61" />
-                            <SortedDescendingCellStyle BackColor="#D4DFE1" />
-                            <SortedDescendingHeaderStyle BackColor="#15524A" />
                         </asp:GridView>
                         <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>

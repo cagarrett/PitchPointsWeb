@@ -12,7 +12,7 @@ namespace PitchPointsWeb.Models.API
         /// <summary>
         /// True if the user wants to register for CompetitionId, false if they want to unregister
         /// </summary>
-        public bool Register { get; set; }
+        public int Register { get; set; }
 
     }
 }

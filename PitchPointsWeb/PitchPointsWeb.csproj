@@ -279,6 +279,7 @@
     <Content Include="Account\TwoFactorAuthenticationSignIn.aspx" />
     <Content Include="Account\VerifyPhoneNumber.aspx" />
     <Content Include="Admin\CreateCompetition.aspx" />
+    <Content Include="Admin\DynamicTablePage.aspx" />
     <Content Include="Admin\EditCompetition.aspx" />
     <Content Include="Admin\LogRouteForClimber.aspx" />
     <Content Include="Admin\UserPermissions.aspx" />
@@ -514,6 +515,13 @@
     <Compile Include="Admin\CreateCompetition.aspx.designer.cs">
       <DependentUpon>CreateCompetition.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\DynamicTablePage.aspx.cs">
+      <DependentUpon>DynamicTablePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\DynamicTablePage.aspx.designer.cs">
+      <DependentUpon>DynamicTablePage.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\EditCompetition.aspx.cs">
       <DependentUpon>EditCompetition.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -543,6 +551,7 @@
       <DependentUpon>RegisterClimberForCompetition.aspx</DependentUpon>
     </Compile>
     <Compile Include="API\AccountController.cs" />
+    <Compile Include="API\Admin\AdminController.cs" />
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
@@ -599,6 +608,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\API\Response\ApiResponseCode.cs" />
+    <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
     <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
@@ -606,7 +616,6 @@
     <Compile Include="Models\API\Response\AccountControllerResponses.cs" />
     <Compile Include="Models\API\Response\CompetitionControllerResponses.cs" />
     <Compile Include="Models\API\Response\LeaderboardControllerResponses.cs" />
-    <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
     <Compile Include="Models\API\RouteControllerModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\API\LeaderboardControllerModels.cs" />
@@ -642,7 +651,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -3,22 +3,43 @@ using System.Web;
 using System.Web.UI;
 using PitchPointsWeb.API;
 using PitchPointsWeb.Models.API;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PitchPointsWeb
 {
     public partial class Log_A_Climb : Page
     {
 
-        protected void Page_Load(object sender, EventArgs e)
+        protected async void Page_Load(object sender, EventArgs e)
         {
-            //Master.ReadToken();
-            //Rider switching to is user logged in boolean
+            var TokenModel = new TokenModel
+            {
+                Token = Master.ReadToken()
+            };
+
+            var loggedIn = await TokenModel.Validate();
+            if (loggedIn)
+            {
+                getActiveCompetitions.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
+            }
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        
+
+        protected void competitionChanged(object sneder, EventArgs e)
+        {
+            int Id = Convert.ToInt32(competitionName.SelectedValue);
+            getClimbersInCompetition.SelectParameters["compID"].DefaultValue = Id.ToString();
+            getClimbersInCompetition.DataBind();
+        }
+
+        protected async void btnSubmit_Click(object sender, EventArgs e)
+
         {
             string empty = "";
-            if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
+            /*if (climber_id.Value != empty && witness_id.Value != empty && route_id.Value != empty && falls.Value != empty)
             {
                 var controller = new RouteController();
                 var logClimbModel = new LoggedClimbModel
@@ -28,7 +49,7 @@ namespace PitchPointsWeb
                     RouteId = Convert.ToInt32(route_id.Value),
                     Falls = Convert.ToInt32(falls.Value),
                 };
-                var result = controller.LogClimb(logClimbModel);
+                var result = await controller.LogClimb(logClimbModel);
                 if (result.Success)
                 {
                     climber_id.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
@@ -42,7 +63,7 @@ namespace PitchPointsWeb
             else
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
-            }
+            }*/
         }
     }
 }
