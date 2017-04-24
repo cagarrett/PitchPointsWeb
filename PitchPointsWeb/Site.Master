@@ -30,7 +30,11 @@
                 e.stopPropagation();
             });
             $('#logoutLink').click(function() {
-                alert("Log out");
+                swal({
+                    title: 'Logged out!',
+                    text: 'You have successfully logged out!',
+                    type: 'success'
+                });
                 deleteToken();
             });
             updateAccountLoginStatus();
@@ -146,6 +150,7 @@
         <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
         <link type="text/css" rel="stylesheet" href="../Content/materialize/css/materialize.clockpicker.css" media="screen,projection"/>
         <script src="../Content/materialize/js/materialize.clockpicker.js"></script>
+        <script src="../Content/materialize/js/materialize.js"></script>
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
         <link rel="stylesheet" href="../Content/theme.css" />
         <asp:ScriptManager runat="server">
