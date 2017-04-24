@@ -42,7 +42,7 @@
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="1" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -72,7 +72,7 @@
                         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="2" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -100,7 +100,7 @@
                         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="3" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -128,7 +128,7 @@
                         <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="4" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>

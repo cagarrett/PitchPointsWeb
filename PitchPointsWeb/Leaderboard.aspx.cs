@@ -15,25 +15,30 @@ namespace PitchPointsWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            SqlDataSource1.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
-            SqlDataSource2.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
-            SqlDataSource3.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
-            SqlDataSource4.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
+            
+            //.ToString();
+            //
+            //;
+            //
         }
         protected void BeginnerUpdateTimer_Tick(object sender, EventArgs e)
         {
+            SqlDataSource1.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
             BeginnerDateStampLabel.Text = DateTime.Now.ToString();
         }
         protected void IntermediateUpdateTimer_Tick(object sender, EventArgs e)
         {
+            SqlDataSource2.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
             IntermediateDateStampLabel.Text = DateTime.Now.ToString();
         }
         protected void AdvancedUpdateTimer_Tick(object sender, EventArgs e)
         {
+            SqlDataSource3.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
             AdvancedDateStampLabel.Text = DateTime.Now.ToString();
         }
         protected void OpenUpdateTimer_Tick(object sender, EventArgs e)
         {
+            SqlDataSource4.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
             OpenDateStampLabel.Text = DateTime.Now.ToString();
         }
     }
