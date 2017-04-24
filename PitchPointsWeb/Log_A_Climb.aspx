@@ -47,10 +47,10 @@
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
                     <asp:DropDownList ID="categoryInput" runat="server" CssClass="browser-default" Width="100 px">
-                        <asp:ListItem Text="Beginner" Value="0" />
-                        <asp:ListItem Text="Intermediate" Value="1" />
-                        <asp:ListItem Text="Advanced" Value="2" />
-                        <asp:ListItem Text="Open" Value="3" />
+                        <asp:ListItem Text="Beginner" Value="1" />
+                        <asp:ListItem Text="Intermediate" Value="2" />
+                        <asp:ListItem Text="Advanced" Value="3" />
+                        <asp:ListItem Text="Open" Value="4" />
                     </asp:DropDownList>
                 </div>
             </div>
