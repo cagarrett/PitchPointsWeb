@@ -4,7 +4,7 @@
 
     <h2>Leaderboard</h2>
     <p>Select Competition</p>
-    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" runat="server"></asp:DropDownList>
+    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" CssClass="browser-default" runat="server"></asp:DropDownList>
     <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
     </asp:SqlDataSource>
 
