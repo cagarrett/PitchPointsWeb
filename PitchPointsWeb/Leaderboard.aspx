@@ -3,6 +3,12 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Leaderboard</h2>
+    <p>Select Competition</p>
+    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5" runat="server"></asp:DropDownList>
+    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
+    </asp:SqlDataSource>
+
+
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#beginner">Beginner</a></li>

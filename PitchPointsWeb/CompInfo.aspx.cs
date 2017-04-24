@@ -25,7 +25,8 @@ namespace PitchPointsWeb
 
         String email = "";
         int climberID = 0;
-        int registered = 1;
+        int registered = 0;
+
         int competitionId = 0;
         int category = 0;
         bool logIn = true; 
@@ -120,12 +121,31 @@ namespace PitchPointsWeb
             }
             
         }
-        protected void btnUnregister_Click(object sender, EventArgs e)
+        protected async void btnUnregister_Click(object sender, EventArgs e)
         {
-            if (logIn && registered == 1)
-            {
+                if (logIn && registered == 1)
+                {
+                    String empty = "";
+                    var controller = new CompetitionsController();
+                    var RegClimberModel = new CompetitionRegistrationModel
+                    {
 
-            }
+                        CompetitionId = competitionId,
+                        Register = 0
+
+                    };
+                    var result = await controller.ModifyCompetitionStatus(RegClimberModel);
+                    if (result.Success)
+                    {
+                        //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                    }
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                }
             else
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
