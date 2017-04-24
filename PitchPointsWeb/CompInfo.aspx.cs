@@ -26,6 +26,7 @@ namespace PitchPointsWeb
         String email = "";
         int climberID = 0;
         int registered = 0;
+
         int competitionId = 0;
         int category = 0;
         bool logIn = true; 
@@ -101,7 +102,7 @@ namespace PitchPointsWeb
                 var controller = new CompetitionsController();
                 var RegClimberModel = new CompetitionRegistrationModel
                 {
-                    
+
                     CompetitionId = competitionId,
                     Register = 1
                     
@@ -122,7 +123,6 @@ namespace PitchPointsWeb
         }
         protected async void btnUnregister_Click(object sender, EventArgs e)
         {
-            
                 if (logIn && registered == 1)
                 {
                     String empty = "";
