@@ -15,7 +15,10 @@ namespace PitchPointsWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            CompDropDownList.DataBind();
+            SqlDataSource1.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
+            SqlDataSource2.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
+            SqlDataSource3.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
+            SqlDataSource4.SelectParameters["compId"].DefaultValue = CompDropDownList.SelectedItem.Value;
         }
         protected void BeginnerUpdateTimer_Tick(object sender, EventArgs e)
         {
