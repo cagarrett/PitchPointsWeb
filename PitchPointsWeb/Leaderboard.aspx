@@ -4,11 +4,13 @@
 
     <h2>Leaderboard</h2>
     <p>Select Competition</p>
-    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" AutoPostBack="true" runat="server"></asp:DropDownList>
+
+    <asp:DropDownList ID="CompDropDownList" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" CssClass="browser-default" runat="server"></asp:DropDownList>
+
     <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
     </asp:SqlDataSource>
 
-
+    <br />
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#beginner">Beginner</a></li>
