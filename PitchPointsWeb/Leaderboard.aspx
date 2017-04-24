@@ -3,8 +3,9 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <h2>Leaderboard</h2>
-    <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
-    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
+    <p>Select Competition</p>
+    <asp:DropDownList ID="DropDownList1" DataSourceID="SqlDataSource5" runat="server"></asp:DropDownList>
+    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
     </asp:SqlDataSource>
 
 
