@@ -2,7 +2,15 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <h2>Leaderboard</h2>
+    <h2>Leaderboards</h2>
+    <p>Select Competition</p>
+
+    <asp:DropDownList ID="CompDropDownList" DataSourceID="SqlDataSource5"  DataTextField="CompTitle" DataValueField="id" CssClass="browser-default" AutoPostback="true" runat="server"></asp:DropDownList>
+
+    <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCompetitions" SelectCommandType="StoredProcedure">
+    </asp:SqlDataSource>
+
+    <br />
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#beginner">Beginner</a></li>
@@ -34,7 +42,7 @@
                         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="1" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -64,7 +72,7 @@
                         <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="2" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -92,7 +100,7 @@
                         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="3" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>
@@ -120,7 +128,7 @@
                         <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetCategoryLeaderboard" SelectCommandType="StoredProcedure">
                             <SelectParameters>
                                 <asp:Parameter DefaultValue="4" Name="catId" Type="Int32" />
-                                <asp:Parameter DefaultValue="7" Name="compId" Type="Int32" />
+                                <asp:Parameter DefaultValue="0" Name="compId" Type="Int32" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                     </ContentTemplate>

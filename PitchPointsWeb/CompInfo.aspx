@@ -1,6 +1,29 @@
 <%@ Page Title="CompInfo" Language="C#" MasterPageFile="~/Site.Master" Async="true"  AutoEventWireup="true" CodeBehind="CompInfo.aspx.cs" Inherits="PitchPointsWeb.CompInfo" %>
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <script>
+        function completeForm() {
+            swal({
+                title: 'Error!',
+                text: 'Please make sure you fill out each form on this page.',
+                type: 'error'
+            });
+        }
+        function serverError() {
+            swal({
+                title: 'Error!',
+                text: 'There was an issue with your registration. Please try again.',
+                type: 'error'
+            });
+        }
+        function success() {
+            swal({
+                title: 'Success!',
+                text: 'You have successfully registered!',
+                type: 'success'
+            });
+        }
+    </script>
     <div class="form-horizontal">
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="row">
@@ -14,7 +37,7 @@
                             </div>
                             <div class="card-content">
 
-                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" RowStyle-HorizontalAlign="Center">
                                     <Columns>
                                         <asp:BoundField DataField="CompTitle"
                                             HeaderText="Comp Title"
@@ -42,7 +65,7 @@
             </div>
             <div class="col s6">
                 <h1>Location</h1>
-                <asp:GridView ID="LocationView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="LocationDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
+                <asp:GridView ID="LocationView" RowStyle-HorizontalAlign="Center" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="LocationDataSource" CellPadding="2" ForeColor="#333333" GridLines="Horizontal">
                     <Columns>
                         <asp:BoundField DataField="Nickname"
                             HeaderText="Gym name"
@@ -70,7 +93,7 @@
                 </asp:SqlDataSource>
 
                 <h1>Competition Rules</h1>
-                <asp:GridView ID="RulesView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="RulesDataSource" CellPadding="2" ForeColor="#333333">
+                <asp:GridView ID="RulesView" RowStyle-HorizontalAlign="Center" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="RulesDataSource" CellPadding="2" ForeColor="#333333">
                     <Columns>
                         <asp:BoundField DataField="Description"
                             HeaderText="Description"
@@ -92,7 +115,7 @@
         <br />
         <br />
         <asp:Label ID="CompetitionResults" runat="server" Text=""></asp:Label>
-            <asp:GridView ID="CompCompGridView" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+            <asp:GridView ID="CompCompGridView" RowStyle-HorizontalAlign="Center" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 
             </asp:GridView>
             <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetScoreCard" SelectCommandType="StoredProcedure">

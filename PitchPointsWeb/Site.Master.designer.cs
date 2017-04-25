@@ -13,14 +13,13 @@ namespace PitchPointsWeb {
     public partial class SiteMaster {
         
         /// <summary>
-        /// accountName control.
+        /// AdminPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton accountName;
-        
+        protected global::System.Web.UI.WebControls.Panel AdminPanel;
         /// <summary>
         /// accountEmail control.
         /// </summary>

@@ -135,5 +135,33 @@ namespace PitchPointsWeb.API.Admin
             return locationId;
         }
 
+        public bool InsertRoutes(List<Route> routes)
+        {
+            var success = true;
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new SqlCommand("", connection))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+                        foreach (var route in routes)
+                        {
+                            command.Parameters.Clear();
+                            command.Parameters.AddWithValue("@categoryId", route.CategoryId);
+                            command.Parameters.AddWithValue("@maxPoints", route.MaxPoints);
+                            command.Parameters.AddWithValue("@name", route.Name);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+            } catch
+            {
+                success = false;
+            }
+            return success;
+        }
+
     }
 }
