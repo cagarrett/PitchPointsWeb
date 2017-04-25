@@ -28,7 +28,7 @@ namespace PitchPointsWeb
                 if (loggedIn)
                 {
                     getActiveCompetitions.SelectParameters.Add("email", tokenModel.Content.Email);
-                    getActiveCompetitions.SelectParameters.Add("onlyReturnRegistered", "1");
+                    getActiveCompetitions.SelectParameters.Add("onlyReturnRegistered", "0");
                     getActiveCompetitions.DataBind();
                     competitionName.DataBind();
                     getClimbersInCompetition.SelectParameters.Add("compID", "0");
