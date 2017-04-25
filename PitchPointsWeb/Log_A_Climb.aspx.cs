@@ -42,7 +42,7 @@ namespace PitchPointsWeb
         }
         
 
-        protected void competitionChanged(object sneder, EventArgs e)
+        protected void competitionChanged(object sender, EventArgs e)
         {
             int Id = Convert.ToInt32(competitionName.SelectedValue);
             getClimbersInCompetition.SelectParameters["compID"].DefaultValue = Id.ToString();

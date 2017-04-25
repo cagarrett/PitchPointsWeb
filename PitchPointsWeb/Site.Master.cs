@@ -44,7 +44,6 @@ namespace PitchPointsWeb
                 }
                 Response.Cookies.Set(responseCookie);
             }
-
             Page.PreLoad += master_Page_PreLoad;
         }
 
@@ -73,7 +72,15 @@ namespace PitchPointsWeb
             {
                 Token = ReadToken()
             };
-            //accountName.Text = TokenModel.
+            if(ReadToken() == null)
+            {
+                accountName.Text = "User";
+            }
+            else
+            {
+                accountName.Text = "My Profile";
+                //accountEmail.Text = TokenModel.Content.Email;
+            }
         }
 
         public void WriteToken(string token)

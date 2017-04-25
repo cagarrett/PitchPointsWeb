@@ -15,19 +15,15 @@ namespace PitchPointsWeb.Account
 {
     public partial class Profile : Page
     {
-
         public class Climbs
         {
-            
             public int WitnessID { get; set; }
             public string WitnessName { get; set; }
             public int Falls { get; set; }
             public int Points { get; set; }
             public int RouteID { get; set; }
             public int CompID { get; set; }
-
             public Climbs() { }
-
         }
 
         public List<Climbs> CompletedClimbs = new List<Climbs>();
@@ -49,7 +45,6 @@ namespace PitchPointsWeb.Account
         {
             Master.ReadToken();
 
-
             string empty = "";
             if (EmailLabel.Text == empty)
             {
@@ -58,7 +53,6 @@ namespace PitchPointsWeb.Account
                 {
                     Token = Master.ReadToken()
                 };
-
                 var result = await controller.GetUserSnapshot(TokenModel);
                 if (result.Success)
                 {
@@ -80,7 +74,6 @@ namespace PitchPointsWeb.Account
                             command.ExecuteNonQuery();
                         }
                     }
-
                     UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     //CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
@@ -93,7 +86,6 @@ namespace PitchPointsWeb.Account
                 }
                 else
                 {
-
                 }
             }
             /*
