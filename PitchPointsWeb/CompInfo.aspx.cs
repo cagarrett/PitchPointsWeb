@@ -108,7 +108,7 @@ namespace PitchPointsWeb
                     
                 };
                 var result = await controller.ModifyCompetitionStatus(RegClimberModel);
-                if (result.Success)
+                if (result.IsRegistered)
                 {
                     //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
