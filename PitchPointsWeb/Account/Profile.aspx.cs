@@ -69,7 +69,7 @@ namespace PitchPointsWeb.Account
                             {
                                 FirstLabel.Text = (UppercaseFirst(rdr["FirstName"].ToString()));
                                 LastLabel.Text = (UppercaseFirst(rdr["LastName"].ToString()));
-                                //courseNums.Add(rdr["CourseNumber"].ToString());
+                                
                             }
                             rdr.Close();
                             command.ExecuteNonQuery();
@@ -77,8 +77,6 @@ namespace PitchPointsWeb.Account
                     }
                     UpCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                     CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    //CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    //CompCompDataSource.SelectParameters["compId"].DefaultValue = "7";
                     EmailLabel.Text = TokenModel.Content.Email;
                     LifeTimePointsLabel.Text = result.Points.ToString();
                     FallsLabel.Text = result.Falls.ToString();
@@ -89,54 +87,6 @@ namespace PitchPointsWeb.Account
                 {
                 }
             }
-            /*
-            while (prevComps > 0)
-            {
-                Table table = new Table();
-                table.ID = "PreviousComp";
-                table.CssClass = "bordered centered highlight responsive-table";
-                Page.Form.Controls.Add(table);
-                for (int i = 0; i < 4; i++)
-                {
-                    TableRow tRow = new TableRow();
-                    for (int j = 0; j < 6; j++)
-                    {
-                        if (i == 0)
-                        {
-                            TableCell cell = new TableCell();
-                            cell.ID = "tbxRow_" + i + "_Col_" + j;
-                            cell.Text = "bitch";
-                            tRow.Cells.Add(cell);
-                        }
-                        if (i == 1)
-                        {
-                            TableCell cell = new TableCell();
-                            cell.ID = "tbxRow_" + i + "_Col_" + j;
-                            cell.Text = "bitch";
-                            tRow.Cells.Add(cell);
-                        }
-                        if (i == 2)
-                        {
-                            TableCell cell = new TableCell();
-                            cell.ID = "tbxRow_" + i + "_Col_" + j;
-                            cell.Text = "bitch";
-                            tRow.Cells.Add(cell);
-                        }
-                        if (i == 3)
-                        {
-                            TableCell cell = new TableCell();
-                            TextBox tb = new TextBox();
-                            tb.ID = "tbxRow_" + i + "_Col_" + j;
-                            tb.Text = "";
-                            cell.Controls.Add(tb);
-                            tRow.Cells.Add(cell);
-                        }
-                    }
-                    table.Rows.Add(tRow);
-                    prevComps = prevComps - 1;
-                }
-            }
-            */
         }
     }
 }

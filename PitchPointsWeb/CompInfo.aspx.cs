@@ -75,7 +75,6 @@ namespace PitchPointsWeb
                         LocationId = (Convert.ToInt32(rdr["LocationID"]));
                     }
                     rdr.Close();
-                    command.ExecuteNonQuery();
                 }
             }
             LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
@@ -98,53 +97,77 @@ namespace PitchPointsWeb
                 var controller = new CompetitionsController();
                 var RegClimberModel = new CompetitionRegistrationModel
                 {
-
+                    Token = Master.ReadToken(),
                     CompetitionId = competitionId,
                     Register = 1
                     
                 };
                 var result = await controller.ModifyCompetitionStatus(RegClimberModel);
-                if (result.Success)
+                if (result.ResponseCode == 0)
                 {
+                    
                     //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "RegisterSuccess();", true);
                 }
-                else
+                else if (result.ResponseCode == 1)
                 {
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                    
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "RegisterError();", true);
                 }
-                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                else if (result.ResponseCode == 2)
+                {
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "ReRegisterSuccess();", true);
+                }
+                else if (result.ResponseCode == 3)
+                {
+
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                }
+
             }
             
         }
         protected async void btnUnregister_Click(object sender, EventArgs e)
         {
-                if (logIn && registered == 1)
-                {
-                    String empty = "";
-                    var controller = new CompetitionsController();
-                    var RegClimberModel = new CompetitionRegistrationModel
-                    {
-
-                        CompetitionId = competitionId,
-                        Register = 0
-
-                    };
-                    var result = await controller.ModifyCompetitionStatus(RegClimberModel);
-                    if (result.Success)
-                    {
-                        //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
-                    }
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
-                }
-            else
+            if (logIn && registered == 1)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                String empty = "";
+                var controller = new CompetitionsController();
+                var RegClimberModel = new CompetitionRegistrationModel
+                {
+
+                    CompetitionId = competitionId,
+                    Register = 0
+
+                };
+                var result = await controller.ModifyCompetitionStatus(RegClimberModel);
+                if (result.ResponseCode == 0)
+                {
+
+                    //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "UnregisterSuccess();", true);
+                }
+                else if (result.ResponseCode == 1)
+                {
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "UnregisterError();", true);
+                }
+                else if (result.ResponseCode == 2)
+                {
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "ReUnregisterError();", true);
+                }
+                else if (result.ResponseCode == 3)
+                {
+
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
+                }
+                else if (result.ResponseCode == 4)
+                {
+
+                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                }
             }
         }
     }
