@@ -45,10 +45,8 @@ namespace PitchPointsWeb
             {
                 ScoreCardDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                 ScoreCardDataSource.SelectParameters["compId"].DefaultValue = CompId;
-
                 CompetitionInfoDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                 RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
-                //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
             }
             else
             {
@@ -121,7 +119,7 @@ namespace PitchPointsWeb
         }
         protected async void btnUnregister_Click(object sender, EventArgs e)
         {
-            if (logIn && registered == 1)
+            if (logIn)
             {
                 String empty = "";
                 var controller = new CompetitionsController();
