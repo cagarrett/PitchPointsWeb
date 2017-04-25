@@ -13,13 +13,13 @@ namespace PitchPointsWeb.Account {
     public partial class Profile {
         
         /// <summary>
-        /// Label1 control.
+        /// lblEmail control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lblEmail;
         
         /// <summary>
         /// EmailLabel control.
@@ -31,13 +31,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label EmailLabel;
         
         /// <summary>
-        /// Label2 control.
+        /// lblFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.Label lblFirstName;
         
         /// <summary>
         /// FirstLabel control.
@@ -49,13 +49,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label FirstLabel;
         
         /// <summary>
-        /// Label3 control.
+        /// lblLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label lblLastName;
         
         /// <summary>
         /// LastLabel control.
@@ -67,13 +67,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label LastLabel;
         
         /// <summary>
-        /// Label4 control.
+        /// lblLifetimePts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.Label lblLifetimePts;
         
         /// <summary>
         /// LifeTimePointsLabel control.
@@ -85,13 +85,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label LifeTimePointsLabel;
         
         /// <summary>
-        /// Label5 control.
+        /// lblFalls control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.WebControls.Label lblFalls;
         
         /// <summary>
         /// FallsLabel control.
@@ -103,13 +103,13 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.Label FallsLabel;
         
         /// <summary>
-        /// Label6 control.
+        /// lblParticipatedComps control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label6;
+        protected global::System.Web.UI.WebControls.Label lblParticipatedComps;
         
         /// <summary>
         /// ParticipatedCompsLabel control.

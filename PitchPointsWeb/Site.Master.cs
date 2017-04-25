@@ -5,6 +5,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.UI.HtmlControls;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.API;
 
@@ -44,7 +46,6 @@ namespace PitchPointsWeb
                 }
                 Response.Cookies.Set(responseCookie);
             }
-
             Page.PreLoad += master_Page_PreLoad;
         }
 
@@ -69,13 +70,57 @@ namespace PitchPointsWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
+            var TokenModel = new TokenModel
+            {
+                Token = ReadToken()
+            };
+            if(ReadToken() == null)
+            {
+                accountName.Text = "User";
+            }
+            else
+            {
+                accountName.Text = "My Profile";
+                //accountEmail.Text = TokenModel.Content.Email;
+            }
         }
 
-        public void WriteToken(string token)
+        public async void WriteToken(string token)
         {
             Response.Cookies.Add(new HttpCookie("Token") { Value = token });
+            await DetermineAdminPanel(new TokenModel
+            {
+                Token = token
+            });
+        }
+
+        [HttpPost]
+        public async Task DetermineAdminPanel(string token)
+        {
+            await DetermineAdminPanel(new TokenModel
+            {
+                Token = token
+            });
+        }
+
+        public async Task DetermineAdminPanel(TokenModel model)
+        {
+            var valid = await model.Validate();
+            if (valid)
+            {
+                if (model.Content.IsAdmin())
+                {
+                    AddAdminPanel();
+                }
+                else
+                {
+                    RemovedAdminPanel();
+                }
+            }
+            else
+            {
+                RemovedAdminPanel();
+            }
         }
 
         public string ReadToken()
@@ -96,6 +141,16 @@ namespace PitchPointsWeb
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+        }
+
+        public void AddAdminPanel()
+        {
+            AdminPanel.Style["display"] = "block";
+        }
+
+        public void RemovedAdminPanel()
+        {
+            AdminPanel.Style["display"] = "none";
         }
 
     }

@@ -58,7 +58,7 @@
                             </div>
                             <div class="card-content">
 
-                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="UnregisteredCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" RowStyle-HorizontalAlign="Center">
+                                <asp:GridView ID="CompetitionGridView" CssClass="bordered centered responsive-table" runat="server" AutoGenerateColumns="False" DataSourceID="CompetitionInfoDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal" RowStyle-HorizontalAlign="Center">
                                     <Columns>
                                         <asp:BoundField DataField="CompTitle"
                                             HeaderText="Comp Title"
@@ -72,7 +72,7 @@
                                             SortExpression="Description" />
                                     </Columns>
                                 </asp:GridView>
-                                <asp:SqlDataSource ID="UnregisteredCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
+                                <asp:SqlDataSource ID="CompetitionInfoDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetActiveCompetitions" SelectCommandType="StoredProcedure">
                                     <SelectParameters>
                                         <asp:Parameter DefaultValue=" " Name="email" Type="String" />
                                         <asp:Parameter DefaultValue="" Name="targetComp" Type="String" />
@@ -130,16 +130,16 @@
         </div>
 
         <br />
-        <asp:Button runat="server" OnClick="btnRegister_Click" Text="Register" CssClass="btn btn-primary" />
-        <asp:Button runat="server" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
+        <asp:Button runat="server" ID="btnRegister" OnClick="btnRegister_Click" Text="Register" CssClass="btn btn-primary" />
+        <asp:Button runat="server" ID="btnUnregister" OnClick="btnUnregister_Click" Text="Unregister" CssClass="btn btn-primary" />
 
         <br />
         <br />
-        <asp:Label ID="CompetitionResults" runat="server" Text=""></asp:Label>
-            <asp:GridView ID="CompCompGridView" RowStyle-HorizontalAlign="Center" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="CompCompDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
+        <asp:Label ID="ScoreCardLabel" runat="server" Text=""></asp:Label>
+            <asp:GridView ID="ScoreCardGridView" RowStyle-HorizontalAlign="Center" CssClass="bordered centered highlight responsive-table" runat="server" AutoGenerateColumns="True" DataSourceID="ScoreCardDataSource" CellPadding="4" ForeColor="#333333" GridLines="Horizontal">
                 
             </asp:GridView>
-            <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetScoreCard" SelectCommandType="StoredProcedure">
+            <asp:SqlDataSource ID="ScoreCardDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetScoreCard" SelectCommandType="StoredProcedure">
                 <SelectParameters>
                     <asp:Parameter DefaultValue="" Name="email" Type="String" />
                     <asp:Parameter DefaultValue="" Name="compId" Type="Int32" />

@@ -13,22 +13,36 @@ namespace PitchPointsWeb
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            var TokenModel = new TokenModel
+            if (!Page.IsPostBack)
             {
-                Token = Master.ReadToken()
-            };
-
-            var loggedIn = await TokenModel.Validate();
-            if (loggedIn)
-            {
-                getActiveCompetitions.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
+                if (Master.ReadToken() == null)
+                {
+                    Response.Redirect("~/");
+                    return;
+                }
+                var tokenModel = new TokenModel()
+                {
+                    Token = Master.ReadToken()
+                };
+                var loggedIn = await tokenModel.Validate();
+                if (loggedIn)
+                {
+                    getActiveCompetitions.SelectParameters.Add("email", tokenModel.Content.Email);
+                    getActiveCompetitions.SelectParameters.Add("onlyReturnRegistered", "1");
+                    getActiveCompetitions.DataBind();
+                    getClimbersInCompetition.SelectParameters.Add("compID", "0");
+                    getClimbersInCompetition.DataBind();
+                    //getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
+                }
+                else
+                {
+                    Response.Redirect("~/");
+                }
             }
         }
-
         
 
-        protected void competitionChanged(object sneder, EventArgs e)
+        protected void competitionChanged(object sender, EventArgs e)
         {
             int Id = Convert.ToInt32(competitionName.SelectedValue);
             getClimbersInCompetition.SelectParameters["compID"].DefaultValue = Id.ToString();

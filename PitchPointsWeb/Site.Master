@@ -13,11 +13,10 @@
     </asp:PlaceHolder>
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-3.1.1.min.js") %>"></script>
     <style>
         loggedOut {
-            display: block;
+            display: none;
         }
         loggedIn {
             display: none;
@@ -33,7 +32,10 @@
                 swal({
                     title: 'Logged out!',
                     text: 'You have successfully logged out!',
-                    type: 'success'
+                    type: 'success',
+                    allowOutsideClick: false
+                }).then(function() {
+                    window.location.reload();
                 });
                 deleteToken();
             });
@@ -59,10 +61,12 @@
                 contentType: "application/json",
                 dataType: "json",
                 success: function (msg) {
-                    $('#loginModal').modal().hide();
+                    hideModal();
                     if (msg.Success) {
                         updateToken(msg.Token);
-                        Materialize.toast('Successfully logged in!', 3000, 'rounded');
+                        Materialize.toast('Successfully logged in!', 1000, 'rounded', function() {
+                            window.location.reload();
+                        });
                     } else {
                         switch(msg.ResponseCode) {
                         case 1:
@@ -81,14 +85,17 @@
                     }
                 },
                 error: function(msg) {
-                    $('#loginModal').modal('hide');
-                    $('body').removeClass('modal-open');
-                    $('.modal-backdrop').remove();
+                    hideModal();
                     serverError();
                     deleteToken();
                 }
             });
             return false;
+        }
+        function hideModal() {
+            $("#loginModal").modal().hide();
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         }
         function updateToken(token) {
             document.cookie = "Token=" + token;
@@ -101,14 +108,12 @@
         function updateAccountLoginStatus() {
             var cookieToken = getCookieValue("Token");
             if (cookieToken === '') {
-                $('.loggedIn')
                 $(".loggedIn").css("display", "none");
                 $(".loggedOut").css("display", "block");
             } else {
                 $(".loggedIn").css("display", "block");
                 $(".loggedOut").css("display", "none");
             }
-            $(".loggedIn").addClass("")
         }
         function getCookieValue(a) {
             var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
@@ -146,7 +151,7 @@
 </head>
 <body>
     <form runat="server" class="container body-content">
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
         <link type="text/css" rel="stylesheet" href="../Content/materialize/css/materialize.clockpicker.css" media="screen,projection"/>
         <script src="../Content/materialize/js/materialize.clockpicker.js"></script>
@@ -186,12 +191,12 @@
                                         <img src="/Assets/PPHangLogoTrimBlack.png" style="width: 270px; height: 155px" />
                                     </div>
                                     <br /><br />
-                                    <a href="#!profile"><span class="black-text name">Pitch Points Admin</span></a>
-                                    <a href="#!email"><span class="black-text email">PitchPointsTeam@gmail.com</span></a>
+                                    <asp:LinkButton runat="server" href="../Account/Profile.aspx" id="accountName"><span class="black-text name">User</span></asp:LinkButton>
+                                    <asp:LinkButton runat="server" href="../Account/Profile.aspx" id="accountEmail"><span class="black-text email"></span></asp:LinkButton>
                                 </div>
                             </li>
                             <li><a class="subheader">Important Links</a></li>
-                            <li><div class="divider" /></li>
+                            <li><div class="divider"/></li>
                             <li><a class="waves-effect" href="../Default.aspx"><i class="material-icons">home</i>Home</a></li>
                             <li><a class="waves-effect" href="../Account/Profile.aspx"><i class="material-icons">A</i>My Account</a></li>
                             <li><a class="waves-effect" href="../Contact.aspx"><i class="material-icons">contact_mail</i>Contact Us</a></li>
@@ -207,15 +212,17 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li><a class="subheader">Competition Manager</a></li>
-                                    <li><div class="divider" /></li>
-                                    <li><a class="waves-effect" href="../Admin/CreateCompetition.aspx"><i class="material-icons">queue</i>Create Competition</a></li>
-                                    <li><a class="waves-effect" href="../Admin/EditCompetition.aspx"><i class="material-icons">edit</i>Edit Competitions</a></li>
-                                    <li><div class="divider"></div></li>
-                                    <li><a class="subheader">User Manager</a></li>
-                                    <li><a class="waves-effect" href="../Admin/UserPermissions.aspx"><i class="material-icons">account_box</i>Manage Permissions</a></li>
-                                    <li><a class="waves-effect" href="../Admin/RegisterClimberForCompetition.aspx"><i class="material-icons">event</i>Register Climber for Comp</a></li>
-                                    <li><a class="waves-effect" href="../Admin/LogRouteForClimber.aspx"><i class="material-icons">edit</i>Log Route for Climber</a></li>
+                                    <asp:Panel runat="server" ID="AdminPanel" style="display: none;">
+                                        <li><a class="subheader">Competition Manager</a></li>
+                                        <li><div class="divider" /></li>
+                                        <li><a class="waves-effect" href="../Admin/CreateCompetition.aspx"><i class="material-icons">queue</i>Create Competition</a></li>
+                                        <li><a class="waves-effect" href="../Admin/EditCompetition.aspx"><i class="material-icons">edit</i>Edit Competitions</a></li>
+                                        <li><div class="divider"></div></li>
+                                        <li><a class="subheader">User Manager</a></li>
+                                        <li><a class="waves-effect" href="../Admin/UserPermissions.aspx"><i class="material-icons">account_box</i>Manage Permissions</a></li>
+                                        <li><a class="waves-effect" href="../Admin/RegisterClimberForCompetition.aspx"><i class="material-icons">event</i>Register Climber for Comp</a></li>
+                                        <li><a class="waves-effect" href="../Admin/LogRouteForClimber.aspx"><i class="material-icons">edit</i>Log Route for Climber</a></li>
+                                    </asp:Panel>
                                 </ul>
                             </li>
                         </ul>
@@ -238,7 +245,7 @@
                 </div>
             </div>
         </div>
-        <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" style="background-color: transparent; box-shadow: none;" aria-labelledby="loginModalLabel">
+        <div id="loginModal" class="modal" tabindex="-1" role="dialog" style="background-color: transparent; box-shadow: none;" aria-labelledby="loginModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

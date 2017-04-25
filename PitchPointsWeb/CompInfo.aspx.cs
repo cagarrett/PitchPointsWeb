@@ -23,7 +23,6 @@ namespace PitchPointsWeb
 
         int LocationId = 0;
 
-        String email = "";
         int climberID = 0;
         int registered = 0;
 
@@ -34,64 +33,59 @@ namespace PitchPointsWeb
         protected async void Page_Load(object sender, EventArgs e)
         {
             
-            String CompId = Request.QueryString["Id"];
+            string CompId = Request.QueryString["Id"];
             competitionId = Convert.ToInt32(CompId);
 
             string empty = "";
-            if (CompetitionResults.Text == empty)
+            var controller = new AccountController();
+            var TokenModel = new TokenModel
             {
-                var controller = new AccountController();
-                var TokenModel = new TokenModel
+                Token = Master.ReadToken()
+            };
+
+            var result = await controller.GetUserSnapshot(TokenModel);
+            CompetitionInfoDataSource.SelectParameters["targetComp"].DefaultValue = CompId;
+            if (result.Success)
+            {
+                ScoreCardDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                ScoreCardDataSource.SelectParameters["compId"].DefaultValue = CompId;
+
+                CompetitionInfoDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
+                RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
+                //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
+            }
+            else
+            {
+                btnRegister.Visible = false;
+                btnUnregister.Visible = false;
+                CompetitionGridView.Visible = false;
+            }
+            using (var connection = MasterController.GetConnection())
+            {
+                connection.Open();
+                using (var command = new SqlCommand("GetCompetitionLocation", connection))
                 {
-                    Token = Master.ReadToken()
-                };
-
-                var result = await controller.GetUserSnapshot(TokenModel);
-                if (result.Success)
-                {
-                    logIn = true;
-                    using (var connection = MasterController.GetConnection())
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@comp", CompId);
+                    SqlDataReader rdr = command.ExecuteReader();
+                    if (rdr.Read())
                     {
-                        connection.Open();
-                        using (var command = new SqlCommand("GetCompetitionLocation", connection))
-                        {
-                            command.CommandType = CommandType.StoredProcedure;
-                            command.Parameters.AddWithValue("@comp", CompId);
-                            SqlDataReader rdr = command.ExecuteReader();
-                            while (rdr.Read())
-                            {
-                                LocationId = (Convert.ToInt32(rdr["LocationID"]));
-
-                            }
-                            rdr.Close();
-                            command.ExecuteNonQuery();
-                        }
+                        LocationId = (Convert.ToInt32(rdr["LocationID"]));
                     }
-                    CompCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    CompCompDataSource.SelectParameters["compId"].DefaultValue = CompId;
-
-                    LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
-                    email = TokenModel.Content.Email;
-                    UnregisteredCompDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
-                    UnregisteredCompDataSource.SelectParameters["targetComp"].DefaultValue = CompId;
-                    RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
-                    //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
-                    if (LocationId == 2)
-                    {
-                        GymImage.Attributes["src"] = ResolveUrl("Assets/NuLuLogo.PNG");
-                        // GymImage.src = Page.ResolveUrl("relative/path/to/image");
-                    }
-                    else if (LocationId == 1)
-                    {
-                        GymImage.Attributes["src"] = ResolveUrl("Assets/HHILogoWall.PNG");
-                    }
-                }
-                else
-                {
-
+                    rdr.Close();
+                    command.ExecuteNonQuery();
                 }
             }
-            CompetitionResults.Text = "Competition Results";
+            LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
+            if (LocationId == 2)
+            {
+                GymImage.Attributes["src"] = ResolveUrl("Assets/NuLuLogo.PNG");
+                // GymImage.src = Page.ResolveUrl("relative/path/to/image");
+            }
+            else if (LocationId == 1)
+            {
+                GymImage.Attributes["src"] = ResolveUrl("Assets/HHILogoWall.PNG");
+            }
         }
 
         protected async void btnRegister_Click(object sender, EventArgs e)

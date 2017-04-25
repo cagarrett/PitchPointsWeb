@@ -7,14 +7,10 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb
 {
-    public partial class Default : Page
+    public partial class Default : BasePage
     {
         protected GridView CompetitionsGridView;
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            
-        }
         protected void grdYourGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)

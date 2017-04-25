@@ -31,13 +31,13 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.GridView CompetitionGridView;
         
         /// <summary>
-        /// UnregisteredCompDataSource control.
+        /// CompetitionInfoDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource UnregisteredCompDataSource;
+        protected global::System.Web.UI.WebControls.SqlDataSource CompetitionInfoDataSource;
         
         /// <summary>
         /// LocationView control.
@@ -76,31 +76,49 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.SqlDataSource RulesDataSource;
         
         /// <summary>
-        /// CompetitionResults control.
+        /// btnRegister control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CompetitionResults;
+        protected global::System.Web.UI.WebControls.Button btnRegister;
         
         /// <summary>
-        /// CompCompGridView control.
+        /// btnUnregister control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView CompCompGridView;
+        protected global::System.Web.UI.WebControls.Button btnUnregister;
         
         /// <summary>
-        /// CompCompDataSource control.
+        /// ScoreCardLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource CompCompDataSource;
+        protected global::System.Web.UI.WebControls.Label ScoreCardLabel;
+        
+        /// <summary>
+        /// ScoreCardGridView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ScoreCardGridView;
+        
+        /// <summary>
+        /// ScoreCardDataSource control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.SqlDataSource ScoreCardDataSource;
         
         /// <summary>
         /// lblMessage control.
