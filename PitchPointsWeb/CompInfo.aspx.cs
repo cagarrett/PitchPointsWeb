@@ -134,7 +134,7 @@ namespace PitchPointsWeb
                 var controller = new CompetitionsController();
                 var RegClimberModel = new CompetitionRegistrationModel
                 {
-
+                    Token = Master.ReadToken(),
                     CompetitionId = competitionId,
                     Register = 0
 
