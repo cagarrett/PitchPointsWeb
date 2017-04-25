@@ -12,9 +12,8 @@ using PitchPointsWeb.Models.API;
 
 namespace PitchPointsWeb.Account
 {
-    public partial class Register : Page
+    public partial class Register : BasePage
     {
-
         protected async void CreateUser_Click(object sender, EventArgs e)
         {
             string empty = "";

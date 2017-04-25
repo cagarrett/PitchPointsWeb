@@ -7,10 +7,11 @@ using System.Windows;
 
 namespace PitchPointsWeb.Account
 {
-    public partial class Login : Page
+    public partial class Login : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             RegisterHyperLink.NavigateUrl = "Register";
             // Enable this once you have account confirmation enabled for password reset functionality
             //ForgotPasswordHyperLink.NavigateUrl = "Forgot";

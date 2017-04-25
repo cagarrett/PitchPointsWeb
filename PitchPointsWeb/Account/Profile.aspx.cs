@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace PitchPointsWeb.Account
 {
-    public partial class Profile : Page
+    public partial class Profile : BasePage
     {
         public class Climbs
         {
@@ -43,6 +43,7 @@ namespace PitchPointsWeb.Account
 
         protected async void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             Master.ReadToken();
 
             string empty = "";

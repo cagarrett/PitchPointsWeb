@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb
 {
-    public partial class _Default : Page
+    public partial class _Default : BasePage
     {
         private void Get_Leaders(String Category)
         {
@@ -15,11 +15,7 @@ namespace PitchPointsWeb
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            //.ToString();
-            //
-            //;
-            //
+            base.Page_Load(sender, e);
         }
         protected void BeginnerUpdateTimer_Tick(object sender, EventArgs e)
         {
