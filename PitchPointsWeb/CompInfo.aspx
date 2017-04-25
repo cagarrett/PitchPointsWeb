@@ -2,24 +2,45 @@
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <script>
-        function completeForm() {
+        function UnregisterError() {
             swal({
                 title: 'Error!',
-                text: 'Please make sure you fill out each form on this page.',
+                text: 'There was an issue with unregistrating. Please try again.',
                 type: 'error'
             });
         }
-        function serverError() {
+        function ReUnregisterError() {
+            swal({
+                title: 'Error!',
+                text: 'You have already unregistered!',
+                type: 'error'
+            });
+        }
+        function RegisterError() {
             swal({
                 title: 'Error!',
                 text: 'There was an issue with your registration. Please try again.',
                 type: 'error'
             });
         }
-        function success() {
+        function RegisterSuccess() {
             swal({
                 title: 'Success!',
                 text: 'You have successfully registered!',
+                type: 'success'
+            });
+        }
+        function ReRegisterSuccess() {
+            swal({
+                title: 'Success!',
+                text: 'You have already registered!',
+                type: 'success'
+            });
+        }
+        function UnregisterSuccess() {
+            swal({
+                title: 'Success!',
+                text: 'You have successfully Unregistered!',
                 type: 'success'
             });
         }
