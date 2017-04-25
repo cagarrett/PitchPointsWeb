@@ -8,11 +8,11 @@ using System.Data;
 
 namespace PitchPointsWeb
 {
-    public partial class Log_A_Climb : Page
+    public partial class Log_A_Climb : BasePage
     {
-
         protected async void Page_Load(object sender, EventArgs e)
         {
+            base.Page_Load(sender, e);
             if (!Page.IsPostBack)
             {
                 if (Master.ReadToken() == null)
@@ -32,7 +32,6 @@ namespace PitchPointsWeb
                     getActiveCompetitions.DataBind();
                     getClimbersInCompetition.SelectParameters.Add("compID", "0");
                     getClimbersInCompetition.DataBind();
-                    //getActiveCompetitions.SelectParameters["onlyReturnRegistered"].DefaultValue = "1";
                 }
                 else
                 {

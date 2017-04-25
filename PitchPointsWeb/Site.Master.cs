@@ -9,6 +9,8 @@ using System.Web.Http;
 using System.Web.UI.HtmlControls;
 using PitchPointsWeb.Models.API;
 using PitchPointsWeb.API;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PitchPointsWeb
 {
@@ -70,19 +72,7 @@ namespace PitchPointsWeb
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            var TokenModel = new TokenModel
-            {
-                Token = ReadToken()
-            };
-            if(ReadToken() == null)
-            {
-                accountName.Text = "User";
-            }
-            else
-            {
-                accountName.Text = "My Profile";
-                //accountEmail.Text = TokenModel.Content.Email;
-            }
+            
         }
 
         public async void WriteToken(string token)
@@ -108,6 +98,28 @@ namespace PitchPointsWeb
             var valid = await model.Validate();
             if (valid)
             {
+                accountEmail.Text = model.Content.Email;
+                var controller = new AccountController();
+                var result = await controller.GetUserSnapshot(model);
+                if (result.Success)
+                {
+                    using (var connection = MasterController.GetConnection())
+                    {
+                        connection.Open();
+                        using (var command = new SqlCommand("GetAllUserInfo", connection))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            command.Parameters.AddWithValue("@email", model.Content.Email);
+                            SqlDataReader rdr = command.ExecuteReader();
+                            while (rdr.Read())
+                            {
+                                accountName.Text = "Welcome, " + rdr["FirstName"].ToString();
+                            }
+                            rdr.Close();
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
                 if (model.Content.IsAdmin())
                 {
                     AddAdminPanel();
@@ -120,6 +132,7 @@ namespace PitchPointsWeb
             else
             {
                 RemovedAdminPanel();
+                accountName.Text = "User";
             }
         }
 

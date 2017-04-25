@@ -191,7 +191,7 @@
                                         <img src="/Assets/PPHangLogoTrimBlack.png" style="width: 270px; height: 155px" />
                                     </div>
                                     <br /><br />
-                                    <asp:LinkButton runat="server" href="../Account/Profile.aspx" id="accountName"><span class="black-text name">User</span></asp:LinkButton>
+                                    <asp:Label runat="server" id="accountName"><span class="black-text name">User</span></asp:Label>
                                     <asp:LinkButton runat="server" href="../Account/Profile.aspx" id="accountEmail"><span class="black-text email"></span></asp:LinkButton>
                                 </div>
                             </li>

@@ -18,7 +18,7 @@ using System.Data;
 
 namespace PitchPointsWeb
 {
-    public partial class CompInfo : Page
+    public partial class CompInfo : BasePage
     {
 
         int LocationId = 0;
@@ -33,7 +33,7 @@ namespace PitchPointsWeb
 
         protected async void Page_Load(object sender, EventArgs e)
         {
-            
+            base.Page_Load(sender, e);
             String CompId = Request.QueryString["Id"];
             competitionId = Convert.ToInt32(CompId);
 
