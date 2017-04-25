@@ -103,21 +103,28 @@ namespace PitchPointsWeb
                 var RegClimberModel = new CompetitionRegistrationModel
                 {
 
-                    CompetitionId = competitionId,
+                    CompetitionId = 14,
                     Register = 1
                     
                 };
                 var result = await controller.ModifyCompetitionStatus(RegClimberModel);
-                if (result.IsRegistered)
+                if (result.ResponseCode == 0)
                 {
+                    
                     //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
                 }
-                else
+                else if (result.ResponseCode == 2)
                 {
+                    
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
                 }
-                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                else if (result.ResponseCode == 1)
+                {
+
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                }
+                
             }
             
         }
