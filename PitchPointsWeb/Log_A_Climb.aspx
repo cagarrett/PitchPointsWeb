@@ -24,6 +24,9 @@
                 type: 'success'
             });
         }
+        $(document).ready(function () {
+            $('select').material_select();
+        });
     </script>
     <div class="form-horizontal">
         <br />
@@ -33,7 +36,7 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
-                    <asp:DropDownList ID="competitionName" AutoPostBack="true" DataValueField="Id" OnSelectedIndexChanged="competitionChanged" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
+                    <asp:DropDownList ID="competitionName" CssClass="browser-default" AutoPostBack="true" DataValueField="Id" OnSelectedIndexChanged="competitionChanged" DataTextField="CompetitionTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                     <asp:SqlDataSource
                         ID="getActiveCompetitions"
                         runat="server"
@@ -64,7 +67,7 @@
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
                         SelectCommand="GetClimbersInCompetition"
                         SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                    <asp:DropDownList ID="witnessName" AutoPostBack="true" DataTextField="Witness" DataSourceID="getClimbersInCompetition" DataValueField="Id" runat="server" Width="100 px" />
+                    <asp:DropDownList ID="witnessName" CssClass="browser-default" AutoPostBack="true" DataTextField="Witness" DataSourceID="getClimbersInCompetition" DataValueField="Id" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
