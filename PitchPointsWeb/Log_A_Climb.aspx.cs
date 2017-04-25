@@ -17,7 +17,7 @@ namespace PitchPointsWeb
             {
                 if (Master.ReadToken() == null)
                 {
-                    Response.Redirect("~/");
+                    Response.Redirect("~/", false);
                     return;
                 }
                 var tokenModel = new TokenModel()
@@ -36,7 +36,7 @@ namespace PitchPointsWeb
                 }
                 else
                 {
-                    Response.Redirect("~/");
+                    Response.Redirect("~/", false);
                 }
             }
         }
