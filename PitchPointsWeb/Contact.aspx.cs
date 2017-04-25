@@ -10,11 +10,11 @@ using System.Net.Mail;
 
 namespace PitchPointsWeb
 {
-    public partial class Contact : Page
+    public partial class Contact : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            base.Page_Load(sender, e);
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
