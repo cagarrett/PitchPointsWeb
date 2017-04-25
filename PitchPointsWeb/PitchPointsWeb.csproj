@@ -550,7 +550,6 @@
     <Compile Include="API\CompetitionsController.cs" />
     <Compile Include="API\LeaderboardController.cs" />
     <Compile Include="API\MasterController.cs" />
-    <Compile Include="API\RegisterController.cs" />
     <Compile Include="API\RouteController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="Account\Profile.aspx.cs">
@@ -605,7 +604,6 @@
     </Compile>
     <Compile Include="Models\API\Response\ApiResponseCode.cs" />
     <Compile Include="Models\API\Response\RouteControllerResponses.cs" />
-    <Compile Include="Models\API\RegisterControllerModels.cs" />
     <Compile Include="Models\API\TokenModel.cs" />
     <Compile Include="Models\API\PublicKeyModel.cs" />
     <Compile Include="Models\API\AccountControllerModels.cs" />
