@@ -10,7 +10,7 @@ namespace PitchPointsWeb
     public partial class Default : BasePage
     {
         protected GridView CompetitionsGridView;
-        
+
         protected void grdYourGrid_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)

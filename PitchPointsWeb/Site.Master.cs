@@ -96,7 +96,6 @@ namespace PitchPointsWeb
         public async Task DetermineAdminPanel(TokenModel model)
         {
             var valid = await model.Validate();
-            Response.Write(valid);
             if (valid)
             {
                 if (model.Content.IsAdmin())

@@ -16,7 +16,7 @@
     <script type="text/javascript" src="<%=ResolveUrl("~/Scripts/jquery-3.1.1.min.js") %>"></script>
     <style>
         loggedOut {
-            display: block;
+            display: none;
         }
         loggedIn {
             display: none;
@@ -32,10 +32,12 @@
                 swal({
                     title: 'Logged out!',
                     text: 'You have successfully logged out!',
-                    type: 'success'
+                    type: 'success',
+                    allowOutsideClick: false
+                }).then(function() {
+                    window.location.reload();
                 });
                 deleteToken();
-                reload();
             });
             updateAccountLoginStatus();
         });
@@ -62,7 +64,9 @@
                     hideModal();
                     if (msg.Success) {
                         updateToken(msg.Token);
-                        Materialize.toast('Successfully logged in!', 3000, 'rounded');
+                        Materialize.toast('Successfully logged in!', 1000, 'rounded', function() {
+                            window.location.reload();
+                        });
                     } else {
                         switch(msg.ResponseCode) {
                         case 1:
