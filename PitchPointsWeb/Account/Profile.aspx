@@ -77,6 +77,12 @@
             <asp:BoundField DataField="Rank"
                 HeaderText="Rank"
                 SortExpression="Rank" />
+            <asp:TemplateField HeaderText="More Info">
+                <ItemTemplate>
+                    <asp:LinkButton ID="btnview" runat="server" href='<%# String.Format("/CompInfo.aspx?ID={0}", Eval("Id")) %>' Text="Logged Ticket" CommandName="More Info">More Info
+                        </asp:LinkButton>
+                </ItemTemplate>
+            </asp:TemplateField>
         </Columns>
     </asp:GridView>
     <asp:SqlDataSource ID="CompCompDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>" SelectCommand="GetPastCompetitions" SelectCommandType="StoredProcedure">

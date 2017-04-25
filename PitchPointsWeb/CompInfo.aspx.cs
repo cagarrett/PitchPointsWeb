@@ -73,7 +73,6 @@ namespace PitchPointsWeb
                         LocationId = (Convert.ToInt32(rdr["LocationID"]));
                     }
                     rdr.Close();
-                    command.ExecuteNonQuery();
                 }
             }
             LocationDataSource.SelectParameters["comp"].DefaultValue = LocationId.ToString();
