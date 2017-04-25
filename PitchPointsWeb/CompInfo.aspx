@@ -30,7 +30,7 @@
                 type: 'success'
             });
         }
-        function ReRegisterSuccess() {
+        function ReRegisterError() {
             swal({
                 title: 'Success!',
                 text: 'You have already registered!',
@@ -42,6 +42,13 @@
                 title: 'Success!',
                 text: 'You have successfully Unregistered!',
                 type: 'success'
+            });
+        }
+        function FinishedComp() {
+            swal({
+                title: 'Error!',
+                text: 'This compteition has already taken place. Please try again.',
+                type: 'error'
             });
         }
     </script>
