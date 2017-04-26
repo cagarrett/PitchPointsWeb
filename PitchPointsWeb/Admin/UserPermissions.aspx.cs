@@ -7,11 +7,8 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb.Admin
 {
-    public partial class PromoteUser : System.Web.UI.Page
+    public partial class PromoteUser : AdminPage
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }
