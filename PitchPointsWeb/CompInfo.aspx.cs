@@ -22,12 +22,8 @@ namespace PitchPointsWeb
     {
 
         int LocationId = 0;
-
-        int climberID = 0;
         int registered = 0;
-
         int competitionId = 0;
-        int category = 0;
         bool logIn = true; 
 
         protected async void Page_Load(object sender, EventArgs e)
@@ -51,10 +47,8 @@ namespace PitchPointsWeb
             {
                 ScoreCardDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                 ScoreCardDataSource.SelectParameters["compId"].DefaultValue = CompId;
-
                 CompetitionInfoDataSource.SelectParameters["email"].DefaultValue = TokenModel.Content.Email;
                 RulesDataSource.SelectParameters["CompetitionID"].DefaultValue = CompId;
-                //CompetitionGridView.SelectParameters["compId"].DefaultValue = CompId;
             }
             else
             {
@@ -81,7 +75,6 @@ namespace PitchPointsWeb
             if (LocationId == 2)
             {
                 GymImage.Attributes["src"] = ResolveUrl("Assets/NuLuLogo.PNG");
-                // GymImage.src = Page.ResolveUrl("relative/path/to/image");
             }
             else if (LocationId == 1)
             {
@@ -105,8 +98,6 @@ namespace PitchPointsWeb
                 var result = await controller.ModifyCompetitionStatus(RegClimberModel);
                 if (result.ResponseCode == 0)
                 {
-                    
-                    //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "RegisterSuccess();", true);
                 }
                 else if (result.ResponseCode == 1)
@@ -114,15 +105,15 @@ namespace PitchPointsWeb
                     
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "RegisterError();", true);
                 }
-                else if (result.ResponseCode == 2)
+                else if (result.ResponseCode == 301)
                 {
 
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "ReRegisterSuccess();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "ReRegisterError();", true);
                 }
-                else if (result.ResponseCode == 3)
+                else if (result.ResponseCode == 300)
                 {
 
-                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "completeForm();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "FinishedComp();", true);
                 }
 
             }
@@ -130,13 +121,13 @@ namespace PitchPointsWeb
         }
         protected async void btnUnregister_Click(object sender, EventArgs e)
         {
-            if (logIn && registered == 1)
+            if (logIn)
             {
                 String empty = "";
                 var controller = new CompetitionsController();
                 var RegClimberModel = new CompetitionRegistrationModel
                 {
-
+                    Token = Master.ReadToken(),
                     CompetitionId = competitionId,
                     Register = 0
 
@@ -144,9 +135,7 @@ namespace PitchPointsWeb
                 var result = await controller.ModifyCompetitionStatus(RegClimberModel);
                 if (result.ResponseCode == 0)
                 {
-
-                    //ClimberId.Value = empty; witness_id.Value = empty; route_id.Value = empty; falls.Value = empty;
-                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "UnregisterSuccess();", true);
+                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "UnregisterSuccess();", true);
                 }
                 else if (result.ResponseCode == 1)
                 {
@@ -158,15 +147,10 @@ namespace PitchPointsWeb
 
                     ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "ReUnregisterError();", true);
                 }
-                else if (result.ResponseCode == 3)
+                else if (result.ResponseCode == 300)
                 {
 
-                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "success();", true);
-                }
-                else if (result.ResponseCode == 4)
-                {
-
-                    //ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "serverError();", true);
+                    ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "FinishedComp();", true);
                 }
             }
         }
