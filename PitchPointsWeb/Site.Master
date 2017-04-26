@@ -238,7 +238,7 @@
                         <div id="loggedIn" class="loggedIn">
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a runat="server" href="~/Account/Profile.aspx">My Account</a></li>
-                                <li><a runat="server" id="logoutLink" href="#">Log out</a></li>
+                                <li><a runat="server" id="logoutLink" href="~/Default.aspx">Log out</a></li>
                             </ul>
                         </div>
                     </div>
