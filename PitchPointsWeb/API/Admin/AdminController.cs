@@ -2,6 +2,7 @@
 using PitchPointsWeb.Models.API;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
@@ -14,7 +15,7 @@ namespace PitchPointsWeb.API.Admin
     public class AdminController : MasterController
     {
 
-        public async Task<bool> CreateCompetition(TokenModel token, Competition competition)
+        public async Task<bool> CreateCompetition(TokenModel token, Competition competition, List<Route> routes)
         {
             var validToken = await token.Validate();
             if (!validToken || !token.Content.IsAdmin())
@@ -42,20 +43,18 @@ namespace PitchPointsWeb.API.Admin
                         command.Parameters.AddWithValue("@date", competition.Date);
                         command.Parameters.AddWithValue("@startTime", competition.Time);
                         command.Parameters.AddWithValue("@description", competition.Description);
-                        var compIdParam = new SqlParameter()
-                        {
-                            Direction = System.Data.ParameterDirection.Output,
-                            ParameterName = "@compId"
-                        };
-                        command.Parameters.Add(compIdParam);
-                        command.ExecuteNonQuery();
-                        competitionId = (int)compIdParam.Value;
+                        competitionId = (int) command.ExecuteScalar();
                     }
                 }
                 InsertCategoriesFor(competitionId, competition.Categories.ToList());
                 InsertRulesFor(competitionId, competition.Rules.ToList());
+                InsertRoutes(routes, competitionId);
                 success = true;
-            } catch { }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
             return success;
         }
 
@@ -121,21 +120,18 @@ namespace PitchPointsWeb.API.Admin
                         command.Parameters.AddWithValue("@zip", location.ZIP);
                         command.Parameters.AddWithValue("@addressLine1", location.AddressLine1);
                         command.Parameters.AddWithValue("@addressLine2", location.AddressLine2);
-                        var locationParam = new SqlParameter()
-                        {
-                            ParameterName = "@locationId",
-                            Direction = System.Data.ParameterDirection.Output
-                        };
-                        command.Parameters.Add(locationParam);
-                        command.ExecuteNonQuery();
-                        locationId = (int) locationParam.Value;
+                        locationId = (int) command.ExecuteScalar();
                     }
                 }
-            } catch { }
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
             return locationId;
         }
 
-        public bool InsertRoutes(List<Route> routes)
+        public bool InsertRoutes(List<Route> routes, int compId)
         {
             var success = true;
             try
@@ -143,7 +139,7 @@ namespace PitchPointsWeb.API.Admin
                 using (var connection = GetConnection())
                 {
                     connection.Open();
-                    using (var command = new SqlCommand("", connection))
+                    using (var command = new SqlCommand("InsertRoute", connection))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         foreach (var route in routes)
@@ -152,7 +148,14 @@ namespace PitchPointsWeb.API.Admin
                             command.Parameters.AddWithValue("@categoryId", route.CategoryId);
                             command.Parameters.AddWithValue("@maxPoints", route.MaxPoints);
                             command.Parameters.AddWithValue("@name", route.Name);
-                            command.ExecuteNonQuery();
+                            var routeId = (int) command.ExecuteScalar();
+                            using (var compCommand = new SqlCommand("InsertCompetitionRoute", connection))
+                            {
+                                compCommand.CommandType = CommandType.StoredProcedure;
+                                compCommand.Parameters.AddWithValue("@compId", compId);
+                                compCommand.Parameters.AddWithValue("@routeId", routeId);
+                                compCommand.ExecuteNonQuery();
+                            }
                         }
                     }
                 }
