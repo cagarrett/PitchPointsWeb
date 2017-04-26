@@ -27,6 +27,10 @@
         </div>
         <div class="col s6">
             <div class="input-field">
+                <input id="tbxAddressNickname" type="text" class="validate" runat="server" required="" aria-required="true"/>
+                <label for="tbxAddressNickname" data-error="Nickname required" data-success="">Location Nickname</label>
+            </div>
+            <div class="input-field">
                 <input id="tbxAddress1" type="text" class="validate" runat="server" required="" aria-required="true"/>
                 <label for="tbxAddress1" data-error="Invalid Address" data-success="">Address Line 1</label>
             </div>
@@ -54,7 +58,24 @@
                     </div>
                 </div>
             </div>
+            <div class="row" />
         </div>
+    </div>
+    <div class="row">
+        <div class="col s6">
+            <div class="input-field">
+                <textarea id="tbxDetails" class="validate materialize-textarea" runat="server" required="" aria-required="true"></textarea>
+                <label for="tbxDetails" data-success="">Details</label>
+            </div>
+        </div>
+        <div class="col s6">
+            <div class="input-field">
+                <textarea id="tbxDescription" class="validate materialize-textarea" runat="server" required="" aria-required="true"></textarea>
+                <label for="tbxDescription" data-success="">Description</label>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col s6">
             <h5>Rules</h5>
             <asp:UpdatePanel runat="server" UpdateMode="Always">

@@ -7,11 +7,8 @@ using System.Web.UI.WebControls;
 
 namespace PitchPointsWeb.Admin
 {
-    public partial class RegisterClimberForCompetition : System.Web.UI.Page
+    public partial class RegisterClimberForCompetition : AdminPage
     {
-        protected void Page_Load(object sender, EventArgs e)
-        {
 
-        }
     }
 }
