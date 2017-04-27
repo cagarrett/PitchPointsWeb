@@ -36,6 +36,7 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
+                    <asp:Label runat="server">Competition</asp:Label>
                     <asp:DropDownList ID="competitionName" CssClass="browser-default" AutoPostBack="true" DataValueField="Id" OnSelectedIndexChanged="competitionChanged" DataTextField="CompTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                     <asp:SqlDataSource
                         ID="getActiveCompetitions"
@@ -49,6 +50,7 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
+                    <asp:Label runat="server">Category</asp:Label>
                     <asp:DropDownList ID="categoryInput" runat="server" CssClass="browser-default" Width="100 px">
                         <asp:ListItem Text="Beginner" Value="1" />
                         <asp:ListItem Text="Intermediate" Value="2" />
@@ -67,6 +69,7 @@
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
                         SelectCommand="GetClimbersInCompetition"
                         SelectCommandType="StoredProcedure"></asp:SqlDataSource>
+                    <asp:Label runat="server">Witness</asp:Label>
                     <asp:DropDownList ID="witnessName" CssClass="browser-default" AutoPostBack="true" DataTextField="ClimberName" DataSourceID="getClimbersInCompetition" DataValueField="Id" runat="server" Width="100 px" />
                 </div>
             </div>
