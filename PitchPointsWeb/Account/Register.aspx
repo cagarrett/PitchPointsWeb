@@ -8,6 +8,41 @@
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 15 // Creates a dropdown of 15 years to control year
         });
+        function completeForm() {
+            swal({
+                title: 'Error!',
+                text: 'Please make sure you fill out each form on this page.',
+                type: 'error'
+            });
+        }
+        function passwordMismatch() {
+            swal({
+                title: 'Error!',
+                text: 'Please make sure your passwords are the same.',
+                type: 'error'
+            });
+        }
+        function emailError() {
+            swal({
+                title: 'Error!',
+                text: 'This email is already taken.',
+                type: 'error'
+            });
+        }
+        function serverError() {
+            swal({
+                title: 'Error!',
+                text: 'There was an error with the server. Please try again.',
+                type: 'error'
+            });
+        }
+        function authError() {
+            swal({
+                title: 'Error!',
+                text: 'We were unable to authorize your account right now. Please try again.',
+                type: 'error'
+            });
+        }
     </script>
     <br />
     <p class="text-danger">
