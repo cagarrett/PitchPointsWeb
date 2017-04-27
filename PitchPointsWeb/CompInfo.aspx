@@ -32,9 +32,9 @@
         }
         function ReRegisterError() {
             swal({
-                title: 'Success!',
+                title: 'Error!',
                 text: 'You have already registered!',
-                type: 'success'
+                type: 'error'
             });
         }
         function UnregisterSuccess() {
@@ -48,7 +48,7 @@
             swal({
                 title: 'Error!',
                 text: 'This compteition has already taken place. Please try again.',
-                type: 'error'
+                type: 'Error'
             });
         }
     </script>
