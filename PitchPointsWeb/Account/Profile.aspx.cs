@@ -85,6 +85,7 @@ namespace PitchPointsWeb.Account
                 }
                 else
                 {
+                    Response.Redirect("~/Default.aspx");
                 }
             }
         }
