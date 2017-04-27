@@ -157,6 +157,11 @@
                                         <asp:ListItem Text="V8" Value="260" />
                                         <asp:ListItem Text="V9" Value="280" />
                                         <asp:ListItem Text="V10" Value="300" />
+                                        <asp:ListItem Text="V11" Value="320" />
+                                        <asp:ListItem Text="V12" Value="340" />
+                                        <asp:ListItem Text="V13" Value="360" />
+                                        <asp:ListItem Text="V14" Value="380" />
+                                        <asp:ListItem Text="V15" Value="400" />
                                     </asp:DropDownList>
                                 </ItemTemplate>
                                 <FooterTemplate>
@@ -172,6 +177,11 @@
                                         <asp:ListItem Text="V8" Value="260" />
                                         <asp:ListItem Text="V9" Value="280" />
                                         <asp:ListItem Text="V10" Value="300" />
+                                        <asp:ListItem Text="V11" Value="320" />
+                                        <asp:ListItem Text="V12" Value="340" />
+                                        <asp:ListItem Text="V13" Value="360" />
+                                        <asp:ListItem Text="V14" Value="380" />
+                                        <asp:ListItem Text="V15" Value="400" />
                                     </asp:DropDownList>
                                 </FooterTemplate>
                             </asp:TemplateField>

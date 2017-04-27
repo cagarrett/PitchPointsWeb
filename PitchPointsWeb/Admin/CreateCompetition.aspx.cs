@@ -58,7 +58,7 @@ namespace PitchPointsWeb.Admin
             var success = await controller.CreateCompetition(token, competition, GetCurrentRoutes());
             if (success)
             {
-                // Handle
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "creationSuccess();", true);
             } else
             {
                 ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "creationError();", true);
