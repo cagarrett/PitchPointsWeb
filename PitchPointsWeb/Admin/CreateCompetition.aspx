@@ -20,7 +20,7 @@
                 <div class="col s3">
                     <div class="input-field">
                         <label for="tbxStartTime" data-success="">Start Time</label>
-                        <input id="tbxStartTime" class="timepicker" type="time" runat="server" required="" aria-required="true"/>
+                        <input id="tbxStartTime" class="active timepicker" type="time" runat="server" required="" aria-required="true"/>
                     </div>
                 </div>
             </div>
