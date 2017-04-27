@@ -40,6 +40,15 @@ namespace PitchPointsWeb.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxStartTime;
         
         /// <summary>
+        /// tbxEndTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxEndTime;
+        
+        /// <summary>
         /// tbxAddressNickname control.
         /// </summary>
         /// <remarks>
