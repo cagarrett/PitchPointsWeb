@@ -224,5 +224,19 @@
             //alert(JSON.stringify(pointBox));
             return false;
         }
+        function creationError() {
+            swal({
+                title: 'Error!',
+                text: 'There was an issue with creating the competition.\nReview the information to ensure everything is correct and try again.',
+                type: 'error'
+            });
+        }
+        function creationSuccess() {
+            swal({
+                title: 'Success!',
+                text: 'Your competition has been successfully created!',
+                type: 'success'
+            });
+        }
     </script>
 </asp:Content>
