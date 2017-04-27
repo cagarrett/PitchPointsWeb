@@ -24,14 +24,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col s3">
-                    <div class="input-field">
-                        <label for="tbxEndTime" data-success="">End Time</label>
-                        <input id="tbxEndTime" class="timepicker" type="time" runat="server" required="" aria-required="true"/>
-                    </div>
-                </div>
-            </div>
         </div>
         <div class="col s6">
             <div class="input-field">
