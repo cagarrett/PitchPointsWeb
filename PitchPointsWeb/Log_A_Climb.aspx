@@ -33,9 +33,13 @@
         <h4>Log a Climb</h4>
         <hr />
 
+       <asp:Label ID="FirstLabel" runat="server" Text=""></asp:Label>
+       <asp:Label ID="LastLabel" runat="server" Text=""></asp:Label>
+
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
+                    <p>Select The Competition</p>
                     <asp:DropDownList ID="competitionName" CssClass="browser-default" AutoPostBack="true" DataValueField="Id" OnSelectedIndexChanged="competitionChanged" DataTextField="CompTitle" DataSourceID="getActiveCompetitions" runat="server" Width="100 px" />
                     <asp:SqlDataSource
                         ID="getActiveCompetitions"
@@ -49,6 +53,7 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
+                    <p>Select your category</p>
                     <asp:DropDownList ID="categoryInput" runat="server" CssClass="browser-default" Width="100 px">
                         <asp:ListItem Text="Beginner" Value="1" />
                         <asp:ListItem Text="Intermediate" Value="2" />
@@ -61,16 +66,18 @@
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">
+                    <p>Select the Completed Route</p>
                     <asp:SqlDataSource
-                        ID="getClimbersInCompetition"
+                        ID="getCompetitionRoutes"
                         runat="server"
                         ConnectionString="<%$ ConnectionStrings:PitchPointsDB %>"
-                        SelectCommand="GetClimbersInCompetition"
+                        SelectCommand="GetCompetitionRoutes"
                         SelectCommandType="StoredProcedure"></asp:SqlDataSource>
-                    <asp:DropDownList ID="witnessName" CssClass="browser-default" AutoPostBack="true" DataTextField="ClimberName" DataSourceID="getClimbersInCompetition" DataValueField="Id" runat="server" Width="100 px" />
+                    <asp:DropDownList ID="witnessName" CssClass="browser-default" AutoPostBack="true" DataTextField="RouteName" DataSourceID="GetCompetitionRoutes" DataValueField="Id" runat="server" Width="100 px" />
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <div class="col-md-offset-0 col-md-10">
                 <div class="input-field col s12">

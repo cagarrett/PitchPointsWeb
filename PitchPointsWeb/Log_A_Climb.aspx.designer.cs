@@ -13,6 +13,24 @@ namespace PitchPointsWeb {
     public partial class Log_A_Climb {
         
         /// <summary>
+        /// FirstLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label FirstLabel;
+        
+        /// <summary>
+        /// LastLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LastLabel;
+        
+        /// <summary>
         /// competitionName control.
         /// </summary>
         /// <remarks>
@@ -40,13 +58,13 @@ namespace PitchPointsWeb {
         protected global::System.Web.UI.WebControls.DropDownList categoryInput;
         
         /// <summary>
-        /// getClimbersInCompetition control.
+        /// getCompetitionRoutes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource getClimbersInCompetition;
+        protected global::System.Web.UI.WebControls.SqlDataSource getCompetitionRoutes;
         
         /// <summary>
         /// witnessName control.
