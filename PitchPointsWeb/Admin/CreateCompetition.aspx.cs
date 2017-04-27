@@ -112,9 +112,9 @@ namespace PitchPointsWeb.Admin
             if (routeGridView.Rows.Count >= 1)
             {
                 newRow["ID"] = routeGridView.Rows.Count;
-                newRow["Grade"] = newGradeBox.SelectedItem.Value.ToString();
-                newRow["Points"] = newGradeBox.SelectedItem.Value.ToString();
-                newRow["Category"] = newCategoryBox.SelectedValue.ToString();
+                newRow["Grade"] = newGradeBox.SelectedValue;
+                newRow["Points"] = newGradeBox.SelectedValue;
+                newRow["Category"] = newCategoryBox.SelectedValue;
             }
             if (routeGridView.Rows.Count == 1 && !routeGridView.Rows[0].Visible)
             {
