@@ -60,7 +60,7 @@ namespace PitchPointsWeb.Admin
                 // Handle
             } else
             {
-                // Handle
+                ScriptManager.RegisterStartupScript(this, GetType(), "Popup", "creationError();", true);
             }
         }
 
