@@ -7,6 +7,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -34,10 +35,13 @@ namespace PitchPointsWeb.Admin
             var competition = new Competition()
             {
                 CompetitionTitle = tbxTitle.Value,
-                Date = Convert.ToDateTime(tbxDate.Value),
-                Time = Convert.ToDateTime(tbxStartTime.Value).TimeOfDay,
+                Date = DateTime.ParseExact(tbxDate.Value, "dd MMMM, yyyy", System.Globalization.CultureInfo.InvariantCulture),
+                Time = TimeSpan.ParseExact(tbxStartTime.Value, "g",System.Globalization.CultureInfo.CurrentCulture),
+                Details = tbxDetails.Value,
+                Description = tbxDescription.Value,
                 Location = new Location()
                 {
+                    Nickname = tbxAddressNickname.Value,
                     City = tbxCity.Value,
                     State = tbxState.Value,
                     ZIP = tbxZip.Value,
@@ -51,10 +55,7 @@ namespace PitchPointsWeb.Admin
                 Token = Master.ReadToken()
             };
             var controller = new AdminController();
-            var success = await controller.CreateCompetition(token, competition);
-            Response.Write(success);
-            success = success && controller.InsertRoutes(GetCurrentRoutes());
-            Response.Write(success);
+            var success = await controller.CreateCompetition(token, competition, GetCurrentRoutes());
             if (success)
             {
                 // Handle

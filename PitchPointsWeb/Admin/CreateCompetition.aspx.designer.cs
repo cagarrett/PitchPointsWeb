@@ -40,6 +40,15 @@ namespace PitchPointsWeb.Admin {
         protected global::System.Web.UI.HtmlControls.HtmlInputGenericControl tbxStartTime;
         
         /// <summary>
+        /// tbxAddressNickname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText tbxAddressNickname;
+        
+        /// <summary>
         /// tbxAddress1 control.
         /// </summary>
         /// <remarks>
@@ -83,6 +92,24 @@ namespace PitchPointsWeb.Admin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText tbxZip;
+        
+        /// <summary>
+        /// tbxDetails control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea tbxDetails;
+        
+        /// <summary>
+        /// tbxDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea tbxDescription;
         
         /// <summary>
         /// ruleGridView control.

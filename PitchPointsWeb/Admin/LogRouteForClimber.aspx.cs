@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PitchPointsWeb.Admin
 {
-    public partial class LogRouteForClimber : Page
+    public partial class LogRouteForClimber : AdminPage
     {
         static string UppercaseFirst(string s)
         {
@@ -26,11 +26,6 @@ namespace PitchPointsWeb.Admin
             return char.ToUpper(s[0]) + s.Substring(1);
         }
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            //Master.ReadToken();
-            //Rider switching to is user logged in boolean
-        }
         protected async void btnSubmit_Click(object sender, EventArgs e)
         {
             string empty = "";
