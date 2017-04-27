@@ -153,7 +153,7 @@
     <form runat="server" class="container body-content">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="../Content/materialize/css/materialize.css" />
-        <link type="text/css" rel="stylesheet" href="../Content/materialize/css/materialize.clockpicker.css" media="screen,projection"/>
+        <link rel="stylesheet" href="../Content/materialize/css/materialize.clockpicker.css" media="screen,projection"/>
         <script src="../Content/materialize/js/materialize.clockpicker.js"></script>
         <script src="../Content/materialize/js/materialize.js"></script>
         <link rel="stylesheet" href="../Content/sweetalert2/sweetalert2.css" />
