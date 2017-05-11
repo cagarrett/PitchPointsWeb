@@ -1,0 +1,47 @@
+﻿<%@ Page Title="Log_A_Climb" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Log_A_Climb.aspx.cs" Inherits="PitchPointsWeb.Log_A_Climb" %>
+
+<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2>Log A Climb</h2>
+
+    <div class="form-horizontal">
+        <asp:ValidationSummary runat="server" CssClass="text-danger" />
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="RouteID" CssClass="col-md-2 control-label">Route ID</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="RouteID" CssClass="form-control" TextMode="Number" Width="75px" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="RouteID"
+                    CssClass="text-danger" ErrorMessage="The RouteID field is required." />
+            </div>
+        </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Attempts" CssClass="col-md-2 control-label">Attempts</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Attempts" CssClass="form-control" TextMode="Number" Width="75px" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Attempts"
+                    CssClass="text-danger" ErrorMessage="The attempts field is required." />
+            </div>
+        </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Witness" CssClass="col-md-2 control-label">Witness #1</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Witness" CssClass="form-control" TextMode="SingleLine" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Witness"
+                    CssClass="text-danger" ErrorMessage="The first witness field is required." />
+            </div>
+        </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Witness2" CssClass="col-md-2 control-label">Witness #2</asp:Label>
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Witness2" CssClass="form-control" TextMode="SingleLine" />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Witness2"
+                    CssClass="text-danger" ErrorMessage="The second witness field is required." />
+                <br />
+                <br />
+                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" CssClass="btn-primary" />
+                <br />
+                <br />
+                <asp:Button ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" Text="Submit" />
+        </div>
+    </div>
+    </div>
+</asp:Content>

@@ -8,6 +8,7 @@ using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using PitchPointsWeb.Models;
+using Microsoft.Owin.Security.OAuth;
 
 namespace PitchPointsWeb
 {
@@ -46,6 +47,15 @@ namespace PitchPointsWeb
             // This is similar to the RememberMe option when you log in.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
+            var options = new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/Token"),
+                Provider = new OAuthAuthorizationServerProvider(),
+                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(90),
+                AllowInsecureHttp = System.Diagnostics.Debugger.IsAttached
+            };
+            app.UseOAuthBearerTokens(options);
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
             //    clientId: "",

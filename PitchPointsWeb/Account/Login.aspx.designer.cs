@@ -67,12 +67,15 @@ namespace PitchPointsWeb.Account {
         protected global::System.Web.UI.WebControls.HyperLink RegisterHyperLink;
         
         /// <summary>
-        /// OpenAuthLogin control.
+        /// Master property.
         /// </summary>
         /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
+        /// Auto-generated property.
         /// </remarks>
-        protected global::PitchPointsWeb.Account.OpenAuthProviders OpenAuthLogin;
+        public new PitchPointsWeb.SiteMaster Master {
+            get {
+                return ((PitchPointsWeb.SiteMaster)(base.Master));
+            }
+        }
     }
 }

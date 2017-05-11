@@ -15,9 +15,12 @@ namespace PitchPointsWeb
         void Application_Start(object sender, EventArgs e)
         {
             // Code that runs on application startup
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            GlobalConfiguration.Configuration.EnsureInitialized();
         }
     }
 }
